@@ -1,36 +1,47 @@
-<section class="nm-hero-banner nm-animate" id="hero">
-  <div class="nm-hero-banner__media">
-    {%- if section.settings.image != blank -%}
-      {{ section.settings.image | image_url: width: 1920 | image_tag: loading: 'eager', alt: section.settings.image.alt | default: 'NovaMeds pharmacy and wellness', class: 'nm-hero-banner__img', sizes: '100vw' }}
-    {%- else -%}
-      <div class="nm-hero-banner__placeholder" role="img" aria-label="Wellness and healthcare"></div>
-    {%- endif -%}
-    <div class="nm-hero-banner__shade"></div>
+<section class="nm-hero-premium nm-animate" id="hero">
+  <div class="nm-hero-premium__particles" aria-hidden="true">
+    <span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span>
   </div>
+  <div class="nm-hero-premium__mesh" aria-hidden="true"></div>
 
-  <div class="nm-hero-banner__content nm-container">
-    <h1 class="nm-hero-banner__title">
-      {{ section.settings.heading | default: 'Premium Wellness & Healthcare Solutions' }}
-    </h1>
-    <p class="nm-hero-banner__text">
-      {{ section.settings.text | default: 'Trusted products for modern health, performance, and vitality.' }}
-    </p>
-    <div class="nm-hero-banner__actions">
-      {%- if section.settings.button_label != blank -%}
-        <a href="{{ section.settings.button_link | default: routes.all_products_collection_url }}" class="nm-btn nm-btn--primary nm-btn--lg">
-          {{ section.settings.button_label }}
+  <div class="nm-container nm-hero-premium__grid">
+    <div class="nm-hero-premium__content">
+      <h1 class="nm-hero-premium__title">{{ section.settings.heading | default: 'Premium Wellness & Healthcare Solutions' }}</h1>
+      <p class="nm-hero-premium__text">
+        {{ section.settings.text | default: 'Trusted products for modern health, performance, and vitality, backed by science and certified for your well-being.' }}
+      </p>
+      <div class="nm-hero-premium__actions">
+        <a href="{{ section.settings.button_link | default: routes.all_products_collection_url }}" class="nm-btn nm-btn--lg nm-btn--cyan">
+          {{ section.settings.button_label | default: 'Shop Now' }}
         </a>
-      {%- endif -%}
-      {%- if section.settings.button_secondary_label != blank -%}
-        <a href="{{ section.settings.button_secondary_link | default: '/collections/best-sellers' }}" class="nm-btn nm-btn--outline nm-btn--lg">
-          {{ section.settings.button_secondary_label }}
+        <a href="{{ section.settings.button_secondary_link | default: '/collections/best-sellers' }}" class="nm-btn nm-btn--lg nm-btn--outline-light">
+          {{ section.settings.button_secondary_label | default: 'Best Sellers' }}
         </a>
-      {%- endif -%}
-      {%- if section.settings.button_tertiary_label != blank -%}
-        <a href="{{ section.settings.button_tertiary_link | default: '/collections/doctor-recommended' }}" class="nm-btn nm-btn--outline nm-btn--lg">
-          {{ section.settings.button_tertiary_label }}
+        <a href="{{ section.settings.button_tertiary_link | default: '/collections/doctor-recommended' }}" class="nm-btn nm-btn--lg nm-btn--outline-light">
+          {{ section.settings.button_tertiary_label | default: 'Doctor Recommended' }}
         </a>
-      {%- endif -%}
+      </div>
+      <div class="nm-hero-premium__mini-trust">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'mini_badge' -%}
+            <span {{ block.shopify_attributes }}>{{ block.settings.icon }} {{ block.settings.label }}</span>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+
+    <div class="nm-hero-premium__visual">
+      <div class="nm-hero-premium__glow-orb" aria-hidden="true"></div>
+      <div class="nm-hero-premium__products">
+        {%- if section.settings.image != blank -%}
+          {{ section.settings.image | image_url: width: 800 | image_tag: class: 'nm-hero-premium__product-img', loading: 'eager', alt: 'NovaMeds products', style: 'max-height:380px;width:auto;' }}
+        {%- else -%}
+          <div class="nm-hero-premium__product" aria-hidden="true"></div>
+          <div class="nm-hero-premium__product" aria-hidden="true"></div>
+          <div class="nm-hero-premium__product" aria-hidden="true"></div>
+        {%- endif -%}
+      </div>
     </div>
   </div>
 </section>
@@ -39,18 +50,36 @@
 {
   "name": "Hero banner",
   "tag": "section",
-  "class": "nm-hero-section",
-  "settings": [
-    { "type": "image_picker", "id": "image", "label": "Background image (pharmacy / wellness photo)" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Premium Wellness & Healthcare Solutions" },
-    { "type": "textarea", "id": "text", "label": "Subheading", "default": "Trusted products for modern health, performance, and vitality." },
-    { "type": "text", "id": "button_label", "label": "Primary button", "default": "Shop Now" },
-    { "type": "url", "id": "button_link", "label": "Primary button link" },
-    { "type": "text", "id": "button_secondary_label", "label": "Secondary button", "default": "Best Sellers" },
-    { "type": "url", "id": "button_secondary_link", "label": "Secondary button link" },
-    { "type": "text", "id": "button_tertiary_label", "label": "Tertiary button", "default": "Doctor Recommended" },
-    { "type": "url", "id": "button_tertiary_link", "label": "Tertiary button link" }
+  "blocks": [
+    {
+      "type": "mini_badge",
+      "name": "Trust pill",
+      "settings": [
+        { "type": "text", "id": "icon", "label": "Icon", "default": "🛡️" },
+        { "type": "text", "id": "label", "label": "Label", "default": "Licensed Products" }
+      ]
+    }
   ],
-  "presets": [{ "name": "Hero banner" }]
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Hero product image (optional)" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Premium Wellness & Healthcare Solutions" },
+    { "type": "textarea", "id": "text", "label": "Subheading" },
+    { "type": "text", "id": "button_label", "label": "Primary CTA", "default": "Shop Now" },
+    { "type": "url", "id": "button_link", "label": "Primary link" },
+    { "type": "text", "id": "button_secondary_label", "label": "Secondary CTA", "default": "Best Sellers" },
+    { "type": "url", "id": "button_secondary_link", "label": "Secondary link" },
+    { "type": "text", "id": "button_tertiary_label", "label": "Tertiary CTA", "default": "Doctor Recommended" },
+    { "type": "url", "id": "button_tertiary_link", "label": "Tertiary link" }
+  ],
+  "presets": [
+    {
+      "name": "Hero banner",
+      "blocks": [
+        { "type": "mini_badge", "settings": { "icon": "🛡️", "label": "Licensed Products" } },
+        { "type": "mini_badge", "settings": { "icon": "✓", "label": "Pharmacist Approved" } },
+        { "type": "mini_badge", "settings": { "icon": "🚚", "label": "Worldwide Shipping" } }
+      ]
+    }
+  ]
 }
 {% endschema %}

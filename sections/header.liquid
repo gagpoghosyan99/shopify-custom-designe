@@ -15,14 +15,14 @@
             <a href="{{ link.url }}" class="nm-nav__link">{{ link.title }}</a>
           {%- endfor -%}
         {%- else -%}
-          <a href="{{ routes.all_products_collection_url }}" class="nm-nav__link">Shop All</a>
+          <a href="{{ routes.root_url }}" class="nm-nav__link">Home</a>
+          <a href="{{ routes.all_products_collection_url }}" class="nm-nav__link">Shop</a>
           <a href="/collections/vitamins" class="nm-nav__link">Vitamins</a>
-          <a href="/collections/supplements" class="nm-nav__link">Supplements</a>
           <a href="/collections/mens-health" class="nm-nav__link">Men's Health</a>
           <a href="/collections/wellness" class="nm-nav__link">Wellness</a>
+          <a href="/collections/performance" class="nm-nav__link">Performance</a>
           <a href="/collections/skincare" class="nm-nav__link">Skincare</a>
-          <a href="/pages/about" class="nm-nav__link">About Us</a>
-          <a href="/pages/contact" class="nm-nav__link">Support</a>
+          <a href="/pages/contact" class="nm-nav__link">Contact</a>
         {%- endif -%}
       </nav>
 

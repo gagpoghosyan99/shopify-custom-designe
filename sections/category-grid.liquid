@@ -1,25 +1,24 @@
-<section class="nm-section nm-categories-v2 nm-animate" id="categories">
+<section class="nm-section-white nm-animate" id="categories">
   <div class="nm-container">
-    <h2 class="nm-section__title nm-section__title--center">{{ section.settings.title | default: 'Shop by Category' }}</h2>
+    <h2 class="nm-section-title">{{ section.settings.title | default: 'Shop by Category' }}</h2>
     {%- if section.settings.subtitle != blank -%}
-      <p class="nm-section__subtitle nm-section__subtitle--center">{{ section.settings.subtitle }}</p>
+      <p class="nm-section-sub">{{ section.settings.subtitle }}</p>
     {%- endif -%}
 
-    <div class="nm-categories-v2__grid">
+    <div class="nm-cat-v3__grid">
       {%- for block in section.blocks -%}
-        {%- assign collection = block.settings.collection -%}
-        {%- assign link_url = block.settings.link | default: collection.url | default: '#' -%}
-        <a href="{{ link_url }}" class="nm-category-tile" {{ block.shopify_attributes }}>
-          <div class="nm-category-tile__media">
-            {%- if block.settings.image != blank -%}
-              {{ block.settings.image | image_url: width: 600 | image_tag: loading: 'lazy', alt: block.settings.title }}
-            {%- elsif collection != blank and collection.image != blank -%}
-              {{ collection.image | image_url: width: 600 | image_tag: loading: 'lazy', alt: collection.title }}
-            {%- else -%}
-              <div class="nm-category-tile__fallback" style="background: {{ block.settings.color | default: 'linear-gradient(135deg,#e8f2fc,#d1faf5)' }};"></div>
-            {%- endif -%}
-          </div>
-          <span class="nm-category-tile__label">{{ block.settings.title | default: collection.title }}</span>
+        {%- assign link_url = block.settings.link | default: block.settings.collection.url | default: '#' -%}
+        <a href="{{ link_url }}" class="nm-cat-v3__tile" {{ block.shopify_attributes }}>
+          {%- if block.settings.image != blank -%}
+            {{ block.settings.image | image_url: width: 500 | image_tag: loading: 'lazy', alt: block.settings.title }}
+          {%- elsif block.settings.collection != blank and block.settings.collection.image != blank -%}
+            {{ block.settings.collection.image | image_url: width: 500 | image_tag: loading: 'lazy', alt: block.settings.title }}
+          {%- else -%}
+            <div style="width:100%;height:100%;background:linear-gradient(160deg,#0e5f6e,#00c9d4);"></div>
+          {%- endif -%}
+          <span class="nm-cat-v3__overlay"></span>
+          <span class="nm-cat-v3__shop">Shop Now →</span>
+          <span class="nm-cat-v3__label">{{ block.settings.title | default: block.settings.collection.title }}</span>
         </a>
       {%- endfor -%}
     </div>
@@ -32,7 +31,7 @@
   "tag": "section",
   "settings": [
     { "type": "text", "id": "title", "label": "Title", "default": "Shop by Category" },
-    { "type": "textarea", "id": "subtitle", "label": "Subtitle", "default": "Explore vitamins, wellness, performance, and skincare essentials." }
+    { "type": "textarea", "id": "subtitle", "label": "Subtitle" }
   ],
   "blocks": [
     {
@@ -40,10 +39,9 @@
       "name": "Category",
       "settings": [
         { "type": "collection", "id": "collection", "label": "Collection" },
-        { "type": "url", "id": "link", "label": "Link override" },
+        { "type": "url", "id": "link", "label": "Link" },
         { "type": "text", "id": "title", "label": "Title" },
-        { "type": "image_picker", "id": "image", "label": "Image" },
-        { "type": "text", "id": "color", "label": "Fallback gradient (CSS)" }
+        { "type": "image_picker", "id": "image", "label": "Image" }
       ]
     }
   ],
@@ -55,7 +53,8 @@
         { "type": "category", "settings": { "title": "Men's Health", "link": "/collections/mens-health" } },
         { "type": "category", "settings": { "title": "Wellness", "link": "/collections/wellness" } },
         { "type": "category", "settings": { "title": "Energy & Performance", "link": "/collections/energy" } },
-        { "type": "category", "settings": { "title": "Skincare", "link": "/collections/skincare" } }
+        { "type": "category", "settings": { "title": "Skincare", "link": "/collections/skincare" } },
+        { "type": "category", "settings": { "title": "Accessories", "link": "/collections/accessories" } }
       ]
     }
   ]

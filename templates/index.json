@@ -2,14 +2,20 @@
   "sections": {
     "hero": {
       "type": "hero",
+      "blocks": {
+        "m1": { "type": "mini_badge", "settings": { "icon": "🛡️", "label": "Licensed Products" } },
+        "m2": { "type": "mini_badge", "settings": { "icon": "✓", "label": "Pharmacist Approved" } },
+        "m3": { "type": "mini_badge", "settings": { "icon": "🚚", "label": "Worldwide Shipping" } }
+      },
+      "block_order": ["m1", "m2", "m3"],
       "settings": {
         "heading": "Premium Wellness & Healthcare Solutions",
-        "text": "Trusted products for modern health, performance, and vitality.",
+        "text": "Trusted products for modern health, performance, and vitality, backed by science and certified for your well-being.",
         "button_label": "Shop Now",
         "button_secondary_label": "Best Sellers",
         "button_secondary_link": "/collections/best-sellers",
         "button_tertiary_label": "Doctor Recommended",
-        "button_tertiary_link": "/collections/doctor-recommended"
+        "button_tertiary_link": "/collections/all"
       }
     },
     "trust": {
@@ -25,49 +31,86 @@
     },
     "categories": {
       "type": "category-grid",
-      "settings": {
-        "title": "Shop by Category",
-        "subtitle": "Explore vitamins, wellness, performance, and skincare essentials."
-      },
       "blocks": {
         "c1": { "type": "category", "settings": { "title": "Vitamins", "link": "/collections/vitamins" } },
         "c2": { "type": "category", "settings": { "title": "Men's Health", "link": "/collections/mens-health" } },
         "c3": { "type": "category", "settings": { "title": "Wellness", "link": "/collections/wellness" } },
         "c4": { "type": "category", "settings": { "title": "Energy & Performance", "link": "/collections/energy" } },
-        "c5": { "type": "category", "settings": { "title": "Skincare", "link": "/collections/skincare" } }
+        "c5": { "type": "category", "settings": { "title": "Skincare", "link": "/collections/skincare" } },
+        "c6": { "type": "category", "settings": { "title": "Accessories", "link": "/collections/accessories" } }
       },
-      "block_order": ["c1", "c2", "c3", "c4", "c5"]
+      "block_order": ["c1", "c2", "c3", "c4", "c5", "c6"]
+    },
+    "promo": {
+      "type": "promo-eye",
+      "settings": {
+        "badge": "🔥 Limited offer",
+        "title": "15% Off Your First Order",
+        "text": "Use code WELLNESS15 at checkout. Pharmacist-reviewed essentials delivered to your door.",
+        "button_label": "Claim Offer"
+      }
     },
     "bestsellers": {
       "type": "best-sellers",
       "settings": {
-        "eyebrow": "",
         "title": "Best Sellers",
+        "subtitle": "Top-rated formulas loved by our community.",
         "products_to_show": 8,
         "show_view_all": true
       }
     },
-    "newsletter": {
-      "type": "newsletter",
-      "settings": {}
+    "professionals": {
+      "type": "professionals-trust",
+      "blocks": {
+        "cert1": { "type": "cert", "settings": { "label": "Certifications", "value": "GMP · FDA" } },
+        "cert2": { "type": "cert", "settings": { "label": "Security", "value": "SSL · PCI" } },
+        "d1": { "type": "doctor", "settings": { "name": "Dr. Emily Chen", "credentials": "PharmD, Wellness Specialist", "quote": "Exceptional quality and full transparency on every label." } },
+        "d2": { "type": "doctor", "settings": { "name": "Dr. Michael Davis", "credentials": "MD, Integrative Medicine", "quote": "I confidently recommend NovaMeds to my patients." } },
+        "d3": { "type": "doctor", "settings": { "name": "Dr. Sarah Lee", "credentials": "PharmD", "quote": "Science-backed formulas you can trust daily." } },
+        "s1": { "type": "stat", "settings": { "value": "50,000+", "label": "Happy Customers" } },
+        "s2": { "type": "stat", "settings": { "value": "98%", "label": "Satisfaction Rate" } },
+        "s3": { "type": "stat", "settings": { "value": "24h", "label": "Worldwide Shipping" } }
+      },
+      "block_order": ["cert1", "cert2", "d1", "d2", "d3", "s1", "s2", "s3"]
+    },
+    "why": {
+      "type": "why-choose-us",
+      "blocks": {
+        "f1": { "type": "feature", "settings": { "icon": "💬", "title": "Pharmacist-Backed Advice", "text": "Expert guidance on every order." } },
+        "f2": { "type": "feature", "settings": { "icon": "🌿", "title": "Premium Quality", "text": "Lab-tested pure ingredients." } },
+        "f3": { "type": "feature", "settings": { "icon": "🚚", "title": "Fast & Secure Delivery", "text": "Tracked shipping worldwide." } },
+        "f4": { "type": "feature", "settings": { "icon": "↩️", "title": "Money-Back Guarantee", "text": "Shop with full confidence." } }
+      },
+      "block_order": ["f1", "f2", "f3", "f4"]
     },
     "reviews": {
       "type": "testimonials",
-      "settings": {
-        "title": "What our customers say",
-        "subtitle": "Trusted by thousands for premium wellness and pharmacy essentials."
-      },
       "blocks": {
-        "r1": { "type": "review", "settings": { "quote": "Fast shipping and exactly what my doctor recommended.", "author": "Sarah M.", "role": "Verified buyer" } },
-        "r2": { "type": "review", "settings": { "quote": "Professional quality and clear product information.", "author": "James L.", "role": "Verified buyer" } },
-        "r3": { "type": "review", "settings": { "quote": "My go-to for vitamins and wellness refills.", "author": "Priya K.", "role": "Verified buyer" } }
+        "r1": { "type": "review", "settings": { "quote": "Fast shipping and exactly what my doctor recommended. Quality you can feel.", "author": "Sarah M.", "role": "Verified buyer · Austin, TX" } },
+        "r2": { "type": "review", "settings": { "quote": "Finally a professional vitamin shop with clear labels and real support.", "author": "James L.", "role": "Verified buyer · Denver, CO" } },
+        "r3": { "type": "review", "settings": { "quote": "My monthly refills arrive sealed and fresh. Highly recommend NovaMeds.", "author": "Priya K.", "role": "Verified buyer · Seattle, WA" } }
       },
       "block_order": ["r1", "r2", "r3"]
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {}
     },
     "faq": {
       "type": "faq",
       "settings": { "title": "Frequently Asked Questions" }
     }
   },
-  "order": ["hero", "trust", "categories", "bestsellers", "newsletter", "reviews", "faq"]
+  "order": [
+    "hero",
+    "trust",
+    "categories",
+    "bestsellers",
+    "promo",
+    "professionals",
+    "why",
+    "reviews",
+    "newsletter",
+    "faq"
+  ]
 }

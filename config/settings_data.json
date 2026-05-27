@@ -2,8 +2,8 @@
   "current": {
     "brand_name": "NovaMeds",
     "public_site_url": "https://novameds.shop",
-    "color_primary": "#1B4B8C",
-    "color_accent": "#00B4C8",
+    "color_primary": "#0a1628",
+    "color_accent": "#00c9d4",
     "color_text": "#0F172A",
     "color_muted": "#64748B",
     "support_phone": "1-800-NOVAMEDS",
@@ -13,8 +13,10 @@
         "type": "announcement-bar",
         "settings": {
           "show": true,
-          "text": "Free express shipping on orders over $75 · Pharmacist-reviewed formulas",
-          "link_label": "Shop now"
+          "shipping_text": "Free express shipping on orders over £75",
+          "trust_1": "Pharmacist reviewed formulas",
+          "trust_2": "Secure & Trusted",
+          "trust_3": "Worldwide Delivery"
         }
       },
       "header": {

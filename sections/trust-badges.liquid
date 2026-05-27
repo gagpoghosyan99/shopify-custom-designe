@@ -1,14 +1,12 @@
-<section class="nm-trust-float nm-animate" aria-label="Trust indicators">
+<section class="nm-trust-float-v2 nm-animate" aria-label="Trust indicators">
   <div class="nm-container">
-    <div class="nm-trust-float__card">
-      <div class="nm-trust-float__grid">
-        {%- for block in section.blocks -%}
-          <div class="nm-trust-float__item" {{ block.shopify_attributes }}>
-            <div class="nm-trust-float__icon" aria-hidden="true">{{ block.settings.icon }}</div>
-            <span class="nm-trust-float__label">{{ block.settings.title }}</span>
-          </div>
-        {%- endfor -%}
-      </div>
+    <div class="nm-trust-float-v2__card">
+      {%- for block in section.blocks -%}
+        <div class="nm-trust-float-v2__item" {{ block.shopify_attributes }}>
+          <div class="nm-trust-float-v2__icon" aria-hidden="true">{{ block.settings.icon }}</div>
+          <span style="font-size:0.75rem;font-weight:600;color:var(--nm-text);">{{ block.settings.title }}</span>
+        </div>
+      {%- endfor -%}
     </div>
   </div>
 </section>

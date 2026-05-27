@@ -1,57 +1,51 @@
-<footer class="nm-footer nm-footer--v2" role="contentinfo">
+<footer class="nm-footer nm-footer--v3" role="contentinfo">
   <div class="nm-container">
     <div class="nm-footer__grid">
       <div class="nm-footer__col">
-        <a href="{{ routes.root_url }}" class="nm-footer__logo-link">
-          {%- if settings.logo != blank -%}
-            {{ settings.logo | image_url: width: 160 | image_tag: alt: settings.brand_name, class: 'nm-footer__logo-img' }}
-          {%- else -%}
-            <img src="{{ 'novameds-logo.png' | asset_url }}" alt="NovaMeds" class="nm-footer__logo-img" width="140" loading="lazy">
-          {%- endif -%}
+        <a href="{{ routes.root_url }}">
+          <img src="{{ 'novameds-logo.png' | asset_url }}" alt="{{ settings.brand_name | default: 'NovaMeds' }}" class="nm-footer__logo-img" width="140" loading="lazy">
         </a>
-        <p class="nm-footer__tagline">{{ section.settings.tagline | default: 'Premium wellness and healthcare solutions trusted by thousands.' }}</p>
+        <p class="nm-footer__tagline" style="margin-top:0.75rem;">{{ section.settings.tagline }}</p>
+        <div class="nm-footer__social-v3">
+          {%- if section.settings.social_facebook != blank -%}<a href="{{ section.settings.social_facebook }}" aria-label="Facebook">FB</a>{%- endif -%}
+          {%- if section.settings.social_instagram != blank -%}<a href="{{ section.settings.social_instagram }}" aria-label="Instagram">IG</a>{%- endif -%}
+          {%- if section.settings.social_linkedin != blank -%}<a href="{{ section.settings.social_linkedin }}" aria-label="LinkedIn">IN</a>{%- endif -%}
+        </div>
       </div>
 
       <div class="nm-footer__col">
-        <h4>About</h4>
+        <h4>Medical Trust</h4>
         <ul>
-          <li><a href="/pages/about">Our Story</a></li>
-          <li><a href="/pages/mission">Mission</a></li>
+          <li><a href="/pages/certifications">Certifications</a></li>
+          <li><a href="/pages/pharmacist-team">Pharmacist Team</a></li>
+          <li><a href="#trusted">Quality Standards</a></li>
+        </ul>
+      </div>
+
+      <div class="nm-footer__col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="/pages/about">About Us</a></li>
           <li><a href="/pages/contact">Contact</a></li>
-        </ul>
-      </div>
-
-      <div class="nm-footer__col">
-        <h4>Support</h4>
-        <ul>
-          <li><a href="mailto:{{ settings.support_email }}">{{ settings.support_email }}</a></li>
-          <li><a href="tel:{{ settings.support_phone | replace: ' ', '' }}">{{ settings.support_phone }}</a></li>
           <li><a href="/pages/faq">FAQ</a></li>
-          <li><a href="/pages/shipping">Shipping & Returns</a></li>
         </ul>
       </div>
 
       <div class="nm-footer__col">
-        <h4>Policies</h4>
+        <h4>Legal</h4>
         <ul>
           {%- assign nm_origin = settings.public_site_url | default: 'https://novameds.shop' | strip -%}
           {%- if nm_origin contains 'myshopify.com' -%}{%- assign nm_origin = 'https://novameds.shop' -%}{%- endif -%}
           <li><a href="{{ nm_origin }}/policies/privacy-policy">Privacy Policy</a></li>
-          <li><a href="{{ nm_origin }}/policies/terms-of-service">Terms of Service</a></li>
-          <li><a href="{{ nm_origin }}/policies/refund-policy">Refund Policy</a></li>
+          <li><a href="{{ nm_origin }}/policies/terms-of-service">Terms</a></li>
+          <li><a href="/pages/medical-disclaimer">Medical Disclaimer</a></li>
         </ul>
-        <p class="nm-footer__certs">{{ section.settings.certifications | default: 'Licensed pharmacy partners · GMP-quality standards' }}</p>
       </div>
     </div>
 
     <div class="nm-footer__bottom">
       <span>&copy; {{ 'now' | date: '%Y' }} {{ settings.brand_name | default: 'NovaMeds' }}. All rights reserved.</span>
-      <div class="nm-footer__social">
-        {%- if section.settings.social_facebook != blank -%}<a href="{{ section.settings.social_facebook }}" aria-label="Facebook">FB</a>{%- endif -%}
-        {%- if section.settings.social_instagram != blank -%}<a href="{{ section.settings.social_instagram }}" aria-label="Instagram">IG</a>{%- endif -%}
-        {%- if section.settings.social_twitter != blank -%}<a href="{{ section.settings.social_twitter }}" aria-label="Twitter">X</a>{%- endif -%}
-        {%- if section.settings.social_linkedin != blank -%}<a href="{{ section.settings.social_linkedin }}" aria-label="LinkedIn">IN</a>{%- endif -%}
-      </div>
+      <span style="font-size:0.75rem;opacity:0.6;">Visa · Mastercard · Amex · PayPal</span>
     </div>
   </div>
 </footer>
@@ -60,12 +54,10 @@
 {
   "name": "Footer",
   "settings": [
-    { "type": "textarea", "id": "tagline", "label": "Tagline", "default": "Premium wellness and healthcare solutions trusted by thousands." },
-    { "type": "text", "id": "certifications", "label": "Certifications line", "default": "Licensed pharmacy partners · GMP-quality standards" },
-    { "type": "url", "id": "social_facebook", "label": "Facebook URL" },
-    { "type": "url", "id": "social_instagram", "label": "Instagram URL" },
-    { "type": "url", "id": "social_twitter", "label": "Twitter URL" },
-    { "type": "url", "id": "social_linkedin", "label": "LinkedIn URL" }
+    { "type": "textarea", "id": "tagline", "label": "Tagline", "default": "Premium wellness and healthcare solutions — science-backed, pharmacist-reviewed." },
+    { "type": "url", "id": "social_facebook", "label": "Facebook" },
+    { "type": "url", "id": "social_instagram", "label": "Instagram" },
+    { "type": "url", "id": "social_linkedin", "label": "LinkedIn" }
   ]
 }
 {% endschema %}

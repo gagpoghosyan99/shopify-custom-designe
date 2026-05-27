@@ -46,6 +46,9 @@
 
     {{ 'novameds-base.css' | asset_url | stylesheet_tag }}
     {{ 'novameds-ui.css' | asset_url | stylesheet_tag }}
+    {%- if template.name == 'index' -%}
+      {{ 'novameds-home.css' | asset_url | stylesheet_tag }}
+    {%- endif -%}
 
     <style>
       :root {

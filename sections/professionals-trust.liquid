@@ -1,0 +1,101 @@
+<section class="nm-pro-section nm-animate" id="trusted">
+  <div class="nm-container">
+    <div class="nm-pro-section__wrap">
+      <h2 class="nm-pro-section__title">{{ section.settings.title | default: 'Trusted by Professionals & Science' }}</h2>
+
+      <div class="nm-pro-section__certs">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'cert' -%}
+            <div class="nm-pro-section__cert" {{ block.shopify_attributes }}>
+              {{ block.settings.label }}
+              <strong>{{ block.settings.value }}</strong>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      <div class="nm-pro-section__doctors">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'doctor' -%}
+            <div class="nm-pro-doctor" {{ block.shopify_attributes }}>
+              <div class="nm-pro-doctor__avatar">
+                {%- if block.settings.image != blank -%}
+                  {{ block.settings.image | image_url: width: 144 | image_tag: loading: 'lazy', alt: block.settings.name }}
+                {%- else -%}
+                  👨‍⚕️
+                {%- endif -%}
+              </div>
+              <h4>{{ block.settings.name }}</h4>
+              <p>{{ block.settings.credentials }}</p>
+              <p style="margin-top:0.5rem;font-style:italic;">"{{ block.settings.quote }}"</p>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      <div class="nm-pro-section__stats">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'stat' -%}
+            <div class="nm-pro-stat" {{ block.shopify_attributes }}>
+              <strong>{{ block.settings.value }}</strong>
+              <span>{{ block.settings.label }}</span>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Professionals trust",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Title", "default": "Trusted by Professionals & Science" }
+  ],
+  "blocks": [
+    {
+      "type": "cert",
+      "name": "Certification",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Certifications" },
+        { "type": "text", "id": "value", "label": "Value", "default": "GMP · FDA" }
+      ]
+    },
+    {
+      "type": "doctor",
+      "name": "Doctor",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Photo" },
+        { "type": "text", "id": "name", "label": "Name", "default": "Dr. Emily Chen" },
+        { "type": "text", "id": "credentials", "label": "Credentials", "default": "PharmD, Wellness Specialist" },
+        { "type": "textarea", "id": "quote", "label": "Quote", "default": "NovaMeds sets the standard for supplement quality." }
+      ]
+    },
+    {
+      "type": "stat",
+      "name": "Statistic",
+      "settings": [
+        { "type": "text", "id": "value", "label": "Value", "default": "50,000+" },
+        { "type": "text", "id": "label", "label": "Label", "default": "Happy Customers" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Professionals trust",
+      "blocks": [
+        { "type": "cert", "settings": { "label": "Certifications", "value": "GMP · FDA" } },
+        { "type": "cert", "settings": { "label": "Security", "value": "SSL · PCI" } },
+        { "type": "doctor", "settings": { "name": "Dr. Emily Chen", "credentials": "PharmD", "quote": "Exceptional quality and transparency." } },
+        { "type": "doctor", "settings": { "name": "Dr. Michael Davis", "credentials": "MD", "quote": "I recommend NovaMeds to patients daily." } },
+        { "type": "doctor", "settings": { "name": "Dr. Sarah Lee", "credentials": "PharmD", "quote": "Trusted formulas backed by science." } },
+        { "type": "stat", "settings": { "value": "50,000+", "label": "Happy Customers" } },
+        { "type": "stat", "settings": { "value": "98%", "label": "Satisfaction Rate" } },
+        { "type": "stat", "settings": { "value": "24h", "label": "Worldwide Shipping" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

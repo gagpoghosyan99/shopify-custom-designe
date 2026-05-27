@@ -1,0 +1,48 @@
+<section class="nm-section-white nm-animate" id="why-us">
+  <div class="nm-container">
+    <h2 class="nm-section-title">{{ section.settings.title | default: 'Why Choose NovaMeds' }}</h2>
+    <p class="nm-section-sub">{{ section.settings.subtitle | default: 'Premium care, science-backed products, and service you can trust.' }}</p>
+    <div class="nm-why__grid">
+      {%- for block in section.blocks -%}
+        <div class="nm-why__item" {{ block.shopify_attributes }}>
+          <div class="nm-why__icon" aria-hidden="true">{{ block.settings.icon }}</div>
+          <h3>{{ block.settings.title }}</h3>
+          <p>{{ block.settings.text }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Why choose us",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Title", "default": "Why Choose NovaMeds" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtitle" }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        { "type": "text", "id": "icon", "label": "Icon", "default": "💬" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Pharmacist-Backed Advice" },
+        { "type": "text", "id": "text", "label": "Text", "default": "Expert guidance on every order." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Why choose us",
+      "blocks": [
+        { "type": "feature", "settings": { "icon": "💬", "title": "Pharmacist-Backed Advice", "text": "Expert guidance on every order." } },
+        { "type": "feature", "settings": { "icon": "🌿", "title": "Premium Quality", "text": "Lab-tested, pure ingredients." } },
+        { "type": "feature", "settings": { "icon": "🚚", "title": "Fast & Secure Delivery", "text": "Tracked shipping worldwide." } },
+        { "type": "feature", "settings": { "icon": "↩️", "title": "Money-Back Guarantee", "text": "Shop with confidence." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

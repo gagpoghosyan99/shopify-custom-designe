@@ -1,22 +1,31 @@
-{%- if section.settings.show and section.settings.text != blank -%}
-  <div class="nm-announce" role="region" aria-label="Announcement">
-    <div class="nm-container nm-announce__inner">
-      <p class="nm-announce__text">{{ section.settings.text }}</p>
-      {%- if section.settings.link != blank and section.settings.link_label != blank -%}
-        <a href="{{ section.settings.link }}" class="nm-announce__link">{{ section.settings.link_label }} →</a>
-      {%- endif -%}
+{%- if section.settings.show -%}
+  <div class="nm-topbar" role="region" aria-label="Store info">
+    <div class="nm-container nm-topbar__inner">
+      <p>{{ section.settings.shipping_text | default: 'Free express shipping on orders over $75' }}</p>
+      <div class="nm-topbar__trust">
+        <span>{{ section.settings.trust_1 | default: 'Pharmacist reviewed formulas' }}</span>
+        <span>|</span>
+        <span>{{ section.settings.trust_2 | default: 'Secure & Trusted' }}</span>
+        <span>|</span>
+        <span>{{ section.settings.trust_3 | default: 'Worldwide Delivery' }}</span>
+      </div>
+      <div class="nm-topbar__locales" aria-hidden="true">
+        <span>🇬🇧 UK</span>
+        <span>🇺🇸 USA</span>
+      </div>
     </div>
   </div>
 {%- endif -%}
 
 {% schema %}
 {
-  "name": "Announcement bar",
+  "name": "Top bar",
   "settings": [
-    { "type": "checkbox", "id": "show", "label": "Show announcement", "default": true },
-    { "type": "text", "id": "text", "label": "Text", "default": "Free express shipping on orders over $75 · Pharmacist-reviewed formulas" },
-    { "type": "text", "id": "link_label", "label": "Link label", "default": "Shop now" },
-    { "type": "url", "id": "link", "label": "Link" }
+    { "type": "checkbox", "id": "show", "label": "Show top bar", "default": true },
+    { "type": "text", "id": "shipping_text", "label": "Shipping message", "default": "Free express shipping on orders over $75" },
+    { "type": "text", "id": "trust_1", "label": "Trust line 1", "default": "Pharmacist reviewed formulas" },
+    { "type": "text", "id": "trust_2", "label": "Trust line 2", "default": "Secure & Trusted" },
+    { "type": "text", "id": "trust_3", "label": "Trust line 3", "default": "Worldwide Delivery" }
   ]
 }
 {% endschema %}
