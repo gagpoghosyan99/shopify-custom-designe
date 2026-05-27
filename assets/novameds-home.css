@@ -345,6 +345,25 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(0, 201, 212, 0.18);
+}
+.nm-trust-float-v2__card::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(110deg, transparent 0%, rgba(0, 201, 212, 0.12) 40%, rgba(46, 232, 240, 0.18) 50%, rgba(0, 201, 212, 0.12) 60%, transparent 100%);
+  transform: translateX(-60%);
+  animation: nm-sheen 5.5s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes nm-sheen {
+  0% { transform: translateX(-70%); opacity: 0; }
+  12% { opacity: 1; }
+  55% { opacity: 1; }
+  70% { opacity: 0; }
+  100% { transform: translateX(70%); opacity: 0; }
 }
 @media (min-width: 768px) {
   .nm-trust-float-v2__card {
@@ -353,6 +372,19 @@
 }
 .nm-trust-float-v2__item {
   text-align: center;
+  padding: 0.25rem 0.25rem 0.4rem;
+  border-radius: 14px;
+  transition: transform 240ms ease, box-shadow 240ms ease, background 240ms ease;
+  position: relative;
+}
+.nm-trust-float-v2__item:hover {
+  transform: translateY(-4px);
+  background: rgba(0, 201, 212, 0.06);
+  box-shadow: 0 14px 34px rgba(10, 22, 40, 0.12);
+}
+.nm-trust-float-v2__item:hover .nm-trust-float-v2__icon {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 10px 26px rgba(0, 201, 212, 0.22);
 }
 .nm-trust-float-v2__icon {
   width: 52px;
@@ -364,6 +396,18 @@
   align-items: center;
   justify-content: center;
   font-size: 1.4rem;
+  box-shadow: 0 8px 20px rgba(10, 22, 40, 0.12);
+  transition: transform 240ms ease, box-shadow 240ms ease, filter 240ms ease;
+  animation: nm-trust-float 3.4s ease-in-out infinite;
+  will-change: transform;
+}
+.nm-trust-float-v2__item:nth-child(2) .nm-trust-float-v2__icon { animation-delay: 0.25s; }
+.nm-trust-float-v2__item:nth-child(3) .nm-trust-float-v2__icon { animation-delay: 0.5s; }
+.nm-trust-float-v2__item:nth-child(4) .nm-trust-float-v2__icon { animation-delay: 0.75s; }
+.nm-trust-float-v2__item:nth-child(5) .nm-trust-float-v2__icon { animation-delay: 1s; }
+@keyframes nm-trust-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
 }
 
 /* White sections */
