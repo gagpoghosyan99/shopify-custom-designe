@@ -1,5 +1,14 @@
 /* NovaMeds — UI components: loader, mega menu, cart drawer, search, mobile bar, CTA, animations */
 
+[hidden] {
+  display: none !important;
+}
+
+body.nm-modal-open {
+  overflow: hidden;
+  touch-action: none;
+}
+
 /* Typography refinement */
 .nm-body {
   font-feature-settings: "kern" 1, "liga" 1;
@@ -46,10 +55,6 @@
 @keyframes nm-loader-slide {
   0% { transform: translateX(-100%); }
   100% { transform: translateX(350%); }
-}
-
-body.nm-modal-open {
-  overflow: hidden;
 }
 
 /* Announcement */
@@ -358,13 +363,18 @@ body.nm-modal-open {
   }
 }
 
-/* Drawer overlay */
+/* Drawer overlay (shared) */
 .nm-drawer-overlay {
   position: fixed;
   inset: 0;
-  z-index: 500;
-  background: rgba(15, 23, 42, 0.45);
+  z-index: 800;
+  background: rgba(15, 23, 42, 0.5);
   backdrop-filter: blur(4px);
+  cursor: pointer;
+}
+
+.nm-drawer-overlay.is-open {
+  display: block;
 }
 
 /* Cart drawer */
@@ -372,7 +382,7 @@ body.nm-modal-open {
   position: fixed;
   top: 0;
   right: 0;
-  z-index: 600;
+  z-index: 900;
   width: min(100%, 420px);
   height: 100%;
   background: #fff;
@@ -508,14 +518,14 @@ body.nm-modal-open {
 .nm-search-modal {
   position: fixed;
   inset: 0;
-  z-index: 700;
+  z-index: 900;
   display: flex;
   align-items: flex-start;
   justify-content: center;
   padding: 10vh 1rem 1rem;
   pointer-events: none;
 }
-.nm-search-modal:not([hidden]) {
+.nm-search-modal.is-open {
   pointer-events: auto;
 }
 .nm-search-modal__inner {

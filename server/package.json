@@ -1,0 +1,14 @@
+{
+  "name": "novameds-server",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Optional NovaMeds API layer (webhooks, integrations). Shopify handles storefront cart/checkout.",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

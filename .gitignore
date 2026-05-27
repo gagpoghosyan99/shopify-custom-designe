@@ -1,6 +1,7 @@
 # Shopify CLI
 .shopify/
 NovaMeds-*.zip
+server/node_modules/
 
 # macOS
 .DS_Store
