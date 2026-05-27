@@ -262,10 +262,61 @@
   margin: 0 auto;
   filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.35));
 }
+.nm-hero-premium__product-img--photo {
+  border-radius: 22px;
+  object-fit: cover;
+  max-height: 420px;
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.35);
+}
 .nm-hero-premium__ph {
   width: 100%;
   max-width: 440px;
   margin: 0 auto;
+}
+
+.nm-hero-premium__kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid rgba(46, 232, 240, 0.35);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--nm-cyan-bright);
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  width: fit-content;
+  margin-bottom: 0.75rem;
+  animation: nm-kicker-pulse 2.2s ease-in-out infinite;
+}
+@keyframes nm-kicker-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(46, 232, 240, 0.18); transform: translateY(0); }
+  50% { box-shadow: 0 0 0 10px rgba(46, 232, 240, 0); transform: translateY(-1px); }
+}
+
+.nm-hero-premium__title--sale {
+  background: linear-gradient(90deg, #ffffff 0%, var(--nm-cyan-bright) 35%, #ffffff 70%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  background-size: 220% 100%;
+  animation: nm-sale-shine 2.6s ease-in-out infinite;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+}
+@keyframes nm-sale-shine {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.nm-hero-premium__mini {
+  margin: 0.75rem 0 0;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  max-width: 42ch;
 }
 
 /* Floating trust card below hero */

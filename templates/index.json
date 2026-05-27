@@ -9,8 +9,10 @@
       },
       "block_order": ["m1", "m2", "m3"],
       "settings": {
-        "heading": "Premium Wellness & Healthcare Solutions",
-        "text": "Trusted products for modern health, performance, and vitality, backed by science and certified for your well-being.",
+        "kicker": "LIMITED TIME",
+        "heading": "BIG SALE",
+        "text": "Limited-time offers on premium wellness essentials. Shop pharmacist-reviewed formulas with fast worldwide delivery.",
+        "mini_description": "Collagen Peptides — supports hair, skin, nails & joints. Unflavoured. Easy daily mix.",
         "button_label": "Shop Now",
         "button_secondary_label": "Best Sellers",
         "button_secondary_link": "/collections/best-sellers",

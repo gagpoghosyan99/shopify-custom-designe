@@ -7,10 +7,16 @@
 
   <div class="nm-container nm-hero-premium__grid">
     <div class="nm-hero-premium__content">
-      <h1 class="nm-hero-premium__title">{{ section.settings.heading | default: 'Premium Wellness & Healthcare Solutions' }}</h1>
+      {%- if section.settings.kicker != blank -%}
+        <div class="nm-hero-premium__kicker">{{ section.settings.kicker }}</div>
+      {%- endif -%}
+      <h1 class="nm-hero-premium__title nm-hero-premium__title--sale">{{ section.settings.heading | default: 'BIG SALE' }}</h1>
       <p class="nm-hero-premium__text">
-        {{ section.settings.text | default: 'Trusted products for modern health, performance, and vitality, backed by science and certified for your well-being.' }}
+        {{ section.settings.text | default: 'Limited-time offers on premium wellness essentials. Shop pharmacist-reviewed formulas with fast worldwide delivery.' }}
       </p>
+      {%- if section.settings.mini_description != blank -%}
+        <p class="nm-hero-premium__mini">{{ section.settings.mini_description }}</p>
+      {%- endif -%}
       <div class="nm-hero-premium__actions">
         <a href="{{ section.settings.button_link | default: routes.all_products_collection_url }}" class="nm-btn nm-btn--lg nm-btn--cyan">
           {{ section.settings.button_label | default: 'Shop Now' }}
@@ -37,15 +43,14 @@
         {%- if section.settings.image != blank -%}
           {{ section.settings.image | image_url: width: 800 | image_tag: class: 'nm-hero-premium__product-img', loading: 'eager', alt: 'NovaMeds products' }}
         {%- else -%}
-          {% render 'nm-placeholder-img',
-            asset: 'placeholder-hero.svg',
-            alt: 'Hero products — replace in Theme Editor',
-            class: 'nm-hero-premium__product-img',
-            class_wrap: 'nm-hero-premium__ph',
-            eager: true,
-            width: 800,
-            height: 520
-          %}
+          <img
+            src="{{ 'hero-sale.png' | asset_url }}"
+            alt="Sale hero image"
+            class="nm-hero-premium__product-img nm-hero-premium__product-img--photo"
+            loading="eager"
+            width="1024"
+            height="576"
+          >
         {%- endif -%}
       </div>
     </div>
@@ -67,9 +72,11 @@
     }
   ],
   "settings": [
+    { "type": "text", "id": "kicker", "label": "Small label (optional)", "default": "LIMITED TIME" },
     { "type": "image_picker", "id": "image", "label": "Hero product image (optional)" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Premium Wellness & Healthcare Solutions" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "BIG SALE" },
     { "type": "textarea", "id": "text", "label": "Subheading" },
+    { "type": "textarea", "id": "mini_description", "label": "Mini description (optional)", "default": "Collagen Peptides — supports hair, skin, nails & joints. Unflavoured. Easy daily mix." },
     { "type": "text", "id": "button_label", "label": "Primary CTA", "default": "Shop Now" },
     { "type": "url", "id": "button_link", "label": "Primary link" },
     { "type": "text", "id": "button_secondary_label", "label": "Secondary CTA", "default": "Best Sellers" },

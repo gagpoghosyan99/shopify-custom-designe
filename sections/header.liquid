@@ -10,20 +10,11 @@
       </a>
 
       <nav class="nm-nav nm-nav--center" aria-label="Main">
-        {%- if section.settings.menu != blank and section.settings.menu.links.size > 0 -%}
-          {%- for link in section.settings.menu.links -%}
-            <a href="{{ link.url }}" class="nm-nav__link">{{ link.title }}</a>
-          {%- endfor -%}
-        {%- else -%}
-          <a href="{{ routes.root_url }}" class="nm-nav__link">Home</a>
-          <a href="{{ routes.all_products_collection_url }}" class="nm-nav__link">Shop</a>
-          <a href="/collections/vitamins" class="nm-nav__link">Vitamins</a>
-          <a href="/collections/mens-health" class="nm-nav__link">Men's Health</a>
-          <a href="/collections/wellness" class="nm-nav__link">Wellness</a>
-          <a href="/collections/performance" class="nm-nav__link">Performance</a>
-          <a href="/collections/skincare" class="nm-nav__link">Skincare</a>
-          <a href="/pages/contact" class="nm-nav__link">Contact</a>
-        {%- endif -%}
+        <a href="{{ routes.root_url }}" class="nm-nav__link">Home</a>
+        <a href="{{ routes.all_products_collection_url }}" class="nm-nav__link">Catalog</a>
+        <a href="/pages/about" class="nm-nav__link">About Us</a>
+        <a href="/blogs/news" class="nm-nav__link">Blog</a>
+        <a href="/pages/contact" class="nm-nav__link">Contact</a>
       </nav>
 
       <div class="nm-header__actions">
@@ -44,20 +35,11 @@
     </div>
 
     <nav id="nm-mobile-nav" class="nm-mobile-nav" data-nm-mobile-nav aria-label="Mobile menu">
-      {%- if section.settings.menu != blank and section.settings.menu.links.size > 0 -%}
-        {%- for link in section.settings.menu.links -%}
-          <a href="{{ link.url }}">{{ link.title }}</a>
-        {%- endfor -%}
-      {%- else -%}
-        <a href="{{ routes.all_products_collection_url }}">Shop All</a>
-        <a href="/collections/vitamins">Vitamins</a>
-        <a href="/collections/supplements">Supplements</a>
-        <a href="/collections/mens-health">Men's Health</a>
-        <a href="/collections/wellness">Wellness</a>
-        <a href="/collections/skincare">Skincare</a>
-        <a href="/pages/about">About Us</a>
-        <a href="/pages/contact">Support</a>
-      {%- endif -%}
+      <a href="{{ routes.root_url }}">Home</a>
+      <a href="{{ routes.all_products_collection_url }}">Catalog</a>
+      <a href="/pages/about">About Us</a>
+      <a href="/blogs/news">Blog</a>
+      <a href="/pages/contact">Contact</a>
     </nav>
   </div>
 </header>
