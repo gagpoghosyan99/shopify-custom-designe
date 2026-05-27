@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" role="img" aria-label="Men's Performance Stack placeholder">
+  <defs><linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0a3040"/><stop offset="100%" stop-color="#7dd3fc"/></linearGradient></defs>
+  <rect width="500" height="500" fill="url(#g)"/>
+  <rect x="175" y="120" width="150" height="220" rx="75" fill="rgba(0,0,0,0.25)"/>
+  <rect x="175" y="120" width="150" height="36" rx="18" fill="#c9a227"/>
+  <text x="250" y="420" text-anchor="middle" fill="#fff" opacity="0.55" font-family="system-ui,sans-serif" font-size="11">Product photo placeholder</text>
+</svg>

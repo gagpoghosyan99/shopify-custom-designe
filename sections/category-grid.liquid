@@ -9,12 +9,22 @@
       {%- for block in section.blocks -%}
         {%- assign link_url = block.settings.link | default: block.settings.collection.url | default: '#' -%}
         <a href="{{ link_url }}" class="nm-cat-v3__tile" {{ block.shopify_attributes }}>
+          {%- assign cat_label = block.settings.title | default: block.settings.collection.title -%}
           {%- if block.settings.image != blank -%}
-            {{ block.settings.image | image_url: width: 500 | image_tag: loading: 'lazy', alt: block.settings.title }}
+            {{ block.settings.image | image_url: width: 500 | image_tag: loading: 'lazy', alt: cat_label, class: 'nm-cat-v3__img' }}
           {%- elsif block.settings.collection != blank and block.settings.collection.image != blank -%}
-            {{ block.settings.collection.image | image_url: width: 500 | image_tag: loading: 'lazy', alt: block.settings.title }}
+            {{ block.settings.collection.image | image_url: width: 500 | image_tag: loading: 'lazy', alt: cat_label, class: 'nm-cat-v3__img' }}
           {%- else -%}
-            <div style="width:100%;height:100%;background:linear-gradient(160deg,#0e5f6e,#00c9d4);"></div>
+            {%- capture ph_asset -%}{% render 'nm-category-placeholder', title: cat_label %}{%- endcapture -%}
+            {%- assign ph_asset = ph_asset | strip -%}
+            {% render 'nm-placeholder-img',
+              asset: ph_asset,
+              alt: cat_label,
+              class: 'nm-cat-v3__img',
+              class_wrap: 'nm-cat-v3__ph',
+              width: 600,
+              height: 400
+            %}
           {%- endif -%}
           <span class="nm-cat-v3__overlay"></span>
           <span class="nm-cat-v3__shop">Shop Now →</span>

@@ -1,14 +1,19 @@
 <section class="nm-promo-eye nm-animate">
   <div class="nm-container">
-    <div class="nm-promo-eye__banner">
-      <div>
+    <div class="nm-promo-eye__banner{% unless section.settings.image != blank %} nm-promo-eye__banner--ph{% endunless %}">
+      {%- if section.settings.image != blank -%}
+        {{ section.settings.image | image_url: width: 1400 | image_tag: class: 'nm-promo-eye__bg-img', loading: 'lazy', alt: '' }}
+      {%- else -%}
+        <img src="{{ 'placeholder-promo.svg' | asset_url }}" alt="" class="nm-promo-eye__bg-img" aria-hidden="true" loading="lazy">
+      {%- endif -%}
+      <div class="nm-promo-eye__content">
         {%- if section.settings.badge != blank -%}
           <span class="nm-promo-eye__badge">{{ section.settings.badge }}</span>
         {%- endif -%}
         <h2 class="nm-promo-eye__title">{{ section.settings.title | default: 'Limited Time — 15% Off Your First Order' }}</h2>
         <p class="nm-promo-eye__text">{{ section.settings.text | default: 'Start your wellness journey with pharmacist-reviewed essentials. Use code WELLNESS15 at checkout.' }}</p>
       </div>
-      <a href="{{ section.settings.button_link | default: routes.all_products_collection_url }}" class="nm-btn nm-btn--lg nm-btn--cyan" style="position:relative;z-index:1;white-space:nowrap;">
+      <a href="{{ section.settings.button_link | default: routes.all_products_collection_url }}" class="nm-btn nm-btn--lg nm-btn--cyan nm-promo-eye__cta">
         {{ section.settings.button_label | default: 'Claim Offer' }}
       </a>
     </div>
@@ -20,6 +25,7 @@
   "name": "Promo banner",
   "tag": "section",
   "settings": [
+    { "type": "image_picker", "id": "image", "label": "Background image (optional)" },
     { "type": "text", "id": "badge", "label": "Badge", "default": "🔥 Limited offer" },
     { "type": "text", "id": "title", "label": "Title", "default": "Limited Time — 15% Off Your First Order" },
     { "type": "textarea", "id": "text", "label": "Text" },

@@ -32,8 +32,10 @@ body.nm-modal-open {
   pointer-events: none;
 }
 .nm-loader__logo {
-  height: 48px;
+  height: 72px;
   width: auto;
+  max-width: 320px;
+  object-fit: contain;
   margin-bottom: 1rem;
 }
 .nm-loader__bar {
@@ -701,11 +703,26 @@ body.nm-modal-open {
 
 /* ═══ NovaMeds v2 — Logo + mockup layout ═══ */
 
+.nm-header__logo {
+  display: flex;
+  align-items: center;
+  background: transparent;
+  line-height: 0;
+}
+
 .nm-header--v2 .nm-header__logo-img {
-  height: 44px;
+  height: 58px;
   width: auto;
-  max-width: 200px;
+  max-width: 300px;
   object-fit: contain;
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .nm-header--v2 .nm-header__logo-img {
+    height: 64px;
+    max-width: 340px;
+  }
 }
 
 .nm-header--v2 .nm-nav--center {
@@ -947,6 +964,26 @@ body.nm-modal-open {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.nm-product-card-v2--demo .nm-product-card-v2__media-wrap {
+  position: relative;
+}
+.nm-product-card-v2--demo .nm-ph {
+  position: absolute;
+  inset: 0;
+}
+.nm-product-card-v2--demo .nm-ph__img {
+  object-fit: cover;
+}
+.nm-product-card-v2__badge--demo {
+  background: var(--nm-teal, #0e5f6e);
+  z-index: 2;
+}
+.nm-btn--disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  pointer-events: none;
 }
 
 .nm-product-card-v2__placeholder {

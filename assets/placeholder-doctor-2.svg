@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Dr. Michael Davis placeholder">
+  <defs><linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1a3a5c"/><stop offset="100%" stop-color="#2ee8f0"/></linearGradient></defs>
+  <circle cx="100" cy="100" r="100" fill="url(#g)"/>
+  <circle cx="100" cy="78" r="32" fill="rgba(255,255,255,0.35)"/>
+  <ellipse cx="100" cy="155" rx="48" ry="38" fill="rgba(255,255,255,0.25)"/>
+</svg>

@@ -35,11 +35,17 @@
       <div class="nm-hero-premium__glow-orb" aria-hidden="true"></div>
       <div class="nm-hero-premium__products">
         {%- if section.settings.image != blank -%}
-          {{ section.settings.image | image_url: width: 800 | image_tag: class: 'nm-hero-premium__product-img', loading: 'eager', alt: 'NovaMeds products', style: 'max-height:380px;width:auto;' }}
+          {{ section.settings.image | image_url: width: 800 | image_tag: class: 'nm-hero-premium__product-img', loading: 'eager', alt: 'NovaMeds products' }}
         {%- else -%}
-          <div class="nm-hero-premium__product" aria-hidden="true"></div>
-          <div class="nm-hero-premium__product" aria-hidden="true"></div>
-          <div class="nm-hero-premium__product" aria-hidden="true"></div>
+          {% render 'nm-placeholder-img',
+            asset: 'placeholder-hero.svg',
+            alt: 'Hero products — replace in Theme Editor',
+            class: 'nm-hero-premium__product-img',
+            class_wrap: 'nm-hero-premium__ph',
+            eager: true,
+            width: 800,
+            height: 520
+          %}
         {%- endif -%}
       </div>
     </div>

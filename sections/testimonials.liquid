@@ -11,9 +11,11 @@
           <div class="nm-review-card-v2__head">
             <div class="nm-review-card-v2__avatar">
               {%- if block.settings.avatar != blank -%}
-                {{ block.settings.avatar | image_url: width: 96 | image_tag: loading: 'lazy', alt: block.settings.author }}
+                {{ block.settings.avatar | image_url: width: 96 | image_tag: loading: 'lazy', alt: block.settings.author, class: 'nm-review-card-v2__photo' }}
               {%- else -%}
-                {{ block.settings.author | slice: 0 }}
+                {%- assign av_i = forloop.index | modulo: 3 -%}
+                {%- if av_i == 0 -%}{%- assign av_i = 3 -%}{%- endif -%}
+                <img src="{{ 'placeholder-avatar-' | append: av_i | append: '.svg' | asset_url }}" alt="{{ block.settings.author }}" class="nm-review-card-v2__photo" width="48" height="48" loading="lazy">
               {%- endif -%}
             </div>
             <div>

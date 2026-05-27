@@ -15,14 +15,17 @@
       </div>
 
       <div class="nm-pro-section__doctors">
+        {%- assign doctor_idx = 0 -%}
         {%- for block in section.blocks -%}
           {%- if block.type == 'doctor' -%}
+            {%- assign doctor_idx = doctor_idx | plus: 1 -%}
             <div class="nm-pro-doctor" {{ block.shopify_attributes }}>
               <div class="nm-pro-doctor__avatar">
                 {%- if block.settings.image != blank -%}
-                  {{ block.settings.image | image_url: width: 144 | image_tag: loading: 'lazy', alt: block.settings.name }}
+                  {{ block.settings.image | image_url: width: 144 | image_tag: loading: 'lazy', alt: block.settings.name, class: 'nm-pro-doctor__photo' }}
                 {%- else -%}
-                  👨‍⚕️
+                  {%- assign doc_ph = 'placeholder-doctor-' | append: doctor_idx | append: '.svg' -%}
+                  <img src="{{ doc_ph | asset_url }}" alt="{{ block.settings.name }}" class="nm-pro-doctor__photo" width="72" height="72" loading="lazy">
                 {%- endif -%}
               </div>
               <h4>{{ block.settings.name }}</h4>

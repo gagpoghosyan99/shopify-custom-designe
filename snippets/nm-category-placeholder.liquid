@@ -1,0 +1,12 @@
+{%- comment -%} Returns placeholder asset filename for a category title. {%- endcomment -%}
+{%- assign t = title | strip -%}
+{%- case t -%}
+  {%- when 'Vitamins' -%}{%- assign nm_ph = 'placeholder-cat-vitamins.svg' -%}
+  {%- when "Men's Health" -%}{%- assign nm_ph = 'placeholder-cat-mens-health.svg' -%}
+  {%- when 'Wellness' -%}{%- assign nm_ph = 'placeholder-cat-wellness.svg' -%}
+  {%- when 'Energy & Performance' -%}{%- assign nm_ph = 'placeholder-cat-energy.svg' -%}
+  {%- when 'Skincare' -%}{%- assign nm_ph = 'placeholder-cat-skincare.svg' -%}
+  {%- when 'Accessories' -%}{%- assign nm_ph = 'placeholder-cat-accessories.svg' -%}
+  {%- else -%}{%- assign nm_ph = 'placeholder-cat-vitamins.svg' -%}
+{%- endcase -%}
+{{ nm_ph }}

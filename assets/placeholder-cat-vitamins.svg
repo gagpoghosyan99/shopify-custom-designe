@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" role="img" aria-label="Vitamins placeholder">
+  <defs><linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0e5f6e"/><stop offset="100%" stop-color="#00c9d4"/></linearGradient></defs>
+  <rect width="600" height="400" fill="url(#g)"/>
+  <circle cx="300" cy="165" r="72" fill="rgba(255,255,255,0.12)"/>
+  <text x="300" y="185" text-anchor="middle" font-size="56">💊</text>
+  <text x="300" y="280" text-anchor="middle" fill="#fff" font-family="system-ui,sans-serif" font-size="22" font-weight="700">Vitamins</text>
+  <text x="300" y="360" text-anchor="middle" fill="#fff" opacity="0.6" font-family="system-ui,sans-serif" font-size="12">Replace in Theme Editor</text>
+</svg>

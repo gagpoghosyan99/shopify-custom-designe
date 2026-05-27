@@ -1,0 +1,21 @@
+{%- comment -%}
+  Renders a theme placeholder image until a real photo is uploaded in Customize.
+  @param asset {string} required — filename in /assets (e.g. placeholder-hero.svg)
+  @param alt {string}
+  @param class {string} optional extra classes on img
+  @param label {string} optional overlay hint
+  @param eager {boolean} optional
+{%- endcomment -%}
+<div class="nm-ph{% if class_wrap %} {{ class_wrap }}{% endif %}">
+  <img
+    src="{{ asset | asset_url }}"
+    alt="{{ alt | default: 'Placeholder image' | escape }}"
+    class="nm-ph__img{% if class %} {{ class }}{% endif %}"
+    {% if eager %}loading="eager"{% else %}loading="lazy"{% endif %}
+    width="{{ width | default: 600 }}"
+    height="{{ height | default: 400 }}"
+  >
+  {%- if label != blank -%}
+    <span class="nm-ph__label">{{ label }}</span>
+  {%- endif -%}
+</div>

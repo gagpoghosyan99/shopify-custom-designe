@@ -1,0 +1,29 @@
+{%- comment -%}
+  Demo product card for empty catalog — replace when real products are added.
+  @param index {number} 1–4
+  @param title {string}
+  @param price {string}
+{%- endcomment -%}
+{%- assign ph_asset = 'placeholder-product-' | append: index | append: '.svg' -%}
+<article class="nm-product-card-v2 nm-product-card-v2--demo nm-animate">
+  <div class="nm-product-card-v2__media-wrap">
+    <span class="nm-product-card-v2__badge nm-product-card-v2__badge--demo">Demo</span>
+    {% render 'nm-placeholder-img',
+      asset: ph_asset,
+      alt: title,
+      class: 'nm-product-card-v2__ph',
+      label: 'Add product photo',
+      width: 600,
+      height: 600
+    %}
+  </div>
+  <div class="nm-product-card-v2__body">
+    <h3 class="nm-product-card-v2__title">{{ title }}</h3>
+    <div class="nm-product-card-v2__rating" aria-hidden="true">
+      <span class="nm-stars">★★★★★</span>
+      <span>4.9</span>
+    </div>
+    <p class="nm-product-card-v2__price">{{ price }}</p>
+    <span class="nm-btn nm-btn--primary nm-btn--block nm-btn--disabled" aria-disabled="true">Add to Cart</span>
+  </div>
+</article>

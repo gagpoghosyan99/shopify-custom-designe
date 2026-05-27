@@ -5,7 +5,7 @@
         {%- if settings.logo != blank -%}
           {{ settings.logo | image_url: width: 220 | image_tag: alt: settings.brand_name | default: 'NovaMeds', loading: 'eager', class: 'nm-header__logo-img' }}
         {%- else -%}
-          <img src="{{ 'novameds-logo.png' | asset_url }}" alt="NovaMeds" class="nm-header__logo-img" width="180" height="48" loading="eager">
+          <img src="{{ 'novameds-logo.png' | asset_url }}" alt="NovaMeds" class="nm-header__logo-img" loading="eager">
         {%- endif -%}
       </a>
 
