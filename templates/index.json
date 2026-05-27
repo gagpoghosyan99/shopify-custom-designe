@@ -1,0 +1,73 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "heading": "Premium Wellness & Healthcare Solutions",
+        "text": "Trusted products for modern health, performance, and vitality.",
+        "button_label": "Shop Now",
+        "button_secondary_label": "Best Sellers",
+        "button_secondary_link": "/collections/best-sellers",
+        "button_tertiary_label": "Doctor Recommended",
+        "button_tertiary_link": "/collections/doctor-recommended"
+      }
+    },
+    "trust": {
+      "type": "trust-badges",
+      "blocks": {
+        "b1": { "type": "badge", "settings": { "icon": "🛡️", "title": "Licensed Products" } },
+        "b2": { "type": "badge", "settings": { "icon": "🚚", "title": "Fast Worldwide Shipping" } },
+        "b3": { "type": "badge", "settings": { "icon": "🔒", "title": "Secure Payments" } },
+        "b4": { "type": "badge", "settings": { "icon": "👨‍⚕️", "title": "Doctor Recommended" } },
+        "b5": { "type": "badge", "settings": { "icon": "✓", "title": "Verified Quality" } }
+      },
+      "block_order": ["b1", "b2", "b3", "b4", "b5"]
+    },
+    "categories": {
+      "type": "category-grid",
+      "settings": {
+        "title": "Shop by Category",
+        "subtitle": "Explore vitamins, wellness, performance, and skincare essentials."
+      },
+      "blocks": {
+        "c1": { "type": "category", "settings": { "title": "Vitamins", "link": "/collections/vitamins" } },
+        "c2": { "type": "category", "settings": { "title": "Men's Health", "link": "/collections/mens-health" } },
+        "c3": { "type": "category", "settings": { "title": "Wellness", "link": "/collections/wellness" } },
+        "c4": { "type": "category", "settings": { "title": "Energy & Performance", "link": "/collections/energy" } },
+        "c5": { "type": "category", "settings": { "title": "Skincare", "link": "/collections/skincare" } }
+      },
+      "block_order": ["c1", "c2", "c3", "c4", "c5"]
+    },
+    "bestsellers": {
+      "type": "best-sellers",
+      "settings": {
+        "eyebrow": "",
+        "title": "Best Sellers",
+        "products_to_show": 8,
+        "show_view_all": true
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {}
+    },
+    "reviews": {
+      "type": "testimonials",
+      "settings": {
+        "title": "What our customers say",
+        "subtitle": "Trusted by thousands for premium wellness and pharmacy essentials."
+      },
+      "blocks": {
+        "r1": { "type": "review", "settings": { "quote": "Fast shipping and exactly what my doctor recommended.", "author": "Sarah M.", "role": "Verified buyer" } },
+        "r2": { "type": "review", "settings": { "quote": "Professional quality and clear product information.", "author": "James L.", "role": "Verified buyer" } },
+        "r3": { "type": "review", "settings": { "quote": "My go-to for vitamins and wellness refills.", "author": "Priya K.", "role": "Verified buyer" } }
+      },
+      "block_order": ["r1", "r2", "r3"]
+    },
+    "faq": {
+      "type": "faq",
+      "settings": { "title": "Frequently Asked Questions" }
+    }
+  },
+  "order": ["hero", "trust", "categories", "bestsellers", "newsletter", "reviews", "faq"]
+}

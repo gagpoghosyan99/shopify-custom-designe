@@ -1,0 +1,85 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "NovaMeds",
+    "theme_version": "1.0.0",
+    "theme_author": "NovaMeds",
+    "theme_documentation_url": "https://github.com/gagpoghosyan99/shopify-custom-designe",
+    "theme_support_url": "https://github.com/gagpoghosyan99/shopify-custom-designe/issues"
+  },
+  {
+    "name": "Brand",
+    "settings": [
+      {
+        "type": "text",
+        "id": "brand_name",
+        "label": "Public brand name",
+        "default": "NovaMeds",
+        "info": "Shown in titles, footer, and SEO. Never use myshopify.com on the storefront."
+      },
+      {
+        "type": "text",
+        "id": "public_site_url",
+        "label": "Public website URL",
+        "default": "https://novameds.shop",
+        "info": "Canonical and schema URLs (e.g. https://novameds.shop). Set Admin → Domains primary domain to match."
+      },
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo"
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon"
+      },
+      {
+        "type": "image_picker",
+        "id": "share_image",
+        "label": "Default social share image"
+      },
+      {
+        "type": "color",
+        "id": "color_primary",
+        "label": "Primary blue",
+        "default": "#1B4B8C"
+      },
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "Accent teal",
+        "default": "#00B4C8"
+      },
+      {
+        "type": "color",
+        "id": "color_text",
+        "label": "Body text",
+        "default": "#0F172A"
+      },
+      {
+        "type": "color",
+        "id": "color_muted",
+        "label": "Muted text",
+        "default": "#64748B"
+      }
+    ]
+  },
+  {
+    "name": "Contact",
+    "settings": [
+      {
+        "type": "text",
+        "id": "support_phone",
+        "label": "Support phone",
+        "default": "1-800-NOVAMEDS"
+      },
+      {
+        "type": "text",
+        "id": "support_email",
+        "label": "Support email",
+        "default": "care@novameds.shop"
+      }
+    ]
+  }
+]

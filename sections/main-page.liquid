@@ -1,0 +1,19 @@
+<div class="nm-page-header">
+  <div class="nm-container">
+    <h1>{{ page.title }}</h1>
+  </div>
+</div>
+
+<section class="nm-section">
+  <div class="nm-container rte" style="max-width:48rem;">
+    {{ page.content }}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Page",
+  "tag": "section",
+  "settings": []
+}
+{% endschema %}

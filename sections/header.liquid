@@ -1,0 +1,72 @@
+<header class="nm-header nm-header--v2" role="banner" data-nm-header>
+  <div class="nm-container">
+    <div class="nm-header__inner">
+      <a href="{{ routes.root_url }}" class="nm-header__logo" aria-label="{{ settings.brand_name | default: 'NovaMeds' }} home">
+        {%- if settings.logo != blank -%}
+          {{ settings.logo | image_url: width: 220 | image_tag: alt: settings.brand_name | default: 'NovaMeds', loading: 'eager', class: 'nm-header__logo-img' }}
+        {%- else -%}
+          <img src="{{ 'novameds-logo.png' | asset_url }}" alt="NovaMeds" class="nm-header__logo-img" width="180" height="48" loading="eager">
+        {%- endif -%}
+      </a>
+
+      <nav class="nm-nav nm-nav--center" aria-label="Main">
+        {%- if section.settings.menu != blank and section.settings.menu.links.size > 0 -%}
+          {%- for link in section.settings.menu.links -%}
+            <a href="{{ link.url }}" class="nm-nav__link">{{ link.title }}</a>
+          {%- endfor -%}
+        {%- else -%}
+          <a href="{{ routes.all_products_collection_url }}" class="nm-nav__link">Shop All</a>
+          <a href="/collections/vitamins" class="nm-nav__link">Vitamins</a>
+          <a href="/collections/supplements" class="nm-nav__link">Supplements</a>
+          <a href="/collections/mens-health" class="nm-nav__link">Men's Health</a>
+          <a href="/collections/wellness" class="nm-nav__link">Wellness</a>
+          <a href="/collections/skincare" class="nm-nav__link">Skincare</a>
+          <a href="/pages/about" class="nm-nav__link">About Us</a>
+          <a href="/pages/contact" class="nm-nav__link">Support</a>
+        {%- endif -%}
+      </nav>
+
+      <div class="nm-header__actions">
+        <button type="button" class="nm-header__icon-btn" data-nm-search-open aria-label="Search">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3-3"/></svg>
+        </button>
+        <a href="{{ routes.account_url }}" class="nm-header__icon-btn" aria-label="Account">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>
+        </a>
+        <button type="button" class="nm-header__cart" data-nm-cart-open aria-label="Cart">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg>
+          <span class="nm-header__cart-count" data-nm-header-cart-count>{% if cart.item_count > 0 %}{{ cart.item_count }}{% endif %}</span>
+        </button>
+        <button type="button" class="nm-menu-toggle" data-nm-menu-toggle aria-expanded="false" aria-controls="nm-mobile-nav" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+
+    <nav id="nm-mobile-nav" class="nm-mobile-nav" data-nm-mobile-nav aria-label="Mobile menu">
+      {%- if section.settings.menu != blank and section.settings.menu.links.size > 0 -%}
+        {%- for link in section.settings.menu.links -%}
+          <a href="{{ link.url }}">{{ link.title }}</a>
+        {%- endfor -%}
+      {%- else -%}
+        <a href="{{ routes.all_products_collection_url }}">Shop All</a>
+        <a href="/collections/vitamins">Vitamins</a>
+        <a href="/collections/supplements">Supplements</a>
+        <a href="/collections/mens-health">Men's Health</a>
+        <a href="/collections/wellness">Wellness</a>
+        <a href="/collections/skincare">Skincare</a>
+        <a href="/pages/about">About Us</a>
+        <a href="/pages/contact">Support</a>
+      {%- endif -%}
+    </nav>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    { "type": "link_list", "id": "menu", "label": "Main menu", "default": "main-menu" }
+  ]
+}
+{% endschema %}

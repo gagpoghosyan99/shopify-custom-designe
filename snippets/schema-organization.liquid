@@ -1,0 +1,37 @@
+{%- liquid
+  assign nm_brand = nm_brand | default: settings.brand_name | default: 'NovaMeds'
+  assign nm_public_origin = nm_public_origin | default: settings.public_site_url | default: 'https://novameds.shop' | strip
+  if nm_public_origin contains 'myshopify.com'
+    assign nm_public_origin = 'https://novameds.shop'
+  endif
+-%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Pharmacy",
+  "name": {{ nm_brand | json }},
+  "url": {{ nm_public_origin | json }},
+  "description": {{ shop.description | default: 'Premium pharmacy and vitamins ecommerce by NovaMeds' | json }},
+  "logo": {% if settings.logo %}{{ settings.logo | image_url: width: 512 | prepend: 'https:' | json }}{% else %}{{ nm_public_origin | append: '/favicon.ico' | json }}{% endif %}
+}
+</script>
+{%- if request.page_type == 'product' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": {{ product.title | json }},
+  "description": {{ product.description | strip_html | truncate: 320 | json }},
+  "image": [{% for image in product.images limit: 5 %}{{ image | image_url: width: 1200 | prepend: 'https:' | json }}{% unless forloop.last %},{% endunless %}{% endfor %}],
+  "sku": {{ product.selected_or_first_available_variant.sku | default: product.id | json }},
+  "brand": { "@type": "Brand", "name": {{ product.vendor | default: nm_brand | json }} },
+  "offers": {
+    "@type": "Offer",
+    "url": {{ nm_public_origin | append: product.url | json }},
+    "priceCurrency": {{ cart.currency.iso_code | default: shop.currency | json }},
+    "price": {{ product.selected_or_first_available_variant.price | divided_by: 100.0 | json }},
+    "availability": "https://schema.org/{% if product.selected_or_first_available_variant.available %}InStock{% else %}OutOfStock{% endif %}"
+  }
+}
+</script>
+{%- endif -%}

@@ -1,0 +1,14 @@
+{
+  "name": "novameds-theme",
+  "version": "1.0.0",
+  "private": true,
+  "description": "NovaMeds custom Shopify theme — https://novameds.shop",
+  "scripts": {
+    "login": "shopify auth login",
+    "dev": "shopify theme dev --store novameds.myshopify.com",
+    "push": "shopify theme push --store novameds.myshopify.com",
+    "pull": "shopify theme pull --store novameds.myshopify.com",
+    "check": "shopify theme check",
+    "package": "shopify theme package"
+  }
+}

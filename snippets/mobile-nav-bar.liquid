@@ -1,0 +1,19 @@
+<nav class="nm-mobile-bar" aria-label="Mobile shortcuts" data-nm-mobile-bar>
+  <a href="{{ routes.root_url }}" class="nm-mobile-bar__item{% if request.page_type == 'index' %} is-active{% endif %}">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1h-5v-7H9v7H4a1 1 0 01-1-1V9.5z"/></svg>
+    <span>Home</span>
+  </a>
+  <a href="{{ routes.all_products_collection_url }}" class="nm-mobile-bar__item{% if request.page_type == 'collection' %} is-active{% endif %}">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+    <span>Shop</span>
+  </a>
+  <button type="button" class="nm-mobile-bar__item" data-nm-search-open>
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3-3"/></svg>
+    <span>Search</span>
+  </button>
+  <button type="button" class="nm-mobile-bar__item" data-nm-cart-open>
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg>
+    <span>Bag</span>
+    <span class="nm-mobile-bar__badge" data-nm-header-cart-count>{% if cart.item_count > 0 %}{{ cart.item_count }}{% endif %}</span>
+  </button>
+</nav>

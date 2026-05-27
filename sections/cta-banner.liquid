@@ -1,0 +1,44 @@
+<section class="nm-cta nm-section nm-animate" id="cta">
+  <div class="nm-container">
+    <div class="nm-cta__card">
+      <div class="nm-cta__content">
+        <span class="nm-section__eyebrow">{{ section.settings.eyebrow | default: 'Wellness membership' }}</span>
+        <h2 class="nm-section__title" style="color:#fff;margin-bottom:0.75rem;">{{ section.settings.title | default: 'Save 15% on every refill' }}</h2>
+        <p class="nm-cta__text">{{ section.settings.text | default: 'Subscribe to your essentials and get pharmacist support, priority shipping, and exclusive member pricing.' }}</p>
+        <div class="nm-cta__actions">
+          {%- if section.settings.button_label != blank -%}
+            <a href="{{ section.settings.button_link | default: routes.all_products_collection_url }}" class="nm-btn nm-btn--green">
+              {{ section.settings.button_label }}
+            </a>
+          {%- endif -%}
+          {%- if section.settings.button_secondary_label != blank -%}
+            <a href="{{ section.settings.button_secondary_link | default: '/pages/contact' }}" class="nm-btn nm-btn--ghost">
+              {{ section.settings.button_secondary_label }}
+            </a>
+          {%- endif -%}
+        </div>
+      </div>
+      <div class="nm-cta__visual" aria-hidden="true">
+        <div class="nm-cta__orb"></div>
+        <span class="nm-cta__icon">💊</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "CTA banner",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Wellness membership" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Save 15% on every refill" },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Subscribe to your essentials and get pharmacist support, priority shipping, and exclusive member pricing." },
+    { "type": "text", "id": "button_label", "label": "Primary button", "default": "Start saving" },
+    { "type": "url", "id": "button_link", "label": "Primary link" },
+    { "type": "text", "id": "button_secondary_label", "label": "Secondary button", "default": "Talk to a pharmacist" },
+    { "type": "url", "id": "button_secondary_link", "label": "Secondary link" }
+  ],
+  "presets": [{ "name": "CTA banner" }]
+}
+{% endschema %}

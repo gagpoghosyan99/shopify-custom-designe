@@ -1,0 +1,9 @@
+# NovaMeds — Shopify CLI environments
+# https://shopify.dev/docs/storefronts/themes/tools/cli/environments
+
+[environments.default]
+store = "novameds"
+# Password: set SHOPIFY_CLI_THEME_TOKEN in .env (Theme Access app)
+
+[environments.production]
+store = "novameds"

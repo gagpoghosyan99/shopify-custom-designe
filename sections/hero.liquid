@@ -1,0 +1,56 @@
+<section class="nm-hero-banner nm-animate" id="hero">
+  <div class="nm-hero-banner__media">
+    {%- if section.settings.image != blank -%}
+      {{ section.settings.image | image_url: width: 1920 | image_tag: loading: 'eager', alt: section.settings.image.alt | default: 'NovaMeds pharmacy and wellness', class: 'nm-hero-banner__img', sizes: '100vw' }}
+    {%- else -%}
+      <div class="nm-hero-banner__placeholder" role="img" aria-label="Wellness and healthcare"></div>
+    {%- endif -%}
+    <div class="nm-hero-banner__shade"></div>
+  </div>
+
+  <div class="nm-hero-banner__content nm-container">
+    <h1 class="nm-hero-banner__title">
+      {{ section.settings.heading | default: 'Premium Wellness & Healthcare Solutions' }}
+    </h1>
+    <p class="nm-hero-banner__text">
+      {{ section.settings.text | default: 'Trusted products for modern health, performance, and vitality.' }}
+    </p>
+    <div class="nm-hero-banner__actions">
+      {%- if section.settings.button_label != blank -%}
+        <a href="{{ section.settings.button_link | default: routes.all_products_collection_url }}" class="nm-btn nm-btn--primary nm-btn--lg">
+          {{ section.settings.button_label }}
+        </a>
+      {%- endif -%}
+      {%- if section.settings.button_secondary_label != blank -%}
+        <a href="{{ section.settings.button_secondary_link | default: '/collections/best-sellers' }}" class="nm-btn nm-btn--outline nm-btn--lg">
+          {{ section.settings.button_secondary_label }}
+        </a>
+      {%- endif -%}
+      {%- if section.settings.button_tertiary_label != blank -%}
+        <a href="{{ section.settings.button_tertiary_link | default: '/collections/doctor-recommended' }}" class="nm-btn nm-btn--outline nm-btn--lg">
+          {{ section.settings.button_tertiary_label }}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero banner",
+  "tag": "section",
+  "class": "nm-hero-section",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Background image (pharmacy / wellness photo)" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Premium Wellness & Healthcare Solutions" },
+    { "type": "textarea", "id": "text", "label": "Subheading", "default": "Trusted products for modern health, performance, and vitality." },
+    { "type": "text", "id": "button_label", "label": "Primary button", "default": "Shop Now" },
+    { "type": "url", "id": "button_link", "label": "Primary button link" },
+    { "type": "text", "id": "button_secondary_label", "label": "Secondary button", "default": "Best Sellers" },
+    { "type": "url", "id": "button_secondary_link", "label": "Secondary button link" },
+    { "type": "text", "id": "button_tertiary_label", "label": "Tertiary button", "default": "Doctor Recommended" },
+    { "type": "url", "id": "button_tertiary_link", "label": "Tertiary button link" }
+  ],
+  "presets": [{ "name": "Hero banner" }]
+}
+{% endschema %}

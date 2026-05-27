@@ -1,0 +1,21 @@
+<div class="nm-drawer-overlay" data-nm-cart-overlay hidden></div>
+<aside class="nm-cart-drawer" data-nm-cart-drawer aria-label="Shopping cart" hidden>
+  <div class="nm-cart-drawer__header">
+    <h2>Your bag <span data-nm-cart-count-label></span></h2>
+    <button type="button" class="nm-cart-drawer__close" data-nm-cart-close aria-label="Close cart">&times;</button>
+  </div>
+  <div class="nm-cart-drawer__body" data-nm-cart-body>
+    <p class="nm-cart-drawer__loading">Loading…</p>
+  </div>
+  <div class="nm-cart-drawer__footer" data-nm-cart-footer hidden>
+    <div class="nm-cart-drawer__subtotal">
+      <span>Subtotal</span>
+      <strong data-nm-cart-subtotal></strong>
+    </div>
+    <p class="nm-cart-drawer__note">Shipping & taxes calculated at checkout.</p>
+    <a href="{{ routes.cart_url }}" class="nm-btn nm-btn--secondary" style="width:100%;margin-bottom:0.5rem;">View cart</a>
+    <form action="{{ routes.cart_url }}" method="post">
+      <button type="submit" name="checkout" class="nm-btn nm-btn--green" style="width:100%;">Secure checkout</button>
+    </form>
+  </div>
+</aside>

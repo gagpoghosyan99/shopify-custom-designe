@@ -1,0 +1,58 @@
+<section class="nm-section nm-testimonials nm-animate" id="reviews">
+  <div class="nm-container">
+    <span class="nm-section__eyebrow">{{ section.settings.eyebrow | default: 'Reviews' }}</span>
+    <h2 class="nm-section__title">{{ section.settings.title | default: 'Trusted by thousands' }}</h2>
+    {%- if section.settings.subtitle != blank -%}
+      <p class="nm-section__subtitle">{{ section.settings.subtitle }}</p>
+    {%- endif -%}
+
+    <div class="nm-testimonials__grid">
+      {%- for block in section.blocks -%}
+        <blockquote class="nm-testimonial" {{ block.shopify_attributes }}>
+          <div class="nm-testimonial__stars" aria-label="{{ block.settings.rating }} out of 5 stars">★★★★★</div>
+          <p class="nm-testimonial__quote">"{{ block.settings.quote }}"</p>
+          <footer>
+            <cite class="nm-testimonial__author" style="font-style:normal;">{{ block.settings.author }}</cite>
+            {%- if block.settings.role != blank -%}
+              <div class="nm-testimonial__role">{{ block.settings.role }}</div>
+            {%- endif -%}
+          </footer>
+        </blockquote>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Reviews" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Trusted by thousands" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtitle", "default": "Real feedback from NovaMeds customers nationwide." }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        { "type": "textarea", "id": "quote", "label": "Quote", "default": "Fast shipping and exactly what my doctor recommended. Quality you can feel." },
+        { "type": "text", "id": "author", "label": "Author", "default": "Sarah M." },
+        { "type": "text", "id": "role", "label": "Role / location", "default": "Verified buyer · Austin, TX" },
+        { "type": "range", "id": "rating", "min": 1, "max": 5, "step": 1, "default": 5, "label": "Rating" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials",
+      "blocks": [
+        { "type": "review", "settings": { "quote": "Fast shipping and exactly what my doctor recommended. Quality you can feel.", "author": "Sarah M.", "role": "Verified buyer · Austin, TX" } },
+        { "type": "review", "settings": { "quote": "Finally a vitamin shop that feels professional. Clear labels and pharmacist-backed advice.", "author": "James L.", "role": "Verified buyer · Denver, CO" } },
+        { "type": "review", "settings": { "quote": "Subscriptions save me time. Products arrive sealed and fresh every month.", "author": "Priya K.", "role": "Verified buyer · Seattle, WA" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,32 @@
+{%- liquid
+  assign nm_brand = nm_brand | default: settings.brand_name | default: 'NovaMeds'
+  assign nm_canonical = nm_canonical | default: canonical_url
+  assign nm_public_origin = nm_public_origin | default: settings.public_site_url | default: 'https://novameds.shop'
+-%}
+
+<meta property="og:site_name" content="{{ nm_brand }}">
+<meta property="og:url" content="{{ nm_canonical }}">
+<meta property="og:title" content="{{ page_title | default: nm_brand | escape }}">
+<meta property="og:type" content="{% if request.page_type == 'product' %}product{% else %}website{% endif %}">
+<meta property="og:locale" content="{{ request.locale.iso_code }}">
+
+{%- if page_description -%}
+  <meta property="og:description" content="{{ page_description | escape }}">
+{%- else -%}
+  <meta property="og:description" content="{{ nm_brand }} — premium pharmacy and vitamins. Shop at {{ nm_public_origin | remove: 'https://' }}.">
+{%- endif -%}
+
+{%- if request.page_type == 'product' and product.featured_image -%}
+  <meta property="og:image" content="https:{{ product.featured_image | image_url: width: 1200 }}">
+  <meta property="og:image:alt" content="{{ product.featured_image.alt | default: product.title | escape }}">
+{%- elsif settings.share_image != blank -%}
+  <meta property="og:image" content="https:{{ settings.share_image | image_url: width: 1200 }}">
+{%- endif -%}
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ page_title | default: nm_brand | escape }}">
+{%- if page_description -%}
+  <meta name="twitter:description" content="{{ page_description | escape }}">
+{%- endif -%}
+
+<meta name="robots" content="index, follow">

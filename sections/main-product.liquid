@@ -1,0 +1,108 @@
+<section class="nm-product-page nm-animate">
+  <div class="nm-container">
+    <div class="nm-product-page__grid">
+      <div class="nm-product-gallery" data-nm-product-gallery>
+        <div class="nm-product-gallery__main" data-nm-gallery-main>
+          {%- if product.featured_image -%}
+            {{ product.featured_image | image_url: width: 1000 | image_tag: loading: 'eager', alt: product.featured_image.alt, id: 'nm-gallery-main-img' }}
+          {%- endif -%}
+        </div>
+        {%- if product.images.size > 1 -%}
+          <div class="nm-product-gallery__thumbs">
+            {%- for image in product.images -%}
+              <button
+                type="button"
+                class="nm-product-gallery__thumb{% if forloop.first %} is-active{% endif %}"
+                data-nm-gallery-thumb
+                data-src="{{ image | image_url: width: 1000 }}"
+                aria-label="View image {{ forloop.index }}"
+              >
+                {{ image | image_url: width: 144 | image_tag: loading: 'lazy', alt: image.alt }}
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div class="nm-product-info">
+        {%- if product.vendor != blank -%}
+          <p class="nm-product-card__vendor">{{ product.vendor }}</p>
+        {%- endif -%}
+        <h1>{{ product.title }}</h1>
+        <p class="nm-product-info__price" data-nm-product-price>
+          {{ product.selected_or_first_available_variant.price | money }}
+          {%- if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price -%}
+            <compare-at-price style="font-size:1rem;font-weight:400;color:var(--nm-muted);text-decoration:line-through;margin-left:0.5rem;">
+              {{ product.selected_or_first_available_variant.compare_at_price | money }}
+            </compare-at-price>
+          {%- endif -%}
+        </p>
+
+        <ul class="nm-product-trust" style="display:flex;flex-wrap:wrap;gap:0.5rem 1rem;list-style:none;padding:0;margin:0 0 1.25rem;font-size:0.8125rem;color:var(--nm-muted);">
+          <li>✓ Pharmacist reviewed</li>
+          <li>✓ Lab tested</li>
+          <li>✓ Secure checkout</li>
+        </ul>
+
+        <div class="rte">{{ product.description }}</div>
+
+        {% form 'product', product, class: 'nm-product-form', id: 'product-form' %}
+          {%- if product.has_only_default_variant -%}
+            <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+          {%- else -%}
+            <label for="product-select">Options</label>
+            <select name="id" id="product-select" data-nm-variant-select>
+              {%- for variant in product.variants -%}
+                <option
+                  value="{{ variant.id }}"
+                  {% if variant == product.selected_or_first_available_variant %}selected{% endif %}
+                  {% unless variant.available %}disabled{% endunless %}
+                  data-price="{{ variant.price | money }}"
+                >
+                  {{ variant.title }} — {{ variant.price | money }}{% unless variant.available %} (Sold out){% endunless %}
+                </option>
+              {%- endfor -%}
+            </select>
+          {%- endif -%}
+
+          <label for="Quantity">{{ 'products.product.quantity' | t }}</label>
+          <input type="number" id="Quantity" name="quantity" value="1" min="1" inputmode="numeric">
+
+          <div style="display:flex;flex-wrap:wrap;gap:0.75rem;margin-top:0.5rem;">
+            <button type="submit" name="add" class="nm-btn nm-btn--primary" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
+              {%- if product.selected_or_first_available_variant.available -%}
+                {{ 'products.product.add_to_cart' | t }}
+              {%- else -%}
+                {{ 'products.product.sold_out' | t }}
+              {%- endif -%}
+            </button>
+            <a href="{{ routes.cart_url }}" class="nm-btn nm-btn--secondary">View cart</a>
+          </div>
+        {% endform %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    var thumbs = document.querySelectorAll('[data-nm-gallery-thumb]');
+    var main = document.getElementById('nm-gallery-main-img');
+    thumbs.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        if (!main) return;
+        main.src = btn.getAttribute('data-src');
+        thumbs.forEach(function (t) { t.classList.remove('is-active'); });
+        btn.classList.add('is-active');
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Product",
+  "tag": "section",
+  "settings": []
+}
+{% endschema %}

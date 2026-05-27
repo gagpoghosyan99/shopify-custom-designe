@@ -1,0 +1,57 @@
+<section class="nm-section nm-faq nm-animate" id="faq">
+  <div class="nm-container">
+    <div style="text-align:center;max-width:32rem;margin:0 auto 2rem;">
+      <span class="nm-section__eyebrow">{{ section.settings.eyebrow | default: 'FAQ' }}</span>
+      <h2 class="nm-section__title">{{ section.settings.title | default: 'Common questions' }}</h2>
+      {%- if section.settings.subtitle != blank -%}
+        <p class="nm-section__subtitle" style="margin-inline:auto;">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="nm-faq__list" role="list">
+      {%- for block in section.blocks -%}
+        <div class="nm-faq__item" data-nm-faq-item role="listitem" {{ block.shopify_attributes }}>
+          <button type="button" class="nm-faq__question" data-nm-faq-question aria-expanded="false">
+            {{ block.settings.question }}
+          </button>
+          <div class="nm-faq__answer" data-nm-faq-answer>
+            {{ block.settings.answer }}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "FAQ",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "FAQ" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Common questions" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtitle", "default": "Everything you need to know about ordering from NovaMeds." }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "Are your products pharmacist approved?" },
+        { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>We partner with licensed pharmacies and verify formulations with qualified pharmacists before listing products.</p>" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ",
+      "blocks": [
+        { "type": "question", "settings": { "question": "Are your products pharmacist approved?", "answer": "<p>We partner with licensed pharmacies and verify formulations with qualified pharmacists before listing products.</p>" } },
+        { "type": "question", "settings": { "question": "How fast is shipping?", "answer": "<p>Orders placed before 2pm ship same business day. Standard delivery is 2–5 business days; express options are available at checkout.</p>" } },
+        { "type": "question", "settings": { "question": "Can I return opened supplements?", "answer": "<p>Unopened items may be returned within 30 days. Opened wellness products may qualify for store credit — see our Returns policy for details.</p>" } },
+        { "type": "question", "settings": { "question": "Is checkout secure?", "answer": "<p>Yes. All payments are processed through encrypted secure checkout with major cards and trusted payment methods.</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,32 @@
+<section class="nm-newsletter nm-animate" id="newsletter">
+  <div class="nm-container">
+    <div class="nm-newsletter__card">
+      <div class="nm-newsletter__content">
+        <h2 class="nm-newsletter__title">{{ section.settings.title | default: 'Get wellness tips and exclusive offers' }}</h2>
+        <p class="nm-newsletter__text">{{ section.settings.text | default: 'Join NovaMeds for pharmacist-backed advice and member-only savings.' }}</p>
+      </div>
+      {% form 'customer', class: 'nm-newsletter__form' %}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <label class="visually-hidden" for="NewsletterEmail">Email</label>
+        <input type="email" id="NewsletterEmail" name="contact[email]" placeholder="Enter your email" required autocomplete="email">
+        <button type="submit" class="nm-btn nm-btn--primary">{{ section.settings.button_label | default: 'Subscribe' }}</button>
+      {% endform %}
+      {%- if form.posted_successfully? -%}
+        <p class="nm-newsletter__success">Thanks for subscribing!</p>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Title", "default": "Get wellness tips and exclusive offers" },
+    { "type": "textarea", "id": "text", "label": "Description", "default": "Join NovaMeds for pharmacist-backed advice and member-only savings." },
+    { "type": "text", "id": "button_label", "label": "Button", "default": "Subscribe" }
+  ],
+  "presets": [{ "name": "Newsletter" }]
+}
+{% endschema %}

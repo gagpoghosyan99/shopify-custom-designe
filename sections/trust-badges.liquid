@@ -1,0 +1,43 @@
+<section class="nm-trust-float nm-animate" aria-label="Trust indicators">
+  <div class="nm-container">
+    <div class="nm-trust-float__card">
+      <div class="nm-trust-float__grid">
+        {%- for block in section.blocks -%}
+          <div class="nm-trust-float__item" {{ block.shopify_attributes }}>
+            <div class="nm-trust-float__icon" aria-hidden="true">{{ block.settings.icon }}</div>
+            <span class="nm-trust-float__label">{{ block.settings.title }}</span>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Trust bar",
+  "tag": "section",
+  "blocks": [
+    {
+      "type": "badge",
+      "name": "Trust item",
+      "settings": [
+        { "type": "text", "id": "icon", "label": "Icon", "default": "✓" },
+        { "type": "text", "id": "title", "label": "Label", "default": "Licensed Products" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Trust bar",
+      "blocks": [
+        { "type": "badge", "settings": { "icon": "🛡️", "title": "Licensed Products" } },
+        { "type": "badge", "settings": { "icon": "🚚", "title": "Fast Worldwide Shipping" } },
+        { "type": "badge", "settings": { "icon": "🔒", "title": "Secure Payments" } },
+        { "type": "badge", "settings": { "icon": "👨‍⚕️", "title": "Doctor Recommended" } },
+        { "type": "badge", "settings": { "icon": "✓", "title": "Verified Quality" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

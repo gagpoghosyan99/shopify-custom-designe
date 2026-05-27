@@ -1,0 +1,102 @@
+<!doctype html>
+<html class="no-js" lang="{{ request.locale.iso_code }}">
+  <head>
+    {%- liquid
+      assign nm_brand = settings.brand_name | default: 'NovaMeds'
+      assign nm_public_origin = settings.public_site_url | default: 'https://novameds.shop' | strip
+      if nm_public_origin contains 'myshopify.com' or nm_public_origin == blank
+        assign nm_public_origin = 'https://novameds.shop'
+      endif
+      assign nm_canonical = nm_public_origin | append: request.path
+    -%}
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <meta name="theme-color" content="{{ settings.color_primary }}">
+    <meta name="application-name" content="{{ nm_brand }}">
+
+    {%- if settings.favicon != blank -%}
+      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+    {%- endif -%}
+
+    <title>
+      {{ page_title }}
+      {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
+      {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
+      {%- unless page_title contains nm_brand %} &ndash; {{ nm_brand }}{% endunless -%}
+    </title>
+
+    {%- if page_description -%}
+      <meta name="description" content="{{ page_description | escape }}">
+    {%- else -%}
+      <meta name="description" content="{{ nm_brand }} — premium pharmacy and vitamins at {{ nm_public_origin | remove: 'https://' | remove: 'http://' }}.">
+    {%- endif -%}
+
+    <link rel="canonical" href="{{ nm_canonical }}">
+
+    {%- render 'meta-tags', nm_brand: nm_brand, nm_canonical: nm_canonical, nm_public_origin: nm_public_origin -%}
+    {%- render 'schema-organization', nm_brand: nm_brand, nm_public_origin: nm_public_origin -%}
+
+    {{ content_for_header }}
+
+    <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&display=swap" rel="stylesheet">
+
+    {{ 'novameds-base.css' | asset_url | stylesheet_tag }}
+    {{ 'novameds-ui.css' | asset_url | stylesheet_tag }}
+
+    <style>
+      :root {
+        --nm-blue: {{ settings.color_primary }};
+        --nm-green: {{ settings.color_accent }};
+        --nm-text: {{ settings.color_text }};
+        --nm-muted: {{ settings.color_muted }};
+      }
+    </style>
+
+    <script src="{{ 'novameds.js' | asset_url }}" defer></script>
+
+    <script>
+      document.documentElement.classList.remove('no-js');
+      document.documentElement.classList.add('js');
+      window.NovaMeds = {
+        brand: {{ nm_brand | json }},
+        publicSite: {{ nm_public_origin | json }},
+        routes: {
+          cart: '{{ routes.cart_url }}',
+          cartAdd: '{{ routes.cart_add_url }}',
+          cartChange: '{{ routes.cart_change_url }}',
+          search: '{{ routes.search_url }}',
+          root: '{{ routes.root_url }}'
+        },
+        moneyFormat: {{ shop.money_format | json }}
+      };
+    </script>
+  </head>
+
+  <body class="nm-body template-{{ template.name | handle }}{% if template.suffix %} template-{{ template.name }}-{{ template.suffix }}{% endif %}">
+    <div class="nm-loader" data-nm-loader aria-hidden="true">
+      <div class="nm-loader__inner">
+        <img src="{{ 'novameds-logo.png' | asset_url }}" alt="NovaMeds" class="nm-loader__logo" width="160">
+        <div class="nm-loader__bar"><span></span></div>
+      </div>
+    </div>
+
+    <a class="nm-skip-link" href="#MainContent">{{ 'accessibility.skip_to_content' | t }}</a>
+
+    {% section 'announcement-bar' %}
+    {% section 'header' %}
+
+    <main id="MainContent" class="nm-main" role="main" tabindex="-1">
+      {{ content_for_layout }}
+    </main>
+
+    {% section 'footer' %}
+
+    {% render 'cart-drawer' %}
+    {% render 'search-modal' %}
+    {% render 'mobile-nav-bar' %}
+  </body>
+</html>

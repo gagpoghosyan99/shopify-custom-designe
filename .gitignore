@@ -1,3 +1,10 @@
+# Shopify CLI
+.shopify/
+NovaMeds-*.zip
+
+# macOS
+.DS_Store
+
 # Logs
 logs
 *.log
