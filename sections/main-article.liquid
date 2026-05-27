@@ -1,0 +1,40 @@
+<article class="nm-section nm-animate">
+  <div class="nm-container" style="max-width: 56rem;">
+    <div class="nm-article-head">
+      <p class="nm-article-meta">
+        <a href="{{ blog.url }}">{{ blog.title }}</a>
+        <span aria-hidden="true">•</span>
+        <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">{{ article.published_at | date: '%b %d, %Y' }}</time>
+      </p>
+      <h2 class="nm-article-title">{{ article.title }}</h2>
+      {%- if article.excerpt != blank -%}
+        <p class="nm-article-sub">{{ article.excerpt | strip_html }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- if article.image -%}
+      <div class="nm-article-media">
+        {{ article.image | image_url: width: 1600 | image_tag: loading: 'eager', alt: article.image.alt }}
+      </div>
+    {%- endif -%}
+
+    <div class="rte nm-article-body">
+      {{ article.content }}
+    </div>
+
+    <div class="nm-article-cta">
+      <h3>Shop pharmacy-grade wellness essentials</h3>
+      <p>Explore vitamins, supplements and health products with secure checkout.</p>
+      <a href="{{ routes.all_products_collection_url }}" class="nm-btn nm-btn--primary">Browse catalog</a>
+    </div>
+  </div>
+</article>
+
+{% schema %}
+{
+  "name": "Article",
+  "tag": "section",
+  "settings": []
+}
+{% endschema %}
+

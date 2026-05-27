@@ -1,0 +1,17 @@
+{
+  "sections": {
+    "hero": {
+      "type": "page-hero",
+      "settings": {
+        "title": "About NovaMeds",
+        "subtitle": "A modern wellness store for pharmacy-grade vitamins, supplements and healthcare essentials — built on quality, transparency and secure checkout."
+      }
+    },
+    "main": {
+      "type": "about-page",
+      "settings": {}
+    }
+  },
+  "order": ["hero", "main"]
+}
+

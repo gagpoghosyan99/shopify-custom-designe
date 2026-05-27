@@ -1,0 +1,74 @@
+<section class="nm-section nm-animate">
+  <div class="nm-container">
+    <div class="nm-contact-grid">
+      <div class="nm-contact-card">
+        <h2 class="nm-contact-title">{{ section.settings.title | default: 'Contact Us' }}</h2>
+        <p class="nm-contact-sub">
+          {{ section.settings.subtitle | default: 'Questions about vitamins, supplements or orders? Send a message and our team will reply as soon as possible.' }}
+        </p>
+
+        {% form 'contact', class: 'nm-contact-form' %}
+          {%- if form.posted_successfully? -%}
+            <p class="nm-contact-success">Thanks — we received your message.</p>
+          {%- endif -%}
+          {%- if form.errors -%}
+            <div class="nm-contact-errors">{{ form.errors | default_errors }}</div>
+          {%- endif -%}
+
+          <div class="nm-field-row">
+            <label>
+              <span>Name</span>
+              <input type="text" name="contact[name]" autocomplete="name" required>
+            </label>
+            <label>
+              <span>Email</span>
+              <input type="email" name="contact[email]" autocomplete="email" required>
+            </label>
+          </div>
+
+          <label>
+            <span>Subject</span>
+            <input type="text" name="contact[subject]" placeholder="Order, product, or general question">
+          </label>
+
+          <label>
+            <span>Message</span>
+            <textarea name="contact[body]" rows="6" required placeholder="Write your message…"></textarea>
+          </label>
+
+          <button type="submit" class="nm-btn nm-btn--cyan nm-contact-submit">Send message</button>
+        {% endform %}
+      </div>
+
+      <aside class="nm-contact-aside">
+        <div class="nm-contact-info">
+          <h3>Support</h3>
+          <p><strong>Email</strong><br>{{ settings.support_email | default: 'care@novameds.shop' }}</p>
+          <p><strong>Phone</strong><br>{{ settings.support_phone | default: '1-800-NOVAMEDS' }}</p>
+          <p><strong>Hours</strong><br>Mon–Fri · 9:00–18:00</p>
+        </div>
+        <div class="nm-contact-info">
+          <h3>Order help</h3>
+          <ul class="nm-contact-list">
+            <li>Shipping & delivery questions</li>
+            <li>Returns and refunds</li>
+            <li>Product recommendations</li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Contact page",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Title", "default": "Contact Us" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtitle" }
+  ],
+  "presets": [{ "name": "Contact page" }]
+}
+{% endschema %}
+

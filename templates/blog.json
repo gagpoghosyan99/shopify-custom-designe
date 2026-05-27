@@ -1,0 +1,16 @@
+{
+  "sections": {
+    "hero": {
+      "type": "page-hero",
+      "settings": {
+        "subtitle": "Science-backed wellness tips, vitamin guides, and product education — written for everyday routines."
+      }
+    },
+    "main": {
+      "type": "main-blog",
+      "settings": {}
+    }
+  },
+  "order": ["hero", "main"]
+}
+

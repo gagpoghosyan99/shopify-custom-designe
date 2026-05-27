@@ -1,0 +1,57 @@
+<section class="nm-section nm-animate">
+  <div class="nm-container">
+    <div class="nm-about-grid">
+      <div>
+        <h2 class="nm-about-title">{{ section.settings.title | default: 'About NovaMeds' }}</h2>
+        <p class="nm-about-lead">
+          {{ section.settings.lead | default: 'NovaMeds is a modern wellness store focused on pharmacy-grade vitamins, supplements and healthcare essentials — with clear labels, quality-first sourcing, and secure checkout.' }}
+        </p>
+
+        <div class="rte nm-about-body">
+          {{ section.settings.body }}
+        </div>
+
+        <div class="nm-about-highlights">
+          <div class="nm-about-pill"><strong>Quality first</strong><span>Lab-tested and curated ingredients</span></div>
+          <div class="nm-about-pill"><strong>Trusted support</strong><span>Helpful guidance for everyday wellness</span></div>
+          <div class="nm-about-pill"><strong>Fast delivery</strong><span>Secure shipping with tracking</span></div>
+        </div>
+
+        <div class="nm-about-actions">
+          <a href="{{ routes.all_products_collection_url }}" class="nm-btn nm-btn--primary">Shop catalog</a>
+          <a href="/pages/contact" class="nm-btn nm-btn--secondary">Contact us</a>
+        </div>
+      </div>
+
+      <div class="nm-about-media">
+        {%- if section.settings.image != blank -%}
+          {{ section.settings.image | image_url: width: 1100 | image_tag: loading: 'lazy', alt: section.settings.title, class: 'nm-about-img' }}
+        {%- else -%}
+          {% render 'nm-placeholder-img',
+            asset: 'placeholder-cat-wellness.svg',
+            alt: 'About image placeholder',
+            class: 'nm-about-img',
+            class_wrap: 'nm-about-img-wrap',
+            width: 600,
+            height: 400
+          %}
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "About page",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Title", "default": "About NovaMeds" },
+    { "type": "textarea", "id": "lead", "label": "Lead text" },
+    { "type": "richtext", "id": "body", "label": "Body", "default": "<p>We believe wellness should be simple: transparent labels, reliable quality, and easy ordering.</p><p>Our catalog covers daily vitamins, performance support, skincare, and essential healthcare products — built for modern routines.</p>" },
+    { "type": "image_picker", "id": "image", "label": "Image (optional)" }
+  ],
+  "presets": [{ "name": "About page" }]
+}
+{% endschema %}
+

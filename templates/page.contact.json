@@ -1,0 +1,17 @@
+{
+  "sections": {
+    "hero": {
+      "type": "page-hero",
+      "settings": {
+        "title": "Contact NovaMeds",
+        "subtitle": "Need help with vitamins, supplements or an order? Send us a message — we’re here to help."
+      }
+    },
+    "main": {
+      "type": "contact-page",
+      "settings": {}
+    }
+  },
+  "order": ["hero", "main"]
+}
+

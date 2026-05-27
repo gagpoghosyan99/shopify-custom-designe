@@ -1,0 +1,57 @@
+<section class="nm-section nm-animate">
+  <div class="nm-container">
+    {%- paginate blog.articles by 9 -%}
+    <div class="nm-blog-grid">
+      {%- for article in blog.articles -%}
+        <article class="nm-blog-card">
+          <a href="{{ article.url }}" class="nm-blog-card__media" aria-label="{{ article.title }}">
+            {%- if article.image -%}
+              {{ article.image | image_url: width: 900 | image_tag: loading: 'lazy', alt: article.image.alt }}
+            {%- else -%}
+              {% render 'nm-placeholder-img',
+                asset: 'placeholder-cat-wellness.svg',
+                alt: article.title,
+                class: 'nm-blog-card__img',
+                class_wrap: 'nm-blog-card__ph',
+                width: 600,
+                height: 400
+              %}
+            {%- endif -%}
+          </a>
+          <div class="nm-blog-card__body">
+            <p class="nm-blog-card__meta">
+              <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">{{ article.published_at | date: '%b %d, %Y' }}</time>
+              <span aria-hidden="true">•</span>
+              <span>{{ blog.title }}</span>
+            </p>
+            <h2 class="nm-blog-card__title"><a href="{{ article.url }}">{{ article.title }}</a></h2>
+            <p class="nm-blog-card__excerpt">{{ article.excerpt_or_content | strip_html | truncate: 140 }}</p>
+            <a class="nm-blog-card__link" href="{{ article.url }}">Read more →</a>
+          </div>
+        </article>
+      {%- endfor -%}
+    </div>
+
+    {%- if paginate.pages > 1 -%}
+      <nav class="nm-pagination" style="margin-top:2rem;text-align:center;" aria-label="Pagination">
+        {%- if paginate.previous -%}
+          <a href="{{ paginate.previous.url }}" class="nm-btn nm-btn--secondary">Previous</a>
+        {%- endif -%}
+        <span style="margin:0 1rem;color:var(--nm-muted);">Page {{ paginate.current_page }} of {{ paginate.pages }}</span>
+        {%- if paginate.next -%}
+          <a href="{{ paginate.next.url }}" class="nm-btn nm-btn--secondary">Next</a>
+        {%- endif -%}
+      </nav>
+    {%- endif -%}
+    {%- endpaginate -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Blog",
+  "tag": "section",
+  "settings": []
+}
+{% endschema %}
+

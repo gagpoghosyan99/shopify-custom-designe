@@ -1,0 +1,100 @@
+<section class="nm-section nm-animate">
+  <div class="nm-container">
+    <div class="nm-catalog-head">
+      <div>
+        <h2 class="nm-catalog-title">{{ section.settings.title | default: 'Shop the Catalog' }}</h2>
+        <p class="nm-catalog-sub">
+          {{ section.settings.subtitle | default: 'Browse pharmacy-grade vitamins, supplements and wellness essentials with fast delivery and secure checkout.' }}
+        </p>
+      </div>
+      <div class="nm-catalog-actions">
+        <a href="{{ routes.search_url }}" class="nm-btn nm-btn--secondary nm-btn--sm" data-nm-search-open>Search</a>
+        <a href="{{ routes.all_products_collection_url }}" class="nm-btn nm-btn--primary nm-btn--sm">View all products</a>
+      </div>
+    </div>
+
+    <div class="nm-catalog-grid">
+      {%- assign picked = section.settings.collection -%}
+      {%- assign cat = section.settings.category_collection -%}
+
+      <div class="nm-catalog-card">
+        <h3>Featured collection</h3>
+        <p>{{ section.settings.featured_text | default: 'Our most popular picks — best sellers and trending wellness formulas.' }}</p>
+        {%- if picked != blank -%}
+          <a class="nm-btn nm-btn--cyan" href="{{ picked.url }}">Shop {{ picked.title }}</a>
+        {%- else -%}
+          <a class="nm-btn nm-btn--cyan" href="/collections/best-sellers">Shop Best Sellers</a>
+        {%- endif -%}
+        <ul class="nm-catalog-bullets">
+          <li>Pharmacist reviewed</li>
+          <li>Quality-focused ingredients</li>
+          <li>Worldwide shipping</li>
+        </ul>
+      </div>
+
+      <div class="nm-catalog-card nm-catalog-card--image">
+        {% render 'nm-placeholder-img',
+          asset: section.settings.image_asset | default: 'placeholder-cat-vitamins.svg',
+          alt: 'Catalog image placeholder',
+          class: 'nm-catalog-img',
+          class_wrap: 'nm-catalog-img-wrap',
+          width: 600,
+          height: 400
+        %}
+      </div>
+    </div>
+
+    <div class="nm-catalog-cats">
+      <a class="nm-catalog-cat" href="/collections/vitamins">Vitamins</a>
+      <a class="nm-catalog-cat" href="/collections/wellness">Wellness</a>
+      <a class="nm-catalog-cat" href="/collections/mens-health">Men's Health</a>
+      <a class="nm-catalog-cat" href="/collections/performance">Performance</a>
+      <a class="nm-catalog-cat" href="/collections/skincare">Skincare</a>
+    </div>
+
+    <div class="nm-catalog-products">
+      {%- assign source = picked -%}
+      {%- if source == blank -%}{%- assign source = collections.all -%}{%- endif -%}
+
+      {%- if source != blank and source.products_count > 0 -%}
+        <div class="nm-products__grid">
+          {%- for product in source.products limit: section.settings.products_to_show -%}
+            {% render 'product-card', product: product %}
+          {%- endfor -%}
+        </div>
+      {%- else -%}
+        <p class="nm-empty">Add products in Shopify Admin to show the catalog.</p>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Catalog page",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Title", "default": "Shop the Catalog" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtitle" },
+    { "type": "collection", "id": "collection", "label": "Products source (optional)" },
+    { "type": "range", "id": "products_to_show", "min": 4, "max": 16, "step": 2, "default": 8, "label": "Products to show" },
+    { "type": "textarea", "id": "featured_text", "label": "Featured text" },
+    {
+      "type": "select",
+      "id": "image_asset",
+      "label": "Placeholder image",
+      "default": "placeholder-cat-vitamins.svg",
+      "options": [
+        { "value": "placeholder-cat-vitamins.svg", "label": "Vitamins" },
+        { "value": "placeholder-cat-wellness.svg", "label": "Wellness" },
+        { "value": "placeholder-cat-mens-health.svg", "label": "Men's Health" },
+        { "value": "placeholder-cat-energy.svg", "label": "Energy & Performance" },
+        { "value": "placeholder-cat-skincare.svg", "label": "Skincare" },
+        { "value": "placeholder-cat-accessories.svg", "label": "Accessories" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Catalog page" }]
+}
+{% endschema %}
+

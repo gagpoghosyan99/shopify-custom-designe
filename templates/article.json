@@ -1,0 +1,16 @@
+{
+  "sections": {
+    "hero": {
+      "type": "page-hero",
+      "settings": {
+        "show_breadcrumbs": true
+      }
+    },
+    "main": {
+      "type": "main-article",
+      "settings": {}
+    }
+  },
+  "order": ["hero", "main"]
+}
+
