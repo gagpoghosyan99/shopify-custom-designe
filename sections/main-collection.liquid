@@ -1,12 +1,3 @@
-<div class="nm-page-header nm-animate">
-  <div class="nm-container">
-    <h1>{{ collection.title }}</h1>
-    {%- if collection.description != blank -%}
-      <p class="nm-section__subtitle" style="margin:0.5rem auto 0;max-width:36rem;">{{ collection.description }}</p>
-    {%- endif -%}
-  </div>
-</div>
-
 <section class="nm-section">
   <div class="nm-container">
     {%- paginate collection.products by section.settings.products_per_page -%}

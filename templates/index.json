@@ -11,7 +11,11 @@
       "settings": {
         "kicker": "LIMITED TIME",
         "heading": "BIG SALE",
-        "text": "Limited-time offers on premium wellness essentials. Shop pharmacist-reviewed formulas with fast worldwide delivery.",
+        "text": "Limited-time deals on pharmacy-grade vitamins, supplements and wellness essentials. Fast delivery and secure checkout.",
+        "price_badge": "Today only",
+        "price_was": "Was £59.99",
+        "price_now": "Now £39.99",
+        "price_save": "Save 33%",
         "mini_description": "Collagen Peptides — supports hair, skin, nails & joints. Unflavoured. Easy daily mix.",
         "button_label": "Shop Now",
         "button_secondary_label": "Best Sellers",

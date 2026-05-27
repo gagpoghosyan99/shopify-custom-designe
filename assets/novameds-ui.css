@@ -751,6 +751,54 @@ body.nm-modal-open {
   color: var(--nm-green);
 }
 
+/* Page hero (all non-home pages) */
+.nm-page-hero {
+  position: relative;
+  overflow: hidden;
+  padding: 3.25rem 0 2.25rem;
+  background: linear-gradient(135deg, #0a1628 0%, #0d3d4a 45%, #0e5f6e 100%);
+  color: #fff;
+}
+.nm-page-hero__bg {
+  position: absolute;
+  inset: 0;
+  opacity: 0.18;
+  background-image:
+    radial-gradient(circle at 20% 45%, rgba(46, 232, 240, 0.55) 0%, transparent 55%),
+    radial-gradient(circle at 80% 30%, rgba(0, 201, 212, 0.45) 0%, transparent 52%);
+  filter: blur(2px);
+}
+.nm-page-hero__inner {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+.nm-page-hero__title {
+  margin: 0;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+}
+.nm-page-hero__sub {
+  margin: 0.75rem auto 0;
+  max-width: 46rem;
+  color: rgba(255, 255, 255, 0.86);
+  line-height: 1.7;
+}
+.nm-page-hero__crumbs {
+  margin-top: 1.1rem;
+  display: inline-flex;
+  gap: 0.5rem;
+  align-items: center;
+  font-size: 0.8125rem;
+  color: rgba(255, 255, 255, 0.72);
+}
+.nm-page-hero__crumbs a {
+  color: rgba(255, 255, 255, 0.88);
+  text-decoration: none;
+}
+.nm-page-hero__crumbs a:hover { color: #fff; }
+
 /* Full-width hero banner */
 .nm-hero-banner {
   position: relative;

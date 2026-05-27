@@ -1,9 +1,15 @@
 {
   "sections": {
+    "hero": {
+      "type": "page-hero",
+      "settings": {
+        "title": "Cart"
+      }
+    },
     "main": {
       "type": "main-cart",
       "settings": {}
     }
   },
-  "order": ["main"]
+  "order": ["hero", "main"]
 }

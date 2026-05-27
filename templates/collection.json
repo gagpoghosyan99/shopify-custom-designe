@@ -1,5 +1,9 @@
 {
   "sections": {
+    "hero": {
+      "type": "page-hero",
+      "settings": {}
+    },
     "main": {
       "type": "main-collection",
       "settings": {
@@ -7,5 +11,5 @@
       }
     }
   },
-  "order": ["main"]
+  "order": ["hero", "main"]
 }

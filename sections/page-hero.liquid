@@ -1,0 +1,48 @@
+<section class="nm-page-hero nm-animate" role="region" aria-label="Page hero">
+  <div class="nm-page-hero__bg" aria-hidden="true"></div>
+  <div class="nm-container nm-page-hero__inner">
+    {%- assign hero_title = section.settings.title -%}
+    {%- if hero_title == blank -%}
+      {%- if template.name == 'collection' -%}
+        {%- assign hero_title = collection.title -%}
+      {%- elsif template.name == 'blog' -%}
+        {%- assign hero_title = blog.title -%}
+      {%- elsif template.name == 'article' -%}
+        {%- assign hero_title = article.title -%}
+      {%- elsif template.name == 'cart' -%}
+        {%- assign hero_title = 'cart.general.title' | t -%}
+      {%- elsif template.name == 'customers' -%}
+        {%- assign hero_title = page_title -%}
+      {%- else -%}
+        {%- assign hero_title = page.title -%}
+      {%- endif -%}
+    {%- endif -%}
+
+    <h1 class="nm-page-hero__title">{{ hero_title }}</h1>
+    {%- if section.settings.subtitle != blank -%}
+      <p class="nm-page-hero__sub">{{ section.settings.subtitle }}</p>
+    {%- endif -%}
+
+    {%- if section.settings.show_breadcrumbs -%}
+      <nav class="nm-page-hero__crumbs" aria-label="Breadcrumb">
+        <a href="{{ routes.root_url }}">Home</a>
+        <span aria-hidden="true">/</span>
+        <span>{{ hero_title }}</span>
+      </nav>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Page hero",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Title override (optional)" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtitle (optional)" },
+    { "type": "checkbox", "id": "show_breadcrumbs", "label": "Show breadcrumbs", "default": true }
+  ],
+  "presets": [{ "name": "Page hero" }]
+}
+{% endschema %}
+
