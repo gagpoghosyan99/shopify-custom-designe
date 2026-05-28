@@ -7,11 +7,31 @@
   assign secondary_link = section.settings.secondary_link | default: '/collections/best-sellers'
   assign tertiary_label = section.settings.tertiary_label | default: 'Doctor Recommended'
   assign tertiary_link = section.settings.tertiary_link | default: '/collections/all'
+  assign has_photo = false
+  if section.settings.hero_image != blank
+    assign has_photo = true
+  endif
 -%}
 
-<section class="nm-vnext-hero nm-dark-stage nm-animate" id="home-hero" aria-label="NovaMeds hero">
+<section class="nm-vnext-hero nm-dark-stage nm-animate{% if has_photo %} nm-vnext-hero--photo{% endif %}" id="home-hero" aria-label="NovaMeds hero">
   <div class="nm-vnext-hero__bg" aria-hidden="true"></div>
   <div class="nm-vnext-hero__molecules" aria-hidden="true"></div>
+  {%- if has_photo -%}
+    <div class="nm-vnext-hero__photo" aria-hidden="true">
+      {{ section.settings.hero_image
+        | image_url: width: 2600
+        | image_tag:
+          widths: '960, 1200, 1600, 2000, 2600',
+          sizes: '100vw',
+          loading: 'eager',
+          fetchpriority: 'high',
+          decoding: 'async',
+          class: 'nm-vnext-hero__photo-img',
+          alt: ''
+      }}
+      <div class="nm-vnext-hero__photo-shade" aria-hidden="true"></div>
+    </div>
+  {%- endif -%}
 
   <div class="nm-container nm-vnext-hero__grid">
     <div class="nm-vnext-hero__copy nm-glass">
@@ -41,14 +61,12 @@
       {%- endif -%}
     </div>
 
-    <div class="nm-vnext-hero__visual" aria-hidden="true">
-      {%- if section.settings.hero_image != blank -%}
-        {{ section.settings.hero_image | image_url: width: 1600 | image_tag: class: 'nm-vnext-hero__img', loading: 'eager', alt: '' }}
-      {%- else -%}
+    {%- unless has_photo -%}
+      <div class="nm-vnext-hero__visual" aria-hidden="true">
         <img class="nm-vnext-hero__img" src="{{ 'hero-sale.png' | asset_url }}" alt="" loading="eager" width="1200" height="600">
-      {%- endif -%}
-      <div class="nm-vnext-hero__glow" aria-hidden="true"></div>
-    </div>
+        <div class="nm-vnext-hero__glow" aria-hidden="true"></div>
+      </div>
+    {%- endunless -%}
   </div>
 </section>
 
