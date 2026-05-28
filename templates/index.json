@@ -19,10 +19,10 @@
         "primary_label": "",
         "primary_link": "",
         "secondary_label": "",
-        "secondary_link": "/collections/best-sellers",
+        "secondary_link": "",
         "tertiary_label": "",
-        "tertiary_link": "/collections/all",
-        "show_micro_trust": true
+        "tertiary_link": "",
+        "show_micro_trust": false
       }
     },
     "bestsellers": {
