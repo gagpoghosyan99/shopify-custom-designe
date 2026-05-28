@@ -1,33 +1,63 @@
-<section class="nm-section">
+{%- liquid
+  assign use_category_rows = section.settings.enable_category_rows
+  if use_category_rows and section.settings.only_on_all_collection and collection.handle != 'all'
+    assign use_category_rows = false
+  endif
+  if use_category_rows and section.blocks.size == 0
+    assign use_category_rows = false
+  endif
+
+  assign per_row = section.settings.products_per_row | default: 4
+-%}
+
+<section class="nm-section nm-section--collection">
   <div class="nm-container">
-    {%- paginate collection.products by section.settings.products_per_page -%}
-      <div class="nm-collection-toolbar nm-animate">
-        <p class="nm-collection-toolbar__count">{{ collection.products_count }} {{ 'collections.general.products' | t }}</p>
-        <a href="{{ routes.search_url }}" class="nm-btn nm-btn--secondary nm-btn--sm" data-nm-search-open style="padding:0.5rem 1rem;font-size:0.8125rem;">Search catalog</a>
+    <div class="nm-collection-toolbar nm-animate">
+      <p class="nm-collection-toolbar__count">{{ collection.products_count }} {{ 'collections.general.products' | t }}</p>
+      <a href="{{ routes.search_url }}" class="nm-btn nm-btn--secondary nm-btn--sm" data-nm-search-open style="padding:0.5rem 1rem;font-size:0.8125rem;">Search catalog</a>
+    </div>
+
+    {%- if use_category_rows -%}
+      <div class="nm-collection-rows">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'category_row' -%}
+            {%- render 'collection-category-row',
+              row_id: block.id,
+              title: block.settings.title,
+              row_collection: block.settings.collection,
+              source_collection: collection,
+              fallback_tag: block.settings.fallback_tag,
+              limit: per_row,
+              show_view_all: section.settings.show_view_all_links
+            -%}
+          {%- endif -%}
+        {%- endfor -%}
       </div>
+    {%- else -%}
+      {%- paginate collection.products by section.settings.products_per_page -%}
+        {%- if collection.products.size > 0 -%}
+          <div class="nm-products__grid">
+            {%- for product in collection.products -%}
+              {% render 'product-card', product: product %}
+            {%- endfor -%}
+          </div>
 
-      {%- if collection.products.size > 0 -%}
-        <div class="nm-products__grid">
-          {%- for product in collection.products -%}
-            {% render 'product-card', product: product %}
-          {%- endfor -%}
-        </div>
-
-        {%- if paginate.pages > 1 -%}
-          <nav class="nm-pagination" style="margin-top:2rem;text-align:center;" aria-label="Pagination">
-            {%- if paginate.previous -%}
-              <a href="{{ paginate.previous.url }}" class="nm-btn nm-btn--secondary">Previous</a>
-            {%- endif -%}
-            <span style="margin:0 1rem;color:var(--nm-muted);">Page {{ paginate.current_page }} of {{ paginate.pages }}</span>
-            {%- if paginate.next -%}
-              <a href="{{ paginate.next.url }}" class="nm-btn nm-btn--secondary">Next</a>
-            {%- endif -%}
-          </nav>
+          {%- if paginate.pages > 1 -%}
+            <nav class="nm-pagination" style="margin-top:2rem;text-align:center;" aria-label="Pagination">
+              {%- if paginate.previous -%}
+                <a href="{{ paginate.previous.url }}" class="nm-btn nm-btn--secondary">Previous</a>
+              {%- endif -%}
+              <span style="margin:0 1rem;color:var(--nm-muted);">Page {{ paginate.current_page }} of {{ paginate.pages }}</span>
+              {%- if paginate.next -%}
+                <a href="{{ paginate.next.url }}" class="nm-btn nm-btn--secondary">Next</a>
+              {%- endif -%}
+            </nav>
+          {%- endif -%}
+        {%- else -%}
+          <p class="nm-empty">No products in this collection yet.</p>
         {%- endif -%}
-      {%- else -%}
-        <p class="nm-empty">No products in this collection yet.</p>
-      {%- endif -%}
-    {%- endpaginate -%}
+      {%- endpaginate -%}
+    {%- endif -%}
   </div>
 </section>
 
@@ -36,7 +66,79 @@
   "name": "Collection",
   "tag": "section",
   "settings": [
-    { "type": "range", "id": "products_per_page", "min": 8, "max": 24, "step": 4, "default": 16, "label": "Products per page" }
+    {
+      "type": "checkbox",
+      "id": "enable_category_rows",
+      "label": "Show products in category rows",
+      "default": true,
+      "info": "Groups products into separate rows (Vitamins, Sports Nutrition, etc.) on the All Products page."
+    },
+    {
+      "type": "checkbox",
+      "id": "only_on_all_collection",
+      "label": "Category rows only on All Products",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "products_per_row",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 4,
+      "label": "Products per row"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all_links",
+      "label": "Show “View all” link per row",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "min": 8,
+      "max": 24,
+      "step": 4,
+      "default": 16,
+      "label": "Products per page (flat grid mode)"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category_row",
+      "name": "Category row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Row title",
+          "default": "Category"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection for this row"
+        },
+        {
+          "type": "text",
+          "id": "fallback_tag",
+          "label": "Fallback product tag",
+          "info": "Used on All Products if the collection above is empty. Tag products in Admin → Products."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection",
+      "blocks": [
+        { "type": "category_row", "settings": { "title": "Vitamins", "fallback_tag": "vitamins" } },
+        { "type": "category_row", "settings": { "title": "Sports Nutrition", "fallback_tag": "sports-nutrition" } },
+        { "type": "category_row", "settings": { "title": "Recovery & Sleep", "fallback_tag": "recovery-sleep" } },
+        { "type": "category_row", "settings": { "title": "Wellness & Immunity", "fallback_tag": "wellness" } }
+      ]
+    }
   ]
 }
 {% endschema %}

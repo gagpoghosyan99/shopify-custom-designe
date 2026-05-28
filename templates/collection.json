@@ -22,8 +22,43 @@
     "main": {
       "type": "main-collection",
       "settings": {
+        "enable_category_rows": true,
+        "only_on_all_collection": true,
+        "products_per_row": 4,
+        "show_view_all_links": true,
         "products_per_page": 16
-      }
+      },
+      "blocks": {
+        "row_vitamins": {
+          "type": "category_row",
+          "settings": {
+            "title": "Vitamins",
+            "fallback_tag": "vitamins"
+          }
+        },
+        "row_sports": {
+          "type": "category_row",
+          "settings": {
+            "title": "Sports Nutrition",
+            "fallback_tag": "sports-nutrition"
+          }
+        },
+        "row_recovery": {
+          "type": "category_row",
+          "settings": {
+            "title": "Recovery & Sleep",
+            "fallback_tag": "recovery-sleep"
+          }
+        },
+        "row_wellness": {
+          "type": "category_row",
+          "settings": {
+            "title": "Wellness & Immunity",
+            "fallback_tag": "wellness"
+          }
+        }
+      },
+      "block_order": ["row_vitamins", "row_sports", "row_recovery", "row_wellness"]
     }
   },
   "order": ["hero", "main"]
