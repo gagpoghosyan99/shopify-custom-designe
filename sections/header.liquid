@@ -22,14 +22,16 @@
       <div class="nm-hdr__promo-inner">
         <div class="nm-hdr__marquee" aria-label="Special offers">
           <div class="nm-hdr__marquee-track" aria-hidden="true">
-            {%- for i in (1..promo_repeat) -%}
-              <span class="nm-hdr__marquee-item">{{ section.settings.promo_text | default: 'Special Offer' }}</span>
-            {%- endfor -%}
-          </div>
-          <div class="nm-hdr__marquee-track nm-hdr__marquee-track--clone" aria-hidden="true">
-            {%- for i in (1..promo_repeat) -%}
-              <span class="nm-hdr__marquee-item">{{ section.settings.promo_text | default: 'Special Offer' }}</span>
-            {%- endfor -%}
+            <div class="nm-hdr__marquee-group">
+              {%- for i in (1..promo_repeat) -%}
+                <span class="nm-hdr__marquee-item">{{ section.settings.promo_text | default: 'Special Offer' }}</span>
+              {%- endfor -%}
+            </div>
+            <div class="nm-hdr__marquee-group" aria-hidden="true">
+              {%- for i in (1..promo_repeat) -%}
+                <span class="nm-hdr__marquee-item">{{ section.settings.promo_text | default: 'Special Offer' }}</span>
+              {%- endfor -%}
+            </div>
           </div>
         </div>
       </div>
