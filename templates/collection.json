@@ -26,6 +26,7 @@
         "only_on_all_collection": true,
         "products_per_row": 4,
         "show_view_all_links": true,
+        "auto_split_products": true,
         "products_per_page": 16
       },
       "blocks": {
@@ -33,32 +34,31 @@
           "type": "category_row",
           "settings": {
             "title": "Vitamins",
-            "fallback_tag": "vitamins"
+            "collection_handle": "vitamins",
+            "fallback_tag": "vitamins",
+            "match_keywords": "vitamin,collagen,probiotic,omega,zinc,magnesium,d3,multivitamin,supplement"
           }
         },
         "row_sports": {
           "type": "category_row",
           "settings": {
             "title": "Sports Nutrition",
-            "fallback_tag": "sports-nutrition"
+            "collection_handle": "sports-nutrition",
+            "fallback_tag": "sports-nutrition",
+            "match_keywords": "creatine,bcaa,protein,energy,sport,pre-workout,whey,performance"
           }
         },
         "row_recovery": {
           "type": "category_row",
           "settings": {
             "title": "Recovery & Sleep",
-            "fallback_tag": "recovery-sleep"
-          }
-        },
-        "row_wellness": {
-          "type": "category_row",
-          "settings": {
-            "title": "Wellness & Immunity",
-            "fallback_tag": "wellness"
+            "collection_handle": "recovery-sleep",
+            "fallback_tag": "recovery-sleep",
+            "match_keywords": "sleep,recovery,melatonin,ashwagandha,rest,night"
           }
         }
       },
-      "block_order": ["row_vitamins", "row_sports", "row_recovery", "row_wellness"]
+      "block_order": ["row_vitamins", "row_sports", "row_recovery"]
     }
   },
   "order": ["hero", "main"]
