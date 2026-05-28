@@ -826,6 +826,10 @@
     display: none !important;
   }
 
+  .nm-product-info-track {
+    min-height: 100%;
+  }
+
   .nm-product-info-scroll {
     position: sticky !important;
     top: var(--nm-pdp-sticky-top) !important;

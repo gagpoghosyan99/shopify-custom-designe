@@ -50,7 +50,8 @@
         </div>
       </aside>
 
-      <div class="nm-product-info-scroll">
+      <div class="nm-product-info-track">
+        <div class="nm-product-info-scroll" data-nm-pdp-info-scroll>
         <div class="nm-pdp__card nm-glass">
           <div class="nm-pdp__top">
             {%- if product.vendor != blank -%}
@@ -266,6 +267,7 @@
             <p class="nm-pdp__note">Secure checkout · Fast shipping · Trusted by professionals</p>
           {% endform %}
         </div>
+        </div>
       </div>
     </div>
   </div>
@@ -421,7 +423,7 @@
 
   /* Desktop: scroll right panel first, then pass scroll to the page */
   (function () {
-    var panel = document.querySelector('.nm-product-info-scroll');
+    var panel = document.querySelector('[data-nm-pdp-info-scroll]');
     if (!panel) return;
     var mq = window.matchMedia('(min-width: 991px)');
 
