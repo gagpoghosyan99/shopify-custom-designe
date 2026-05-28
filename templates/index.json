@@ -54,9 +54,9 @@
     "bestsellers": {
       "type": "custom-product-grid",
       "settings": {
-        "title": "Best Sellers",
-        "products_to_show": 8,
-        "show_view_all": true
+        "title": "LET US HELP YOU REACH YOUR HEALTH GOALS !!!",
+        "products_to_show": 12,
+        "show_view_all": false
       }
     },
     "discount": {
