@@ -332,10 +332,19 @@ a:hover {
 
 .nm-mobile-nav {
   display: none;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 120;
   flex-direction: column;
   gap: 0;
-  padding: 1rem 0;
-  border-top: 1px solid var(--nm-border);
+  padding: calc(76px + env(safe-area-inset-top)) 1.25rem calc(84px + env(safe-area-inset-bottom));
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(14px);
+  overflow: auto;
+  border-top: none;
 }
 
 .nm-mobile-nav.is-open {
@@ -343,10 +352,17 @@ a:hover {
 }
 
 .nm-mobile-nav a {
-  padding: 0.875rem 0;
-  font-weight: 500;
+  padding: 0.95rem 0;
+  font-weight: 700;
   color: var(--nm-text);
   border-bottom: 1px solid var(--nm-border);
+}
+
+@media (min-width: 900px) {
+  .nm-mobile-nav,
+  .nm-mobile-nav.is-open {
+    display: none !important;
+  }
 }
 
 /* Hero */

@@ -410,6 +410,106 @@
   backdrop-filter: blur(8px);
 }
 
+/* ─────────────────────────────────────────────────────────
+   Mobile & tablet polish (app-like)
+   ───────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .nm-hero-premium__grid {
+    padding: 2.75rem 0 3.5rem;
+    min-height: unset;
+  }
+  .nm-hero-premium__content {
+    text-align: left;
+  }
+  .nm-hero-premium__text {
+    max-width: 40rem;
+    margin-bottom: 1.25rem;
+  }
+  .nm-hero-premium__actions {
+    gap: 0.6rem;
+    margin-bottom: 1.25rem;
+  }
+  .nm-hero-premium__actions .nm-btn {
+    flex: 1;
+    min-width: 160px;
+    justify-content: center;
+  }
+  .nm-hero-premium__mini-trust {
+    gap: 0.6rem 1rem;
+  }
+  .nm-trust-float-v2 {
+    margin-top: -2.25rem;
+    margin-bottom: 2.25rem;
+  }
+  .nm-trust-float-v2__card {
+    padding: 1.1rem 1.1rem;
+    border-radius: 18px;
+  }
+}
+
+@media (max-width: 520px) {
+  .nm-topbar__inner {
+    padding: 0.35rem 0;
+  }
+  .nm-topbar__locales {
+    display: none;
+  }
+  .nm-hero-premium__grid {
+    gap: 1.25rem;
+    padding: 2.25rem 0 3rem;
+  }
+  .nm-hero-premium__title {
+    font-size: clamp(2.35rem, 12vw, 3.6rem);
+    line-height: 1.02;
+  }
+  .nm-hero-premium__kicker {
+    font-size: 0.6875rem;
+  }
+  .nm-hero-premium__text {
+    font-size: 1rem;
+  }
+  .nm-hero-price {
+    gap: 0.45rem 0.55rem;
+  }
+  .nm-hero-price__now {
+    font-size: 1.15rem;
+  }
+  .nm-hero-premium__actions {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.6rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 0.25rem;
+  }
+  .nm-hero-premium__actions .nm-btn {
+    width: auto;
+    white-space: nowrap;
+    flex: 0 0 auto;
+    padding: 0.65rem 1rem;
+    border-radius: 999px;
+    font-size: 0.875rem;
+  }
+  .nm-hero-premium__mini-trust {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem 0.75rem;
+  }
+  .nm-trust-float-v2__card {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+  .nm-section-white {
+    padding: 3.25rem 0;
+  }
+  .nm-section-title {
+    font-size: 1.65rem;
+  }
+  .nm-section-sub {
+    margin-bottom: 1.75rem;
+  }
+}
+
 /* Floating trust card below hero */
 .nm-trust-float-v2 {
   position: relative;
