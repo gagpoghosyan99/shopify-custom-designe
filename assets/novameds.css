@@ -794,6 +794,11 @@
   min-height: 1200px;
 }
 
+/* Make sticky start immediately (desktop) */
+@media (min-width: 991px) {
+  .nm-pdp { padding-top: 0.5rem; }
+}
+
 @media (max-width: 990px) {
   .product-layout {
     display: block;
