@@ -417,15 +417,7 @@
       el.addEventListener('change', onOptionsChange);
     });
 
-    if (window.NovaMedsPdpSticky && window.NovaMedsPdpSticky.boot) {
-      window.NovaMedsPdpSticky.boot();
-    }
   })();
-</script>
-
-<script src="{{ 'novameds-pdp-sticky.js' | asset_url }}"></script>
-<script>
-  if (window.NovaMedsPdpSticky) window.NovaMedsPdpSticky.boot();
 </script>
 
 {% schema %}

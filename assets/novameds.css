@@ -782,74 +782,74 @@
   margin-inline: auto;
 }
 
-/* Shopify section wrapper must not break sticky/fixed */
-.shopify-section:has(.nm-product-page),
-body.template-product .shopify-section,
-body.template-product #MainContent,
-body.template-product .nm-main,
-#MainContent,
-.nm-main {
-  overflow: visible !important;
-  transform: none !important;
-  contain: none !important;
-  filter: none !important;
-  perspective: none !important;
-}
-
+/*
+ * Desktop PDP: split scroll (reliable lock without sticky JS).
+ * Left gallery stays put; only the right column scrolls inside its panel.
+ */
 @media (min-width: 991px) {
-  .nm-product-page,
-  .nm-product-shell,
-  .nm-product-layout {
-    overflow: visible !important;
-    transform: none !important;
-    contain: none !important;
-    filter: none !important;
-    perspective: none !important;
+  body.template-product {
+    overflow-x: hidden;
+  }
+
+  .nm-product-page {
+    --nm-pdp-header-offset: 115px;
+    height: calc(100vh - var(--nm-pdp-header-offset));
+    min-height: 520px;
+    padding: 0 0 1.5rem;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+
+  .nm-product-shell {
+    height: 100%;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
   }
 
   .nm-product-layout {
     display: grid !important;
     grid-template-columns: minmax(0, 1.1fr) minmax(380px, 520px) !important;
     gap: 48px !important;
-    align-items: start !important;
-    position: relative !important;
+    align-items: stretch !important;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
   }
 
   .nm-product-media-sticky {
     position: relative !important;
     top: auto !important;
     align-self: start !important;
-    z-index: 2 !important;
+    overflow: hidden;
+    min-height: 0;
   }
 
   .nm-product-media-sticky__spacer {
-    display: block;
-    height: 0;
-    pointer-events: none;
+    display: none !important;
   }
 
-  .nm-product-media-sticky__inner.is-locked {
-    position: fixed !important;
-    top: 115px !important;
-    z-index: 25 !important;
-    margin: 0 !important;
-  }
-
-  .nm-product-media-sticky__inner.is-pinned-bottom {
-    position: absolute !important;
-    top: auto !important;
-    bottom: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    width: 100% !important;
-    z-index: 2 !important;
+  .nm-product-media-sticky__inner {
+    max-height: 100%;
   }
 
   .nm-product-info-scroll {
-    min-height: 1600px !important;
+    min-height: 0 !important;
+    height: 100%;
+    max-height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
     display: flex !important;
     flex-direction: column !important;
     gap: 18px !important;
+    padding-right: 4px;
+    scrollbar-gutter: stable;
+  }
+
+  .nm-pdp-sticky {
+    display: none !important;
   }
 }
 
