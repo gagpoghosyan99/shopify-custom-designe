@@ -521,11 +521,9 @@
     padding: 2.25rem 0 2.75rem;
   }
 
-  /* Full-screen “banner” feel */
   .nm-hero-premium {
-    min-height: 100svh;
-    display: flex;
-    align-items: stretch;
+    min-height: 0;
+    display: block;
   }
   .nm-hero-premium__grid {
     width: 100%;
