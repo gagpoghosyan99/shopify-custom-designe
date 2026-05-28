@@ -782,74 +782,62 @@
   margin-inline: auto;
 }
 
-/*
- * Desktop PDP: right panel scrolls inside product area first;
- * at bottom/top, wheel scroll continues on the full page (footer, etc.).
- */
+/* Desktop PDP: smooth native page scroll + sticky left gallery */
 @media (min-width: 991px) {
-  body.template-product {
-    overflow-x: hidden;
+  body.template-product .shopify-section:has(.nm-product-page),
+  body.template-product #MainContent,
+  body.template-product .nm-main,
+  .nm-product-page,
+  .nm-product-shell,
+  .nm-product-layout {
+    overflow: visible !important;
+    transform: none !important;
+    contain: none !important;
+    filter: none !important;
+    perspective: none !important;
   }
 
   .nm-product-page {
-    --nm-pdp-header-offset: 115px;
-    height: calc(100vh - var(--nm-pdp-header-offset));
-    min-height: 520px;
-    padding: 0 0 1.5rem;
-    overflow: hidden;
-    box-sizing: border-box;
+    --nm-pdp-sticky-top: 115px;
+    height: auto;
+    overflow: visible;
   }
 
   .nm-product-shell {
-    height: 100%;
-    min-height: 0;
-    display: flex;
-    flex-direction: column;
-    padding-top: 12px;
-    box-sizing: border-box;
+    height: auto;
+    display: block;
+    padding-top: 0;
   }
 
   .nm-product-layout {
     display: grid !important;
     grid-template-columns: minmax(0, 1.1fr) minmax(380px, 520px) !important;
     gap: 48px !important;
-    align-items: stretch !important;
-    flex: 1;
-    min-height: 0;
-    overflow: hidden;
+    align-items: start !important;
+    overflow: visible !important;
   }
 
   .nm-product-media-sticky {
-    position: relative !important;
-    top: auto !important;
+    position: sticky !important;
+    top: var(--nm-pdp-sticky-top) !important;
     align-self: start !important;
-    overflow: hidden;
-    min-height: 0;
+    height: fit-content !important;
+    z-index: 2;
   }
 
   .nm-product-media-sticky__spacer {
     display: none !important;
   }
 
-  .nm-product-info-track {
-    min-height: 0;
-    height: 100%;
-    overflow: hidden;
-  }
-
+  .nm-product-info-track,
   .nm-product-info-scroll {
-    min-height: 0 !important;
-    height: 100%;
-    max-height: 100%;
-    overflow-x: hidden;
-    overflow-y: auto;
-    overscroll-behavior: auto;
-    -webkit-overflow-scrolling: touch;
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    position: static !important;
     display: flex !important;
     flex-direction: column !important;
     gap: 18px !important;
-    padding-right: 4px;
-    scrollbar-gutter: stable;
   }
 
   .nm-pdp-sticky {

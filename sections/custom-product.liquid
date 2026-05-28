@@ -420,43 +420,6 @@
     });
 
   })();
-
-  /* Desktop: scroll right panel first, then scroll the full page (footer) */
-  (function () {
-    var panel = document.querySelector('[data-nm-pdp-info-scroll]');
-    var page = document.querySelector('[data-nm-product-page]');
-    if (!panel || !page) return;
-    var mq = window.matchMedia('(min-width: 991px)');
-
-    function onWheel(e) {
-      if (!mq.matches) return;
-      var max = panel.scrollHeight - panel.clientHeight;
-      var atTop = panel.scrollTop <= 0;
-      var atBottom = max <= 0 || panel.scrollTop >= max - 1;
-
-      if (e.deltaY > 0 && atBottom) {
-        e.preventDefault();
-        window.scrollBy({ top: e.deltaY, left: 0, behavior: 'auto' });
-        return;
-      }
-      if (e.deltaY < 0 && atTop) {
-        e.preventDefault();
-        window.scrollBy({ top: e.deltaY, left: 0, behavior: 'auto' });
-        return;
-      }
-
-      if (max <= 0) {
-        e.preventDefault();
-        window.scrollBy({ top: e.deltaY, left: 0, behavior: 'auto' });
-        return;
-      }
-
-      e.preventDefault();
-      panel.scrollTop += e.deltaY;
-    }
-
-    page.addEventListener('wheel', onWheel, { passive: false });
-  })();
 </script>
 
 {% schema %}
