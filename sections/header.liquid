@@ -1,138 +1,167 @@
-<header class="nm-header">
+{%- liquid
+  assign nm_brand = settings.brand_name | default: 'NovaMeds'
+  assign promo_enabled = section.settings.promo_enabled
+  assign sticky_enabled = section.settings.sticky_enabled
+  assign header_transparency = section.settings.header_transparency | default: 0.8
+  assign header_blur = section.settings.header_blur | default: 18
+  assign promo_repeat = section.settings.promo_repeat | default: 14
+-%}
 
-  <div class="nm-left">
+{{ 'novameds-header.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'novameds-header.js' | asset_url }}" defer></script>
 
-    <button class="nm-menu-btn">
-      ☰
-    </button>
+<section
+  class="nm-hdrx"
+  data-nm-hdrx
+  data-section-id="{{ section.id }}"
+  data-sticky="{{ sticky_enabled }}"
+  style="
+    --nm-hdrx-promo-bg: {{ section.settings.promo_bg }};
+    --nm-hdrx-promo-text: {{ section.settings.promo_text_color }};
+    --nm-hdrx-promo-speed: {{ section.settings.promo_speed }}s;
+    --nm-hdrx-glass: rgba(255, 255, 255, {{ header_transparency }});
+    --nm-hdrx-blur: {{ header_blur }}px;
+  "
+>
+  {%- if promo_enabled -%}
+    <div class="nm-hdrx__promo" data-nm-hdrx-promo role="region" aria-label="Promotion">
+      <div class="nm-hdrx__promo-inner">
+        <div class="nm-hdrx__marquee" aria-label="Special offers">
+          <div class="nm-hdrx__marquee-track" aria-hidden="true">
+            {%- for i in (1..promo_repeat) -%}
+              <span class="nm-hdrx__marquee-item">{{ section.settings.promo_text | default: 'Special Offer' }}</span>
+            {%- endfor -%}
+          </div>
+          <div class="nm-hdrx__marquee-track nm-hdrx__marquee-track--clone" aria-hidden="true">
+            {%- for i in (1..promo_repeat) -%}
+              <span class="nm-hdrx__marquee-item">{{ section.settings.promo_text | default: 'Special Offer' }}</span>
+            {%- endfor -%}
+          </div>
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
 
-    <span>Menu</span>
+  <header class="nm-hdrx__header" data-nm-header role="banner">
+    <div class="nm-hdrx__header-inner">
+      <div class="nm-hdrx__left">
+        <button
+          type="button"
+          class="nm-hdrx__btn nm-hdrx__btn--menu"
+          data-nm-menu-toggle
+          aria-expanded="false"
+          aria-controls="nm-hdrx-mobile-nav"
+        >
+          <span class="nm-hdrx__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="M4 7h16" />
+              <path d="M4 12h16" />
+              <path d="M4 17h16" />
+            </svg>
+          </span>
+          <span class="nm-hdrx__label">Menu</span>
+        </button>
+      </div>
 
-  </div>
+      <div class="nm-hdrx__center">
+        <a class="nm-hdrx__logo" href="{{ routes.root_url }}" aria-label="{{ nm_brand }} home">
+          {%- if section.settings.logo != blank -%}
+            {{ section.settings.logo | image_url: width: 320 | image_tag: alt: nm_brand, loading: 'eager', class: 'nm-hdrx__logo-img' }}
+          {%- elsif settings.logo != blank -%}
+            {{ settings.logo | image_url: width: 320 | image_tag: alt: nm_brand, loading: 'eager', class: 'nm-hdrx__logo-img' }}
+          {%- else -%}
+            <span class="nm-hdrx__logo-text">NOVAMEDS</span>
+          {%- endif -%}
+        </a>
+      </div>
 
-  <a href="/" class="nm-logo">
-    NOVAMEDS
-  </a>
+      <div class="nm-hdrx__right">
+        <button type="button" class="nm-hdrx__btn nm-hdrx__btn--icononly" data-nm-search-open aria-label="Search">
+          <span class="nm-hdrx__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="7" />
+              <path d="M20 20l-3.2-3.2" />
+            </svg>
+          </span>
+        </button>
 
-  <div class="nm-right">
+        <button type="button" class="nm-hdrx__btn nm-hdrx__btn--cart nm-hdrx__btn--icononly" data-nm-cart-open aria-label="Cart">
+          <span class="nm-hdrx__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 6h15l-1.6 9H7.2L6 6Z" />
+              <path d="M6 6 5 3H2" />
+              <circle cx="9" cy="20" r="1" />
+              <circle cx="18" cy="20" r="1" />
+            </svg>
+          </span>
+          <span
+            class="nm-hdrx__badge"
+            data-nm-header-cart-count
+            data-nm-hdrx-badge
+            data-count="{{ cart.item_count | default: 0 }}"
+          >
+            {%- if cart.item_count > 0 -%}{{ cart.item_count }}{%- endif -%}
+          </span>
+        </button>
+      </div>
+    </div>
 
-    <a href="/search" class="nm-search">
-      ⌕ <span>Search</span>
-    </a>
-
-    <a href="/cart" class="nm-cart">
-
-      🛒
-
-      <span class="nm-cart-count">
-        {{ cart.item_count }}
-      </span>
-
-      <span>Cart</span>
-
-    </a>
-
-  </div>
-
-</header>
-
-<style>
-.nm-header{
-  width:100%;
-  height:82px;
-  background:#fff;
-  display:grid;
-  grid-template-columns:1fr auto 1fr;
-  align-items:center;
-  padding:0 28px;
-  border-bottom:1px solid #eee;
-  font-family:Arial,sans-serif;
-}
-
-.nm-left,
-.nm-right{
-  display:flex;
-  align-items:center;
-  gap:18px;
-}
-
-.nm-right{
-  justify-content:flex-end;
-}
-
-.nm-menu-btn{
-  background:none;
-  border:none;
-  font-size:34px;
-  cursor:pointer;
-}
-
-.nm-logo{
-  font-size:42px;
-  font-weight:900;
-  color:#000;
-  text-decoration:none;
-  letter-spacing:-2px;
-}
-
-.nm-search,
-.nm-cart{
-  color:#000;
-  text-decoration:none;
-  display:flex;
-  align-items:center;
-  gap:8px;
-  font-size:24px;
-  position:relative;
-}
-
-.nm-cart-count{
-  position:absolute;
-  top:-10px;
-  right:38px;
-  width:20px;
-  height:20px;
-  border-radius:50%;
-  background:#111;
-  color:#fff;
-  font-size:12px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-@media(max-width:768px){
-
-  .nm-header{
-    height:68px;
-    padding:0 16px;
-  }
-
-  .nm-logo{
-    font-size:26px;
-  }
-
-  .nm-left span,
-  .nm-right span:not(.nm-cart-count){
-    display:none;
-  }
-
-  .nm-search,
-  .nm-cart{
-    font-size:22px;
-  }
-
-}
-</style>
+    <nav
+      id="nm-hdrx-mobile-nav"
+      class="nm-hdrx__mobile"
+      data-nm-mobile-nav
+      aria-label="Mobile menu"
+    >
+      <div class="nm-hdrx__mobile-head">
+        <span class="nm-hdrx__mobile-title">{{ section.settings.mobile_menu_title | default: 'Browse' }}</span>
+        <button type="button" class="nm-hdrx__mobile-close" data-nm-hdrx-menu-close aria-label="Close menu">×</button>
+      </div>
+      <div class="nm-hdrx__mobile-links">
+        {%- if section.settings.menu != blank -%}
+          {%- for link in section.settings.menu.links -%}
+            <a class="nm-hdrx__mobile-link" href="{{ link.url }}">{{ link.title }}</a>
+            {%- if link.links.size > 0 -%}
+              {%- for child in link.links -%}
+                <a class="nm-hdrx__mobile-link nm-hdrx__mobile-link--child" href="{{ child.url }}">{{ child.title }}</a>
+              {%- endfor -%}
+            {%- endif -%}
+          {%- endfor -%}
+        {%- else -%}
+          <a class="nm-hdrx__mobile-link" href="{{ routes.root_url }}">Home</a>
+          <a class="nm-hdrx__mobile-link" href="{{ routes.search_url }}">Search</a>
+          <a class="nm-hdrx__mobile-link" href="{{ routes.cart_url }}">Cart</a>
+        {%- endif -%}
+      </div>
+      {%- if section.settings.mobile_menu_note != blank -%}
+        <div class="nm-hdrx__mobile-note">{{ section.settings.mobile_menu_note }}</div>
+      {%- endif -%}
+    </nav>
+  </header>
+</section>
 
 {% schema %}
 {
-  "name":"NovaMeds Header",
-  "settings":[],
-  "presets":[
-    {
-      "name":"NovaMeds Header"
-    }
+  "name": "NovaMeds Header",
+  "settings": [
+    { "type": "checkbox", "id": "promo_enabled", "label": "Enable promo bar", "default": true },
+    { "type": "text", "id": "promo_text", "label": "Promo marquee text", "default": "Special Offer" },
+    { "type": "color", "id": "promo_bg", "label": "Promo background", "default": "#00172f" },
+    { "type": "color", "id": "promo_text_color", "label": "Promo text color", "default": "#ffffff" },
+    { "type": "range", "id": "promo_repeat", "label": "Promo repeat count", "min": 6, "max": 22, "step": 1, "default": 14 },
+    { "type": "range", "id": "promo_speed", "label": "Marquee speed (seconds)", "min": 10, "max": 40, "step": 1, "default": 18 },
+
+    { "type": "checkbox", "id": "sticky_enabled", "label": "Enable sticky header", "default": true },
+    { "type": "range", "id": "header_transparency", "label": "Header transparency", "min": 0, "max": 1, "step": 0.1, "default": 0.8 },
+    { "type": "range", "id": "header_blur", "label": "Header blur (px)", "min": 8, "max": 28, "step": 1, "default": 18 },
+
+    { "type": "image_picker", "id": "logo", "label": "Header logo (optional override)" },
+    { "type": "link_list", "id": "menu", "label": "Menu links", "default": "main-menu" },
+    { "type": "text", "id": "mobile_menu_title", "label": "Mobile menu title", "default": "Menu" },
+    { "type": "richtext", "id": "mobile_menu_note", "label": "Mobile menu note", "default": "<p>Premium wellness essentials. Fast shipping. Trusted care.</p>" }
+  ],
+  "presets": [
+    { "name": "Custom announcement + header (NovaMeds)" }
   ]
 }
 {% endschema %}
+
