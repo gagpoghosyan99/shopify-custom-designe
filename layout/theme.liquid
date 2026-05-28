@@ -49,6 +49,7 @@
     {%- if template.name == 'index' -%}
       {{ 'novameds-home.css' | asset_url | stylesheet_tag }}
     {%- endif -%}
+    {{ 'novameds.css' | asset_url | stylesheet_tag }}
 
     <style>
       :root {
@@ -60,6 +61,7 @@
     </style>
 
     <script src="{{ 'novameds.js' | asset_url }}" defer></script>
+    <script src="{{ 'novameds-vnext.js' | asset_url }}" defer></script>
 
     <script>
       document.documentElement.classList.remove('no-js');

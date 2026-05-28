@@ -1,0 +1,41 @@
+<section class="nm-custom-trust nm-animate" aria-label="Trust indicators">
+  <div class="nm-container">
+    <div class="nm-custom-trust__row" role="list">
+      {%- for block in section.blocks -%}
+        <div role="listitem">
+          {% render 'trust-badge', icon: block.settings.icon, label: block.settings.label, block: block %}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Custom trust (pills)",
+  "tag": "section",
+  "blocks": [
+    {
+      "type": "pill",
+      "name": "Trust pill",
+      "settings": [
+        { "type": "text", "id": "icon", "label": "Icon", "default": "🛡️" },
+        { "type": "text", "id": "label", "label": "Label", "default": "Licensed Products" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom trust (pills)",
+      "blocks": [
+        { "type": "pill", "settings": { "icon": "🛡️", "label": "Licensed Products" } },
+        { "type": "pill", "settings": { "icon": "✓", "label": "Pharmacist Approved" } },
+        { "type": "pill", "settings": { "icon": "🚚", "label": "Worldwide Shipping" } },
+        { "type": "pill", "settings": { "icon": "🔒", "label": "Secure Payments" } },
+        { "type": "pill", "settings": { "icon": "✓", "label": "Verified Quality" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
