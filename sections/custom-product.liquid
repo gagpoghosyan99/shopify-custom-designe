@@ -71,51 +71,92 @@
             {%- endif -%}
           </div>
 
-          {%- if section.blocks.size > 0 -%}
-            <ul class="nm-pdp__bullets" aria-label="Benefits">
-              {%- for block in section.blocks -%}
-                {%- if block.type == 'benefit' -%}
-                  <li {{ block.shopify_attributes }}>
-                    <span aria-hidden="true">✅</span>
-                    <span>{{ block.settings.text }}</span>
-                  </li>
-                {%- endif -%}
-              {%- endfor -%}
-            </ul>
-          {%- endif -%}
+          <ul class="nm-pdp__bullets" aria-label="Benefits">
+            {%- assign has_benefit = false -%}
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'benefit' -%}
+                {%- assign has_benefit = true -%}
+                <li {{ block.shopify_attributes }}>
+                  <span aria-hidden="true">✅</span>
+                  <span>{{ block.settings.text }}</span>
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+            {%- unless has_benefit -%}
+              <li><span aria-hidden="true">✅</span><span>{{ section.settings.demo_benefit_1 | default: 'Pharmacist-reviewed, science-backed formulation' }}</span></li>
+              <li><span aria-hidden="true">✅</span><span>{{ section.settings.demo_benefit_2 | default: 'Made for daily energy, immunity & wellness support' }}</span></li>
+              <li><span aria-hidden="true">✅</span><span>{{ section.settings.demo_benefit_3 | default: 'Fast shipping + secure checkout' }}</span></li>
+              <li><span aria-hidden="true">✅</span><span>{{ section.settings.demo_benefit_4 | default: '30-day satisfaction guarantee' }}</span></li>
+            {%- endunless -%}
+          </ul>
 
           {% form 'product', product, class: 'nm-pdp__form', id: 'nm-product-form' %}
             <input type="hidden" name="id" value="{{ variant.id }}" data-nm-variant-id>
 
             {%- unless product.has_only_default_variant -%}
-              <div class="nm-pdp__options" data-nm-options>
-                {%- for opt in product.options_with_values -%}
-                  {%- assign opt_name_down = opt.name | downcase -%}
-                  <fieldset class="nm-pdp__opt-group" data-nm-option data-index="{{ forloop.index0 }}">
-                    <legend class="nm-pdp__opt-legend">
-                      {%- if opt_name_down contains 'color' -%}Choose color{%- elsif opt_name_down contains 'size' -%}Choose size{%- else -%}Choose {{ opt.name }}{%- endif -%}
-                    </legend>
-                    <div class="nm-pdp__opt-row" role="list">
-                      {%- for val in opt.values -%}
-                        {%- assign input_id = 'nm-opt-' | append: section.id | append: '-' | append: forloop.parentloop.index0 | append: '-' | append: forloop.index0 -%}
-                        <label class="nm-pdp__opt" for="{{ input_id }}" role="listitem">
-                          <input
-                            id="{{ input_id }}"
-                            class="nm-pdp__opt-input"
-                            type="radio"
-                            name="options[{{ opt.name | escape }}]"
-                            value="{{ val | escape }}"
-                            {% if opt.selected_value == val %}checked{% endif %}
-                            data-nm-opt
-                          >
-                          <span class="nm-pdp__opt-pill">{{ val }}</span>
-                        </label>
-                      {%- endfor -%}
-                    </div>
-                  </fieldset>
-                {%- endfor -%}
+              <div class="nm-pdp__module nm-pdp__module--variants" aria-label="Choose options">
+                <div class="nm-pdp__module-head">
+                  <strong>{{ section.settings.variants_title | default: 'Choose your perfect fit' }}</strong>
+                </div>
+                <div class="nm-pdp__options" data-nm-options>
+                  {%- for opt in product.options_with_values -%}
+                    {%- assign opt_name_down = opt.name | downcase -%}
+                    <fieldset class="nm-pdp__opt-group" data-nm-option data-index="{{ forloop.index0 }}">
+                      <legend class="nm-pdp__opt-legend">
+                        {%- if opt_name_down contains 'color' -%}Choose color{%- elsif opt_name_down contains 'size' -%}Choose size{%- else -%}Choose {{ opt.name }}{%- endif -%}
+                      </legend>
+                      <div class="nm-pdp__opt-row" role="list">
+                        {%- for val in opt.values -%}
+                          {%- assign input_id = 'nm-opt-' | append: section.id | append: '-' | append: forloop.parentloop.index0 | append: '-' | append: forloop.index0 -%}
+                          <label class="nm-pdp__opt" for="{{ input_id }}" role="listitem">
+                            <input
+                              id="{{ input_id }}"
+                              class="nm-pdp__opt-input"
+                              type="radio"
+                              name="options[{{ opt.name | escape }}]"
+                              value="{{ val | escape }}"
+                              {% if opt.selected_value == val %}checked{% endif %}
+                              data-nm-opt
+                            >
+                            <span class="nm-pdp__opt-pill">{{ val }}</span>
+                          </label>
+                        {%- endfor -%}
+                      </div>
+                    </fieldset>
+                  {%- endfor -%}
+                </div>
               </div>
             {%- endunless -%}
+
+            <div class="nm-pdp__module nm-pdp__module--bundle" aria-label="Bundle and free gifts">
+              <div class="nm-pdp__bundle-top">
+                <span class="nm-pdp__bundle-pill">{{ section.settings.bundle_badge | default: 'SPECIAL OFFER' }}</span>
+                <strong class="nm-pdp__bundle-title">{{ section.settings.bundle_title | default: 'Free bonus gifts with your order' }}</strong>
+              </div>
+              <div class="nm-pdp__bundle-grid" role="list">
+                <div class="nm-pdp__gift" role="listitem">
+                  <div class="nm-pdp__gift-img" aria-hidden="true"></div>
+                  <div class="nm-pdp__gift-meta">
+                    <div class="nm-pdp__gift-name">{{ section.settings.bundle_item_1 | default: 'Daily Support Guide (PDF)' }}</div>
+                    <div class="nm-pdp__gift-sub">{{ section.settings.bundle_item_1_note | default: 'Included free' }}</div>
+                  </div>
+                </div>
+                <div class="nm-pdp__gift" role="listitem">
+                  <div class="nm-pdp__gift-img" aria-hidden="true"></div>
+                  <div class="nm-pdp__gift-meta">
+                    <div class="nm-pdp__gift-name">{{ section.settings.bundle_item_2 | default: '30‑Day Wellness Plan' }}</div>
+                    <div class="nm-pdp__gift-sub">{{ section.settings.bundle_item_2_note | default: 'Included free' }}</div>
+                  </div>
+                </div>
+                <div class="nm-pdp__gift" role="listitem">
+                  <div class="nm-pdp__gift-img" aria-hidden="true"></div>
+                  <div class="nm-pdp__gift-meta">
+                    <div class="nm-pdp__gift-name">{{ section.settings.bundle_item_3 | default: 'Recipe + Habit Checklist' }}</div>
+                    <div class="nm-pdp__gift-sub">{{ section.settings.bundle_item_3_note | default: 'Included free' }}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
 
             <div class="nm-pdp__cta-row">
               <button type="submit" name="add" class="nm-vnext-btn nm-vnext-btn--primary nm-pdp__atc" {% unless variant.available %}disabled{% endunless %}>
@@ -126,34 +167,102 @@
               </button>
             </div>
 
+            <div class="nm-pdp__module nm-pdp__module--bonus" aria-label="Membership and bonuses">
+              <div class="nm-pdp__bonus-row">
+                <div class="nm-pdp__bonus-check" aria-hidden="true">✓</div>
+                <div class="nm-pdp__bonus-body">
+                  <strong class="nm-pdp__bonus-title">{{ section.settings.bonus_title | default: 'Free bonus included' }}</strong>
+                  <div class="nm-pdp__bonus-text">
+                    {{ section.settings.bonus_text | default: 'Get a 30‑day wellness plan + habit tracker with your purchase. Cancel anytime.' }}
+                  </div>
+                </div>
+                <div class="nm-pdp__bonus-price">
+                  <span class="nm-pdp__bonus-free">{{ section.settings.bonus_free | default: 'FREE' }}</span>
+                  <span class="nm-pdp__bonus-was">{{ section.settings.bonus_was | default: '$39.99' }}</span>
+                </div>
+              </div>
+            </div>
+
+            <p class="nm-pdp__pitch">
+              {{ section.settings.pitch_text | default: 'Finally, a daily routine you can actually stick to — simple, effective support for real-world wellness.' }}
+            </p>
+
+            <div class="nm-pdp__ugc" aria-label="Videos and reviews">
+              <div class="nm-pdp__ugc-row">
+                <button type="button" class="nm-pdp__ugc-card" aria-label="Play video 1">
+                  <span class="nm-pdp__ugc-play" aria-hidden="true">▶</span>
+                  <span class="nm-pdp__ugc-caption">{{ section.settings.ugc_1 | default: 'Customer story' }}</span>
+                </button>
+                <button type="button" class="nm-pdp__ugc-card" aria-label="Play video 2">
+                  <span class="nm-pdp__ugc-play" aria-hidden="true">▶</span>
+                  <span class="nm-pdp__ugc-caption">{{ section.settings.ugc_2 | default: 'Before & after routine' }}</span>
+                </button>
+                <button type="button" class="nm-pdp__ugc-card" aria-label="Play video 3">
+                  <span class="nm-pdp__ugc-play" aria-hidden="true">▶</span>
+                  <span class="nm-pdp__ugc-caption">{{ section.settings.ugc_3 | default: 'Unboxing + review' }}</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="nm-pdp__icons" aria-label="Key benefits">
+              <div class="nm-pdp__icon">
+                <span class="nm-pdp__icon-glyph" aria-hidden="true">🚚</span>
+                <span class="nm-pdp__icon-text">{{ section.settings.icon_1 | default: 'Fast shipping' }}</span>
+              </div>
+              <div class="nm-pdp__icon">
+                <span class="nm-pdp__icon-glyph" aria-hidden="true">🛡️</span>
+                <span class="nm-pdp__icon-text">{{ section.settings.icon_2 | default: '30‑day guarantee' }}</span>
+              </div>
+              <div class="nm-pdp__icon">
+                <span class="nm-pdp__icon-glyph" aria-hidden="true">⏱</span>
+                <span class="nm-pdp__icon-text">{{ section.settings.icon_3 | default: 'Simple daily routine' }}</span>
+              </div>
+            </div>
+
+            <div class="nm-pdp__acc" aria-label="More information">
+              <div class="nm-pdp__acc-list" role="list">
+                <div class="nm-pdp__acc-item" data-nm-faq-item role="listitem">
+                  <button type="button" class="nm-pdp__acc-q" data-nm-faq-question aria-expanded="false">
+                    {{ section.settings.acc_1_title | default: 'Why NovaMeds works' }}
+                  </button>
+                  <div class="nm-pdp__acc-a" data-nm-faq-answer>
+                    {{ section.settings.acc_1_body | default: '<p>Built with pharmacist-first standards and transparent formulas to support consistent daily wellness habits.</p>' }}
+                  </div>
+                </div>
+                <div class="nm-pdp__acc-item" data-nm-faq-item role="listitem">
+                  <button type="button" class="nm-pdp__acc-q" data-nm-faq-question aria-expanded="false">
+                    {{ section.settings.acc_2_title | default: 'What’s included' }}
+                  </button>
+                  <div class="nm-pdp__acc-a" data-nm-faq-answer>
+                    {%- if product.description != blank -%}
+                      <div class="rte nm-pdp__rte">{{ product.description }}</div>
+                    {%- else -%}
+                      {{ section.settings.acc_2_body | default: '<p>Your product + bonus guides + a 30‑day plan to help you stay consistent.</p>' }}
+                    {%- endif -%}
+                  </div>
+                </div>
+                <div class="nm-pdp__acc-item" data-nm-faq-item role="listitem">
+                  <button type="button" class="nm-pdp__acc-q" data-nm-faq-question aria-expanded="false">
+                    {{ section.settings.acc_3_title | default: '30‑Day Guarantee' }}
+                  </button>
+                  <div class="nm-pdp__acc-a" data-nm-faq-answer>
+                    {{ section.settings.acc_3_body | default: '<p>Try it for 30 days. If you’re not satisfied, contact us and we’ll make it right.</p>' }}
+                  </div>
+                </div>
+                <div class="nm-pdp__acc-item" data-nm-faq-item role="listitem">
+                  <button type="button" class="nm-pdp__acc-q" data-nm-faq-question aria-expanded="false">
+                    {{ section.settings.acc_4_title | default: 'Your wellness plan' }}
+                  </button>
+                  <div class="nm-pdp__acc-a" data-nm-faq-answer>
+                    {{ section.settings.acc_4_body | default: '<p>We include a simple schedule and habit tracker so you can build a routine that actually fits your life.</p>' }}
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <p class="nm-pdp__note">Secure checkout · Fast shipping · Trusted by professionals</p>
           {% endform %}
         </div>
-
-        <div class="nm-pdp__details nm-glass">
-          <h2 class="nm-pdp__h2">{{ section.settings.details_title | default: 'Details' }}</h2>
-          <div class="rte nm-pdp__rte">{{ product.description }}</div>
-        </div>
-
-        {%- if section.settings.show_faq -%}
-          <div class="nm-pdp__faq nm-glass" aria-label="Product FAQ">
-            <h2 class="nm-pdp__h2">{{ section.settings.faq_title | default: 'FAQ' }}</h2>
-            <div class="nm-vnext-faq__list" role="list">
-              {%- for block in section.blocks -%}
-                {%- if block.type == 'faq' -%}
-                  <div class="nm-vnext-faq__item" data-nm-faq-item role="listitem" {{ block.shopify_attributes }}>
-                    <button type="button" class="nm-vnext-faq__q" data-nm-faq-question aria-expanded="false">
-                      {{ block.settings.question }}
-                    </button>
-                    <div class="nm-vnext-faq__a" data-nm-faq-answer>
-                      {{ block.settings.answer }}
-                    </div>
-                  </div>
-                {%- endif -%}
-              {%- endfor -%}
-            </div>
-          </div>
-        {%- endif -%}
       </div>
     </div>
   </div>
