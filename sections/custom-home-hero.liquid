@@ -19,8 +19,10 @@
 -%}
 
 <section class="nm-vnext-hero nm-dark-stage nm-animate{% if has_photo %} nm-vnext-hero--photo{% endif %}" id="home-hero" aria-label="NovaMeds hero">
-  <div class="nm-vnext-hero__bg" aria-hidden="true"></div>
-  <div class="nm-vnext-hero__molecules" aria-hidden="true"></div>
+  {%- unless has_photo -%}
+    <div class="nm-vnext-hero__bg" aria-hidden="true"></div>
+    <div class="nm-vnext-hero__molecules" aria-hidden="true"></div>
+  {%- endunless -%}
   {%- if has_photo -%}
     <div class="nm-vnext-hero__photo" aria-hidden="true">
       {{ section.settings.hero_image
@@ -34,7 +36,6 @@
           class: 'nm-vnext-hero__photo-img',
           alt: ''
       }}
-      <div class="nm-vnext-hero__photo-shade" aria-hidden="true"></div>
     </div>
   {%- endif -%}
 
