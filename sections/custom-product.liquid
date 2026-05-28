@@ -12,10 +12,21 @@
 <section class="nm-pdp nm-animate" aria-label="Product">
   <div class="nm-container">
     <div class="nm-pdp__grid">
-      <div class="nm-pdp__media nm-glass" aria-label="Product media">
+      <div class="nm-pdp__media product-gallery" aria-label="Product media">
         <div class="nm-pdp__gallery">
-          {%- if product.featured_image -%}
-            {{ product.featured_image | image_url: width: 1400 | image_tag: loading: 'eager', alt: product.featured_image.alt, class: 'nm-pdp__img', id: 'nm-pdp-main-img' }}
+          {%- if product.images.size > 0 -%}
+            <div class="nm-pdp__carousel" data-nm-pdp-carousel aria-label="Swipe product images">
+              {%- for image in product.images -%}
+                <div class="nm-pdp__slide" data-nm-pdp-slide="{{ forloop.index0 }}">
+                  {{ image | image_url: width: 1400 | image_tag: loading: 'lazy', alt: image.alt, class: 'nm-pdp__img' }}
+                </div>
+              {%- endfor -%}
+            </div>
+
+            <div class="nm-pdp__main" aria-label="Selected product image">
+              {%- assign first_img = product.images.first -%}
+              {{ first_img | image_url: width: 1400 | image_tag: loading: 'eager', alt: first_img.alt, class: 'nm-pdp__img', id: 'nm-pdp-main-img' }}
+            </div>
           {%- endif -%}
         </div>
         {%- if product.images.size > 1 -%}
@@ -26,6 +37,7 @@
                 class="nm-pdp__thumb{% if forloop.first %} is-active{% endif %}"
                 data-nm-pdp-thumb
                 data-src="{{ image | image_url: width: 1400 }}"
+                data-index="{{ forloop.index0 }}"
                 aria-label="View image {{ forloop.index }}"
               >
                 {{ image | image_url: width: 140 | image_tag: loading: 'lazy', alt: image.alt }}
