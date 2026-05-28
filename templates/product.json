@@ -11,8 +11,29 @@
   "sections": {
     "main": {
       "type": "custom-product",
-      "settings": {}
+      "blocks": {
+        "benefit_qf3xYy": {
+          "type": "benefit",
+          "settings": {
+            "text": "Unlimited workouts & challenges"
+          }
+        }
+      },
+      "block_order": [
+        "benefit_qf3xYy"
+      ],
+      "settings": {
+        "details_title": "Details",
+        "show_faq": true,
+        "faq_title": "FAQ",
+        "rating_score": "4.6/5",
+        "rating_text": "(900+ Reviews)",
+        "rating_brand": "Trustpilot",
+        "sale_badge": "Save"
+      }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main"
+  ]
 }
