@@ -50,7 +50,7 @@
         "secondary_link": "/collections/best-sellers",
         "tertiary_label": "Doctor Recommended",
         "tertiary_link": "/collections/all",
-        "show_micro_trust": true
+        "show_micro_trust": false
       }
     },
     "bestsellers": {
