@@ -9,6 +9,8 @@
 -%}
 
 
+<script src="{{ 'novameds-pdp-lock.js' | asset_url }}" defer></script>
+
 <section class="nm-product-page nm-pdp" data-nm-product-page aria-label="Product">
   <div class="nm-product-shell">
     <div class="nm-product-layout" data-nm-product-layout>
@@ -420,6 +422,9 @@
     });
 
   })();
+</script>
+<script>
+  if (window.NovaMedsPdpLock) window.NovaMedsPdpLock.boot();
 </script>
 
 {% schema %}
