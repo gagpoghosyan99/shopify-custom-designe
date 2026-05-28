@@ -1,31 +1,149 @@
-{%- if section.settings.show -%}
-  <div class="nm-topbar" role="region" aria-label="Store info">
-    <div class="nm-container nm-topbar__inner">
-      <p>{{ section.settings.shipping_text | default: 'Free express shipping on orders over $75' }}</p>
-      <div class="nm-topbar__trust">
-        <span>{{ section.settings.trust_1 | default: 'Pharmacist reviewed formulas' }}</span>
-        <span>|</span>
-        <span>{{ section.settings.trust_2 | default: 'Secure & Trusted' }}</span>
-        <span>|</span>
-        <span>{{ section.settings.trust_3 | default: 'Worldwide Delivery' }}</span>
-      </div>
-      <div class="nm-topbar__locales" aria-hidden="true">
-        <span>🇬🇧 UK</span>
-        <span>🇺🇸 USA</span>
-      </div>
+<div class="nm-topbar">
+  <div class="nm-topbar-inner">
+
+    <div class="nm-sale-text">
+      <strong>NovaMeds SALE 🇬🇧🇺🇸</strong>
+      <span>£20 OFF + FREE SHIPPING! 🥳</span>
     </div>
+
+    <div class="nm-countdown">
+      <span id="nm-hours">16</span>
+      <span>:</span>
+      <span id="nm-minutes">16</span>
+      <span>:</span>
+      <span id="nm-seconds">34</span>
+
+      <small>Hrs &nbsp; Mins &nbsp; Secs</small>
+    </div>
+
+    <button class="nm-close-btn">
+      ×
+    </button>
+
   </div>
-{%- endif -%}
+</div>
+
+<style>
+.nm-topbar{
+  width:100%;
+  height:64px;
+  background:#f653a7;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  font-family:Arial,sans-serif;
+}
+
+.nm-topbar-inner{
+  width:100%;
+  max-width:1600px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:30px;
+  position:relative;
+}
+
+.nm-sale-text strong{
+  display:block;
+  font-size:24px;
+  font-weight:900;
+  line-height:1;
+}
+
+.nm-sale-text span{
+  font-size:16px;
+}
+
+.nm-countdown{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:32px;
+  font-weight:900;
+  position:relative;
+}
+
+.nm-countdown small{
+  position:absolute;
+  bottom:-18px;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:11px;
+  white-space:nowrap;
+}
+
+.nm-close-btn{
+  position:absolute;
+  right:24px;
+  background:none;
+  border:none;
+  color:#666;
+  font-size:34px;
+  cursor:pointer;
+}
+
+@media(max-width:768px){
+
+  .nm-topbar{
+    height:54px;
+  }
+
+  .nm-sale-text strong{
+    font-size:16px;
+  }
+
+  .nm-sale-text span{
+    font-size:12px;
+  }
+
+  .nm-countdown{
+    font-size:20px;
+  }
+
+  .nm-countdown small{
+    display:none;
+  }
+
+  .nm-close-btn{
+    font-size:24px;
+    right:10px;
+  }
+}
+</style>
+
+<script>
+(function(){
+
+let total = 16 * 3600 + 16 * 60 + 34;
+
+setInterval(function(){
+
+  total--;
+
+  const h = String(Math.floor(total / 3600)).padStart(2,'0');
+  const m = String(Math.floor((total % 3600)/60)).padStart(2,'0');
+  const s = String(total % 60).padStart(2,'0');
+
+  document.getElementById('nm-hours').innerText = h;
+  document.getElementById('nm-minutes').innerText = m;
+  document.getElementById('nm-seconds').innerText = s;
+
+},1000);
+
+})();
+</script>
 
 {% schema %}
 {
-  "name": "Top bar",
-  "settings": [
-    { "type": "checkbox", "id": "show", "label": "Show top bar", "default": true },
-    { "type": "text", "id": "shipping_text", "label": "Shipping message", "default": "Free express shipping on orders over $75" },
-    { "type": "text", "id": "trust_1", "label": "Trust line 1", "default": "Pharmacist reviewed formulas" },
-    { "type": "text", "id": "trust_2", "label": "Trust line 2", "default": "Secure & Trusted" },
-    { "type": "text", "id": "trust_3", "label": "Trust line 3", "default": "Worldwide Delivery" }
+  "name":"NovaMeds Top Bar",
+  "settings":[],
+  "presets":[
+    {
+      "name":"NovaMeds Top Bar"
+    }
   ]
 }
 {% endschema %}
