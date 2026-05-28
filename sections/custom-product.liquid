@@ -7,6 +7,8 @@
     assign on_sale = true
   endif
 -%}
+  assign money_compare = compare_at | money
+-%}
 
 <section class="nm-pdp nm-animate" aria-label="Product">
   <div class="nm-container">
@@ -41,9 +43,12 @@
               <div class="nm-pdp__vendor">{{ product.vendor }}</div>
             {%- endif -%}
             <h1 class="nm-pdp__title">{{ product.title }}</h1>
-            <div class="nm-pdp__rating" aria-label="Rated 4.9 out of 5">
+            <div class="nm-pdp__rating" aria-label="Reviews">
               <span class="nm-pdp__stars" aria-hidden="true">★★★★★</span>
-              <span class="nm-pdp__score">4.9</span>
+              <span class="nm-pdp__score">{{ section.settings.rating_score | default: '4.6/5' }}</span>
+              <span class="nm-pdp__reviews">{{ section.settings.rating_text | default: '(900+ Reviews)' }}</span>
+              <span class="nm-pdp__rating-sep" aria-hidden="true">·</span>
+              <span class="nm-pdp__trust">{{ section.settings.rating_brand | default: 'Trustpilot' }}</span>
             </div>
           </div>
 
@@ -51,7 +56,7 @@
             <span class="nm-pdp__now">{{ money_price }}</span>
             {%- if on_sale -%}
               <span class="nm-pdp__was">{{ compare_at | money }}</span>
-              <span class="nm-pdp__save">Save</span>
+              <span class="nm-pdp__save">{{ section.settings.sale_badge | default: 'Save' }}</span>
             {%- endif -%}
           </div>
 
@@ -69,22 +74,36 @@
           {%- endif -%}
 
           {% form 'product', product, class: 'nm-pdp__form', id: 'nm-product-form' %}
-            <input type="hidden" name="id" value="{{ variant.id }}">
+            <input type="hidden" name="id" value="{{ variant.id }}" data-nm-variant-id>
 
             {%- unless product.has_only_default_variant -%}
-              <label class="nm-pdp__label" for="nm-variant">Options</label>
-              <select class="nm-pdp__select" id="nm-variant" name="id" data-nm-variant-select>
-                {%- for v in product.variants -%}
-                  <option
-                    value="{{ v.id }}"
-                    {% if v.id == variant.id %}selected{% endif %}
-                    {% unless v.available %}disabled{% endunless %}
-                    data-price="{{ v.price | money }}"
-                  >
-                    {{ v.title }} — {{ v.price | money }}{% unless v.available %} (Sold out){% endunless %}
-                  </option>
+              <div class="nm-pdp__options" data-nm-options>
+                {%- for opt in product.options_with_values -%}
+                  {%- assign opt_name_down = opt.name | downcase -%}
+                  <fieldset class="nm-pdp__opt-group" data-nm-option data-index="{{ forloop.index0 }}">
+                    <legend class="nm-pdp__opt-legend">
+                      {%- if opt_name_down contains 'color' -%}Choose color{%- elsif opt_name_down contains 'size' -%}Choose size{%- else -%}Choose {{ opt.name }}{%- endif -%}
+                    </legend>
+                    <div class="nm-pdp__opt-row" role="list">
+                      {%- for val in opt.values -%}
+                        {%- assign input_id = 'nm-opt-' | append: section.id | append: '-' | append: forloop.parentloop.index0 | append: '-' | append: forloop.index0 -%}
+                        <label class="nm-pdp__opt" for="{{ input_id }}" role="listitem">
+                          <input
+                            id="{{ input_id }}"
+                            class="nm-pdp__opt-input"
+                            type="radio"
+                            name="options[{{ opt.name | escape }}]"
+                            value="{{ val | escape }}"
+                            {% if opt.selected_value == val %}checked{% endif %}
+                            data-nm-opt
+                          >
+                          <span class="nm-pdp__opt-pill">{{ val }}</span>
+                        </label>
+                      {%- endfor -%}
+                    </div>
+                  </fieldset>
                 {%- endfor -%}
-              </select>
+              </div>
             {%- endunless -%}
 
             <div class="nm-pdp__cta-row">
@@ -161,6 +180,70 @@
         form.scrollIntoView({ behavior: 'smooth', block: 'center' });
       });
     }
+
+    // Variant + price sync for pill options
+    var variants = {{ product.variants | json }};
+    var optionGroups = document.querySelectorAll('[data-nm-option]');
+    var idInput = document.querySelector('[data-nm-variant-id]');
+    var priceWrap = document.querySelector('[data-nm-product-price]');
+    var atcBtn = form ? form.querySelector('button[name="add"]') : null;
+
+    function getSelectedOptions() {
+      var selected = [];
+      optionGroups.forEach(function (g) {
+        var checked = g.querySelector('input[data-nm-opt]:checked');
+        selected.push(checked ? checked.value : '');
+      });
+      return selected;
+    }
+
+    function formatMoneyFromCents(cents) {
+      if (typeof Shopify !== 'undefined' && Shopify.formatMoney) {
+        var fmt = (window.NovaMeds && window.NovaMeds.moneyFormat) || (window.NovaMeds && window.NovaMeds.cfg && window.NovaMeds.cfg.moneyFormat);
+        return Shopify.formatMoney(cents, fmt);
+      }
+      return '$' + (cents / 100).toFixed(2);
+    }
+
+    function setPrice(v) {
+      if (!priceWrap || !v) return;
+      var now = formatMoneyFromCents(v.price);
+      var was = v.compare_at_price && v.compare_at_price > v.price ? formatMoneyFromCents(v.compare_at_price) : '';
+      var html = '<span class="nm-pdp__now">' + now + '</span>';
+      if (was) {
+        html += '<span class="nm-pdp__was">' + was + '</span>';
+        html += '<span class="nm-pdp__save">{{ section.settings.sale_badge | default: 'Save' | escape }}</span>';
+      }
+      priceWrap.innerHTML = html;
+    }
+
+    function onOptionsChange() {
+      if (!variants || !variants.length || !idInput) return;
+      var opts = getSelectedOptions();
+      var match = null;
+      for (var i = 0; i < variants.length; i++) {
+        var v = variants[i];
+        if (!v || !v.options) continue;
+        var ok = true;
+        for (var j = 0; j < opts.length; j++) {
+          if (String(v.options[j]) !== String(opts[j])) { ok = false; break; }
+        }
+        if (ok) { match = v; break; }
+      }
+      if (!match) return;
+
+      idInput.value = match.id;
+      setPrice(match);
+
+      if (atcBtn) {
+        atcBtn.disabled = !match.available;
+        atcBtn.textContent = match.available ? 'Add to cart' : 'Sold out';
+      }
+    }
+
+    document.querySelectorAll('input[data-nm-opt]').forEach(function (el) {
+      el.addEventListener('change', onOptionsChange);
+    });
   })();
 </script>
 
@@ -171,7 +254,11 @@
   "settings": [
     { "type": "text", "id": "details_title", "label": "Details title", "default": "Details" },
     { "type": "checkbox", "id": "show_faq", "label": "Show product FAQ", "default": true },
-    { "type": "text", "id": "faq_title", "label": "FAQ title", "default": "FAQ" }
+    { "type": "text", "id": "faq_title", "label": "FAQ title", "default": "FAQ" },
+    { "type": "text", "id": "rating_score", "label": "Rating score text", "default": "4.6/5" },
+    { "type": "text", "id": "rating_text", "label": "Rating reviews text", "default": "(900+ Reviews)" },
+    { "type": "text", "id": "rating_brand", "label": "Rating brand", "default": "Trustpilot" },
+    { "type": "text", "id": "sale_badge", "label": "Sale badge text", "default": "Save" }
   ],
   "blocks": [
     {
