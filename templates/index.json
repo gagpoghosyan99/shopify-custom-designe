@@ -10,24 +10,24 @@
 {
   "sections": {
     "hero": {
-      "type": "hero",
+      "type": "custom-home-hero",
       "blocks": {
-        "m1": {
-          "type": "mini_badge",
+        "mt1": {
+          "type": "micro_trust",
           "settings": {
             "icon": "🛡️",
             "label": "Licensed Products"
           }
         },
-        "m2": {
-          "type": "mini_badge",
+        "mt2": {
+          "type": "micro_trust",
           "settings": {
             "icon": "✓",
             "label": "Pharmacist Approved"
           }
         },
-        "m3": {
-          "type": "mini_badge",
+        "mt3": {
+          "type": "micro_trust",
           "settings": {
             "icon": "🚚",
             "label": "Worldwide Shipping"
@@ -35,159 +35,101 @@
         }
       },
       "block_order": [
-        "m1",
-        "m2",
-        "m3"
+        "mt1",
+        "mt2",
+        "mt3"
       ],
       "settings": {
-        "kicker": "LIMITED TIME",
-        "heading": "BIG SALE",
-        "text": "Limited-time deals on pharmacy-grade vitamins, supplements and wellness essentials. Fast delivery and secure checkout.",
-        "price_badge": "Today only",
-        "price_was": "Was £59.99",
-        "price_now": "Now £39.99",
-        "price_save": "Save 33%",
-        "mini_description": "Collagen Peptides — supports hair, skin, nails & joints. Unflavoured. Easy daily mix.",
-        "button_label": "Shop Now",
-        "button_secondary_label": "Best Sellers",
-        "button_secondary_link": "/collections/best-sellers",
-        "button_tertiary_label": "Doctor Recommended",
-        "button_tertiary_link": "/collections/all"
+        "kicker": "Premium, pharmacist-first care",
+        "heading": "Premium Wellness & Healthcare Solutions",
+        "subheading": "Trusted products for modern health, performance, and vitality — backed by science and pharmacist-first care.",
+        "primary_label": "Shop Now",
+        "secondary_label": "Best Sellers",
+        "secondary_link": "/collections/best-sellers",
+        "tertiary_label": "Doctor Recommended",
+        "tertiary_link": "/collections/all",
+        "show_micro_trust": true
       }
     },
     "trust": {
-      "type": "trust-badges",
+      "type": "custom-trust",
       "blocks": {
-        "b1": {
-          "type": "badge",
+        "t1": {
+          "type": "pill",
           "settings": {
             "icon": "🛡️",
-            "title": "Licensed Products"
+            "label": "Licensed Products"
           }
         },
-        "b2": {
-          "type": "badge",
-          "settings": {
-            "icon": "🚚",
-            "title": "Fast Worldwide Shipping"
-          }
-        },
-        "b3": {
-          "type": "badge",
-          "settings": {
-            "icon": "🔒",
-            "title": "Secure Payments"
-          }
-        },
-        "b4": {
-          "type": "badge",
-          "settings": {
-            "icon": "👨‍⚕️",
-            "title": "Doctor Recommended"
-          }
-        },
-        "b5": {
-          "type": "badge",
+        "t2": {
+          "type": "pill",
           "settings": {
             "icon": "✓",
-            "title": "Verified Quality"
+            "label": "Pharmacist Approved"
+          }
+        },
+        "t3": {
+          "type": "pill",
+          "settings": {
+            "icon": "🚚",
+            "label": "Worldwide Shipping"
+          }
+        },
+        "t4": {
+          "type": "pill",
+          "settings": {
+            "icon": "🔒",
+            "label": "Secure Payments"
+          }
+        },
+        "t5": {
+          "type": "pill",
+          "settings": {
+            "icon": "✓",
+            "label": "Verified Quality"
           }
         }
       },
       "block_order": [
-        "b1",
-        "b2",
-        "b3",
-        "b4",
-        "b5"
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5"
       ],
       "settings": {}
     },
-    "categories": {
-      "type": "category-grid",
-      "blocks": {
-        "c1": {
-          "type": "category",
-          "settings": {
-            "link": "/collections/vitamins",
-            "title": "Vitamins"
-          }
-        },
-        "c2": {
-          "type": "category",
-          "settings": {
-            "link": "/collections/mens-health",
-            "title": "Men's Health"
-          }
-        },
-        "c3": {
-          "type": "category",
-          "settings": {
-            "link": "/collections/wellness",
-            "title": "Wellness"
-          }
-        },
-        "c4": {
-          "type": "category",
-          "settings": {
-            "link": "/collections/energy",
-            "title": "Energy & Performance"
-          }
-        },
-        "c5": {
-          "type": "category",
-          "settings": {
-            "link": "/collections/skincare",
-            "title": "Skincare"
-          }
-        },
-        "c6": {
-          "type": "category",
-          "settings": {
-            "link": "/collections/accessories",
-            "title": "Accessories"
-          }
-        }
-      },
-      "block_order": [
-        "c1",
-        "c2",
-        "c3",
-        "c4",
-        "c5",
-        "c6"
-      ],
-      "settings": {}
-    },
-    "promo": {
-      "type": "promo-eye",
+    "cats": {
+      "type": "custom-categories",
       "settings": {
-        "badge": "🔥 Limited offer",
-        "title": "15% Off Your First Order",
-        "text": "Use code WELLNESS15 at checkout. Pharmacist-reviewed essentials delivered to your door.",
-        "button_label": "Claim Offer"
+        "title": "Shop by Category"
       }
     },
     "bestsellers": {
-      "type": "best-sellers",
+      "type": "custom-product-grid",
       "settings": {
         "title": "Best Sellers",
-        "subtitle": "Top-rated formulas loved by our community.",
         "products_to_show": 8,
         "show_view_all": true
       }
     },
-    "professionals": {
-      "type": "professionals-trust",
+    "discount": {
+      "type": "custom-first-order-discount",
+      "settings": {
+        "code": "WELLNESS15"
+      }
+    },
+    "pro": {
+      "type": "custom-professionals-trust",
       "blocks": {
-        "cert1": {
+        "c1": {
           "type": "cert",
           "settings": {
             "label": "Certifications",
             "value": "GMP · FDA"
           }
         },
-        "cert2": {
+        "c2": {
           "type": "cert",
           "settings": {
             "label": "Security",
@@ -241,8 +183,8 @@
         }
       },
       "block_order": [
-        "cert1",
-        "cert2",
+        "c1",
+        "c2",
         "d1",
         "d2",
         "d3",
@@ -253,102 +195,29 @@
       "settings": {}
     },
     "why": {
-      "type": "why-choose-us",
-      "blocks": {
-        "f1": {
-          "type": "feature",
-          "settings": {
-            "icon": "💬",
-            "title": "Pharmacist-Backed Advice",
-            "text": "Expert guidance on every order."
-          }
-        },
-        "f2": {
-          "type": "feature",
-          "settings": {
-            "icon": "🌿",
-            "title": "Premium Quality",
-            "text": "Lab-tested pure ingredients."
-          }
-        },
-        "f3": {
-          "type": "feature",
-          "settings": {
-            "icon": "🚚",
-            "title": "Fast & Secure Delivery",
-            "text": "Tracked shipping worldwide."
-          }
-        },
-        "f4": {
-          "type": "feature",
-          "settings": {
-            "icon": "↩️",
-            "title": "Money-Back Guarantee",
-            "text": "Shop with full confidence."
-          }
-        }
-      },
-      "block_order": [
-        "f1",
-        "f2",
-        "f3",
-        "f4"
-      ],
+      "type": "custom-why-choose-us",
       "settings": {}
     },
     "reviews": {
-      "type": "testimonials",
-      "blocks": {
-        "r1": {
-          "type": "review",
-          "settings": {
-            "quote": "Fast shipping and exactly what my doctor recommended. Quality you can feel.",
-            "author": "Sarah M.",
-            "role": "Verified buyer · Austin, TX"
-          }
-        },
-        "r2": {
-          "type": "review",
-          "settings": {
-            "quote": "Finally a professional vitamin shop with clear labels and real support.",
-            "author": "James L.",
-            "role": "Verified buyer · Denver, CO"
-          }
-        },
-        "r3": {
-          "type": "review",
-          "settings": {
-            "quote": "My monthly refills arrive sealed and fresh. Highly recommend NovaMeds.",
-            "author": "Priya K.",
-            "role": "Verified buyer · Seattle, WA"
-          }
-        }
-      },
-      "block_order": [
-        "r1",
-        "r2",
-        "r3"
-      ],
+      "type": "custom-testimonials",
       "settings": {}
     },
     "newsletter": {
-      "type": "newsletter",
+      "type": "custom-newsletter",
       "settings": {}
     },
     "faq": {
-      "type": "faq",
-      "settings": {
-        "title": "Frequently Asked Questions"
-      }
+      "type": "custom-faq",
+      "settings": {}
     }
   },
   "order": [
     "hero",
     "trust",
-    "categories",
+    "cats",
     "bestsellers",
-    "promo",
-    "professionals",
+    "discount",
+    "pro",
     "why",
     "reviews",
     "newsletter",
