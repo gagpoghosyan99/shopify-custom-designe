@@ -784,6 +784,9 @@
 
 /* Shopify section wrapper must not break sticky/fixed */
 .shopify-section:has(.nm-product-page),
+body.template-product .shopify-section,
+body.template-product #MainContent,
+body.template-product .nm-main,
 #MainContent,
 .nm-main {
   overflow: visible !important;

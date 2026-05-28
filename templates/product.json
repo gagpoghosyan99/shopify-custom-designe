@@ -37,17 +37,26 @@
         "benefit_qf3xYy"
       ],
       "settings": {
-        "details_title": "Details",
-        "show_faq": true,
-        "faq_title": "FAQ",
         "rating_score": "4.6/5",
         "rating_text": "(900+ Reviews)",
         "rating_brand": "Trustpilot",
         "sale_badge": "Save"
       }
+    },
+    "best_sellers_DzDDRQ": {
+      "type": "best-sellers",
+      "name": "Best sellers",
+      "settings": {
+        "title": "Best Sellers",
+        "subtitle": "Top-rated formulas loved by our community.",
+        "collection": "",
+        "products_to_show": 8,
+        "show_view_all": true
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "best_sellers_DzDDRQ"
   ]
 }
