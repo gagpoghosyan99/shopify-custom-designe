@@ -11,8 +11,8 @@
 
 <section class="nm-pdp nm-animate" aria-label="Product">
   <div class="nm-container">
-    <div class="nm-pdp__grid">
-      <div class="nm-pdp__media product-gallery" aria-label="Product media">
+    <div class="nm-pdp__grid product-layout">
+      <div class="nm-pdp__media product-media-column" aria-label="Product media">
         <div class="nm-pdp__gallery">
           {%- if product.images.size > 0 -%}
             <div class="nm-pdp__carousel" data-nm-pdp-carousel aria-label="Swipe product images">
@@ -47,7 +47,7 @@
         {%- endif -%}
       </div>
 
-      <div class="nm-pdp__info">
+      <div class="nm-pdp__info product-info-column">
         <div class="nm-pdp__card nm-glass">
           <div class="nm-pdp__top">
             {%- if product.vendor != blank -%}
