@@ -46,10 +46,22 @@
       </div>
     {%- elsif source_collection != blank and fallback_tag != blank -%}
       {%- assign tag_count = 0 -%}
+      {%- assign fallback_slug = fallback_tag | handleize -%}
       <div class="nm-products__grid nm-products__grid--row">
         {%- for product in source_collection.products -%}
           {%- if tag_count >= row_limit -%}{%- break -%}{%- endif -%}
+          {%- assign matched = false -%}
           {%- if product.tags contains fallback_tag -%}
+            {%- assign matched = true -%}
+          {%- else -%}
+            {%- for tag in product.tags -%}
+              {%- if tag | handleize == fallback_slug -%}
+                {%- assign matched = true -%}
+                {%- break -%}
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endif -%}
+          {%- if matched -%}
             {% render 'product-card', product: product %}
             {%- assign tag_count = tag_count | plus: 1 -%}
           {%- endif -%}
