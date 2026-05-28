@@ -1,0 +1,46 @@
+{%- assign col = section.settings.collection -%}
+{%- if col == blank -%}{%- assign col = collections.all -%}{%- endif -%}
+
+<section class="nm-vnext-products nm-animate" id="best-sellers" aria-label="Best sellers">
+  <div class="nm-container">
+    <header class="nm-vnext-section-head">
+      <h2 class="nm-vnext-h2">{{ section.settings.title | default: 'Best Sellers' }}</h2>
+      {%- if section.settings.subtitle != blank -%}
+        <p class="nm-vnext-sub">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
+    </header>
+
+    {%- if col != blank and col.products_count > 0 -%}
+      <div class="nm-vnext-products__grid">
+        {%- for product in col.products limit: section.settings.products_to_show -%}
+          {% render 'product-card', product: product %}
+        {%- endfor -%}
+      </div>
+      {%- if section.settings.show_view_all and col.url != blank -%}
+        <div class="nm-vnext-center">
+          <a class="nm-vnext-btn nm-vnext-btn--primary" href="{{ col.url }}">View all</a>
+        </div>
+      {%- endif -%}
+    {%- else -%}
+      {%- if request.design_mode -%}
+        <p class="nm-demo-note">Choose a collection in this section settings to show products.</p>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Custom product grid",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Title", "default": "Best Sellers" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtitle", "default": "Top-rated formulas trusted by our customers." },
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "range", "id": "products_to_show", "min": 4, "max": 16, "step": 2, "default": 8, "label": "Products to show" },
+    { "type": "checkbox", "id": "show_view_all", "label": "Show view all", "default": true }
+  ],
+  "presets": [{ "name": "Custom product grid" }]
+}
+{% endschema %}
+

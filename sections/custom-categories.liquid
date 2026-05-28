@@ -1,0 +1,69 @@
+<section class="nm-vnext-cats nm-animate" id="shop-by-category" aria-label="Shop by category">
+  <div class="nm-container">
+    <header class="nm-vnext-section-head">
+      <h2 class="nm-vnext-h2">{{ section.settings.title | default: 'Shop by Category' }}</h2>
+      {%- if section.settings.subtitle != blank -%}
+        <p class="nm-vnext-sub">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
+    </header>
+
+    <div class="nm-vnext-cats__grid">
+      {%- for block in section.blocks -%}
+        {%- assign link_url = block.settings.link | default: block.settings.collection.url | default: '#' -%}
+        {%- assign label = block.settings.title | default: block.settings.collection.title | default: 'Category' -%}
+        <a class="nm-vnext-cat nm-glow-hover" href="{{ link_url }}" {{ block.shopify_attributes }}>
+          <div class="nm-vnext-cat__media" aria-hidden="true">
+            {%- if block.settings.image != blank -%}
+              {{ block.settings.image | image_url: width: 800 | image_tag: loading: 'lazy', alt: label }}
+            {%- elsif block.settings.collection != blank and block.settings.collection.image != blank -%}
+              {{ block.settings.collection.image | image_url: width: 800 | image_tag: loading: 'lazy', alt: label }}
+            {%- else -%}
+              <div class="nm-vnext-cat__ph" aria-hidden="true"></div>
+            {%- endif -%}
+            <div class="nm-vnext-cat__shade" aria-hidden="true"></div>
+          </div>
+          <div class="nm-vnext-cat__label">
+            <span>{{ label }}</span>
+          </div>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Custom categories",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Title", "default": "Shop by Category" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtitle", "default": "Curated for modern wellness — explore what you need in seconds." }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category card",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "url", "id": "link", "label": "Link (optional override)" },
+        { "type": "text", "id": "title", "label": "Title (optional override)" },
+        { "type": "image_picker", "id": "image", "label": "Image (optional override)" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom categories",
+      "blocks": [
+        { "type": "category", "settings": { "title": "Vitamins", "link": "/collections/vitamins" } },
+        { "type": "category", "settings": { "title": "Supplements", "link": "/collections/supplements" } },
+        { "type": "category", "settings": { "title": "Skincare", "link": "/collections/skincare" } },
+        { "type": "category", "settings": { "title": "Men's Health", "link": "/collections/mens-health" } },
+        { "type": "category", "settings": { "title": "Wellness", "link": "/collections/wellness" } },
+        { "type": "category", "settings": { "title": "Performance", "link": "/collections/performance" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
