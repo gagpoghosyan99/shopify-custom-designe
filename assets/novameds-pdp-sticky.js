@@ -1,120 +1,125 @@
 /**
- * NovaMeds PDP — desktop gallery lock (InfinityHoop-style).
- * Uses position:fixed while scrolling; pins to bottom at section end.
+ * NovaMeds PDP — lock left gallery on desktop (position: fixed).
  */
 (function () {
   'use strict';
 
-  var DESKTOP_MQ = window.matchMedia('(min-width: 991px)');
-  var TOP_OFFSET = 115;
+  var MQ = '(min-width: 991px)';
+  var TOP = 115;
 
-  function qs(sel, root) {
-    return (root || document).querySelector(sel);
+  function qsa(sel, root) {
+    return Array.prototype.slice.call((root || document).querySelectorAll(sel));
   }
 
-  function init(page) {
-    var layout = qs('[data-nm-product-layout]', page);
-    var mediaCol = qs('[data-nm-pdp-media]', page);
-    var inner = qs('[data-nm-pdp-sticky-inner]', page);
-    if (!layout || !mediaCol || !inner) return;
+  function lockGallery(page) {
+    var layout = page.querySelector('[data-nm-product-layout]');
+    var media = page.querySelector('[data-nm-pdp-media]');
+    var inner = page.querySelector('[data-nm-pdp-sticky-inner]');
+    var spacer = page.querySelector('[data-nm-pdp-spacer]');
+    if (!layout || !media || !inner) return null;
 
-    var enabled = false;
     var raf = 0;
+    var running = false;
 
-    function clearStyles() {
-      inner.style.position = '';
-      inner.style.top = '';
+    function unlock() {
+      inner.classList.remove('is-locked', 'is-pinned-bottom');
       inner.style.left = '';
       inner.style.width = '';
-      inner.style.zIndex = '';
-      mediaCol.style.minHeight = '';
+      inner.style.right = '';
+      media.style.minHeight = '';
+      if (spacer) spacer.style.height = '0';
       page.classList.remove('is-pdp-media-fixed');
     }
 
-    function measure() {
-      if (!enabled) return;
+    function tick() {
+      if (!running) return;
 
-      var scrollY = window.scrollY || window.pageYOffset;
-      var pageRect = page.getBoundingClientRect();
-      var pageTop = scrollY + pageRect.top;
-      var pageBottom = pageTop + page.offsetHeight;
-      var layoutH = layout.offsetHeight;
       var innerH = inner.offsetHeight;
-      var colRect = mediaCol.getBoundingClientRect();
-      var start = pageTop - TOP_OFFSET;
-      var end = pageBottom - innerH - TOP_OFFSET;
+      if (spacer) spacer.style.height = innerH + 'px';
 
-      if (scrollY < start) {
-        clearStyles();
+      var layoutRect = layout.getBoundingClientRect();
+      var mediaRect = media.getBoundingClientRect();
+      var layoutH = layout.offsetHeight;
+
+      media.style.position = 'relative';
+      media.style.minHeight = layoutH + 'px';
+
+      if (layoutRect.bottom <= TOP || layoutRect.top >= window.innerHeight) {
+        unlock();
+        return;
+      }
+
+      if (layoutRect.top > TOP) {
+        unlock();
         return;
       }
 
       page.classList.add('is-pdp-media-fixed');
-      mediaCol.style.minHeight = layoutH + 'px';
-      mediaCol.style.position = 'relative';
 
-      if (scrollY >= end) {
-        inner.style.position = 'absolute';
-        inner.style.top = layoutH - innerH + 'px';
+      if (layoutRect.bottom <= TOP + innerH) {
+        inner.classList.remove('is-locked');
+        inner.classList.add('is-pinned-bottom');
         inner.style.left = '0';
         inner.style.width = '100%';
-        inner.style.zIndex = '2';
+        inner.style.right = '';
         return;
       }
 
-      inner.style.position = 'fixed';
-      inner.style.top = TOP_OFFSET + 'px';
-      inner.style.left = colRect.left + 'px';
-      inner.style.width = colRect.width + 'px';
-      inner.style.zIndex = '2';
+      inner.classList.add('is-locked');
+      inner.classList.remove('is-pinned-bottom');
+      inner.style.left = mediaRect.left + 'px';
+      inner.style.width = mediaRect.width + 'px';
+      inner.style.right = 'auto';
     }
 
-    function onScrollOrResize() {
-      if (!enabled) return;
+    function requestTick() {
+      if (!running) return;
       if (raf) return;
       raf = window.requestAnimationFrame(function () {
         raf = 0;
-        measure();
+        tick();
       });
     }
 
-    function enable() {
-      if (enabled) return;
-      enabled = true;
-      measure();
-      window.addEventListener('scroll', onScrollOrResize, { passive: true });
-      window.addEventListener('resize', onScrollOrResize);
+    function start() {
+      if (running) return;
+      running = true;
+      tick();
+      window.addEventListener('scroll', requestTick, { passive: true });
+      window.addEventListener('resize', requestTick);
     }
 
-    function disable() {
-      if (!enabled) return;
-      enabled = false;
-      window.removeEventListener('scroll', onScrollOrResize);
-      window.removeEventListener('resize', onScrollOrResize);
-      clearStyles();
-      mediaCol.style.position = '';
+    function stop() {
+      if (!running) return;
+      running = false;
+      window.removeEventListener('scroll', requestTick);
+      window.removeEventListener('resize', requestTick);
+      unlock();
+      media.style.position = '';
     }
 
-    function onMqChange() {
-      if (DESKTOP_MQ.matches) {
-        enable();
+    function mqChange() {
+      if (window.matchMedia(MQ).matches) {
+        start();
       } else {
-        disable();
+        stop();
       }
     }
 
-    if (typeof DESKTOP_MQ.addEventListener === 'function') {
-      DESKTOP_MQ.addEventListener('change', onMqChange);
-    } else {
-      DESKTOP_MQ.addListener(onMqChange);
-    }
+    var mql = window.matchMedia(MQ);
+    if (mql.addEventListener) mql.addEventListener('change', mqChange);
+    else if (mql.addListener) mql.addListener(mqChange);
 
-    onMqChange();
+    mqChange();
+
+    return { stop: stop, refresh: tick };
   }
 
   function boot() {
-    document.querySelectorAll('[data-nm-product-page]').forEach(init);
+    qsa('[data-nm-product-page]').forEach(lockGallery);
   }
+
+  window.NovaMedsPdpSticky = { lockGallery: lockGallery, boot: boot };
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', boot);
@@ -122,10 +127,14 @@
     boot();
   }
 
-  document.addEventListener('shopify:section:load', function (evt) {
-    var root = evt.target;
+  window.addEventListener('load', boot);
+
+  document.addEventListener('shopify:section:load', function (e) {
+    var root = e.target;
     if (!root) return;
-    var page = root.matches && root.matches('[data-nm-product-page]') ? root : qs('[data-nm-product-page]', root);
-    if (page) init(page);
+    var page = root.matches && root.matches('[data-nm-product-page]')
+      ? root
+      : root.querySelector('[data-nm-product-page]');
+    if (page) lockGallery(page);
   });
 })();

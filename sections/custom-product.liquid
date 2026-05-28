@@ -9,12 +9,11 @@
 -%}
 
 
-<script src="{{ 'novameds-pdp-sticky.js' | asset_url }}" defer></script>
-
 <section class="nm-product-page nm-pdp" data-nm-product-page aria-label="Product">
   <div class="nm-product-shell">
     <div class="nm-product-layout" data-nm-product-layout>
       <aside class="nm-product-media-sticky" data-nm-pdp-media aria-label="Product media">
+        <div class="nm-product-media-sticky__spacer" data-nm-pdp-spacer aria-hidden="true"></div>
         <div class="nm-product-media-sticky__inner" data-nm-pdp-sticky-inner>
         <div class="nm-pdp__gallery">
           {%- if product.images.size > 0 -%}
@@ -417,7 +416,16 @@
     document.querySelectorAll('input[data-nm-opt]').forEach(function (el) {
       el.addEventListener('change', onOptionsChange);
     });
+
+    if (window.NovaMedsPdpSticky && window.NovaMedsPdpSticky.boot) {
+      window.NovaMedsPdpSticky.boot();
+    }
   })();
+</script>
+
+<script src="{{ 'novameds-pdp-sticky.js' | asset_url }}"></script>
+<script>
+  if (window.NovaMedsPdpSticky) window.NovaMedsPdpSticky.boot();
 </script>
 
 {% schema %}
