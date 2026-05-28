@@ -24,6 +24,20 @@
               {%- endfor -%}
             </div>
 
+            {%- if product.images.size > 1 -%}
+              <div class="nm-pdp__dots" data-nm-pdp-dots aria-hidden="true">
+                {%- for image in product.images -%}
+                  <button
+                    type="button"
+                    class="nm-pdp__dot{% if forloop.first %} is-active{% endif %}"
+                    data-nm-pdp-dot
+                    data-index="{{ forloop.index0 }}"
+                    aria-label="Go to image {{ forloop.index }}"
+                  ></button>
+                {%- endfor -%}
+              </div>
+            {%- endif -%}
+
             <div class="nm-pdp__main" aria-label="Selected product image">
               {%- assign first_img = product.images.first -%}
               {{ first_img | image_url: width: 1400 | image_tag: loading: 'eager', alt: first_img.alt, class: 'nm-pdp__img', id: 'nm-pdp-main-img' }}
@@ -291,13 +305,17 @@
     var carousel = document.querySelector('[data-nm-pdp-carousel]');
     var slides = document.querySelectorAll('[data-nm-pdp-slide]');
 
-    function setActiveThumb(idx) {
+    var dots = document.querySelectorAll('[data-nm-pdp-dot]');
+
+    function setActiveIndex(idx) {
       thumbs.forEach(function (t) { t.classList.remove('is-active'); });
-      var match = null;
       thumbs.forEach(function (t) {
-        if (String(t.getAttribute('data-index')) === String(idx)) match = t;
+        if (String(t.getAttribute('data-index')) === String(idx)) t.classList.add('is-active');
       });
-      if (match) match.classList.add('is-active');
+      dots.forEach(function (d) { d.classList.remove('is-active'); });
+      dots.forEach(function (d) {
+        if (String(d.getAttribute('data-index')) === String(idx)) d.classList.add('is-active');
+      });
     }
 
     function scrollCarouselTo(idx) {
@@ -315,7 +333,15 @@
       btn.addEventListener('click', function () {
         var idx = btn.getAttribute('data-index') || '0';
         if (main) main.src = btn.getAttribute('data-src');
-        setActiveThumb(idx);
+        setActiveIndex(idx);
+        scrollCarouselTo(idx);
+      });
+    });
+
+    dots.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var idx = btn.getAttribute('data-index') || '0';
+        setActiveIndex(idx);
         scrollCarouselTo(idx);
       });
     });
@@ -339,7 +365,7 @@
                 best = parseInt(s.getAttribute('data-nm-pdp-slide') || '0', 10) || 0;
               }
             });
-            setActiveThumb(best);
+            setActiveIndex(best);
           });
         },
         { passive: true }
