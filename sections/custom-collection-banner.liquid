@@ -1,0 +1,165 @@
+{%- liquid
+  assign brand = settings.brand_name | default: 'NovaMeds'
+  assign headline = section.settings.headline | default: 'Premium Health & Wellness Products'
+  assign subheadline = section.settings.subheadline | default: 'Trusted supplements, vitamins, and wellness essentials — selected for quality and daily performance.'
+  assign cta_label = section.settings.cta_label | default: 'Shop Best Sellers'
+  assign trust_line = section.settings.trust_line | default: 'Fast delivery • Quality brands • Secure checkout'
+
+  assign cta_url = section.settings.cta_link
+  if cta_url == blank
+    if section.settings.cta_collection != blank
+      assign cta_url = section.settings.cta_collection.url
+    else
+      assign cta_url = '/collections/best-sellers'
+    endif
+  endif
+
+  assign visual = section.settings.hero_image
+  if visual == blank and section.settings.use_default_visual
+    assign visual_asset = 'collection-hero-visual.png'
+  endif
+-%}
+
+{{ 'novameds-collection-banner.css' | asset_url | stylesheet_tag }}
+
+<section class="nm-coll-banner" aria-label="{{ headline | escape }}">
+  <div class="nm-coll-banner__bg" aria-hidden="true">
+    <span class="nm-coll-banner__glow nm-coll-banner__glow--a"></span>
+    <span class="nm-coll-banner__glow nm-coll-banner__glow--b"></span>
+    <span class="nm-coll-banner__ring nm-coll-banner__ring--1"></span>
+    <span class="nm-coll-banner__ring nm-coll-banner__ring--2"></span>
+    <span class="nm-coll-banner__ring nm-coll-banner__ring--3"></span>
+  </div>
+
+  <div class="nm-container nm-coll-banner__inner">
+    <div class="nm-coll-banner__copy">
+      <div class="nm-coll-banner__brand">
+        {%- if settings.logo != blank -%}
+          {{ settings.logo | image_url: width: 280 | image_tag: class: 'nm-coll-banner__logo', alt: brand, widths: '140, 200, 280', loading: 'eager' }}
+        {%- else -%}
+          <span class="nm-coll-banner__logo-text">{{ brand }}</span>
+        {%- endif -%}
+      </div>
+
+      <h1 class="nm-coll-banner__title">{{ headline }}</h1>
+
+      {%- if subheadline != blank -%}
+        <p class="nm-coll-banner__sub">{{ subheadline }}</p>
+      {%- endif -%}
+
+      {%- if cta_label != blank -%}
+        <a class="nm-coll-banner__cta" href="{{ cta_url }}">{{ cta_label }}</a>
+      {%- endif -%}
+
+      {%- if trust_line != blank -%}
+        <div class="nm-coll-banner__trust" aria-label="Trust highlights">
+          <span class="nm-coll-banner__trust-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 8.5L12 3l9 5.5V18a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1V8.5z" stroke="currentColor" stroke-width="1.6"/></svg>
+            Fast delivery
+          </span>
+          <span class="nm-coll-banner__trust-dot" aria-hidden="true">•</span>
+          <span class="nm-coll-banner__trust-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3l7 4v5c0 4.2-3 7.8-7 9-4-1.2-7-4.8-7-9V7l7-4z" stroke="currentColor" stroke-width="1.6"/><path d="M9.5 12.2l1.8 1.8 3.5-3.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            Quality brands
+          </span>
+          <span class="nm-coll-banner__trust-dot" aria-hidden="true">•</span>
+          <span class="nm-coll-banner__trust-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M8 11V8a4 4 0 118 0v3" stroke="currentColor" stroke-width="1.6"/></svg>
+            Secure checkout
+          </span>
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="nm-coll-banner__visual" aria-hidden="true">
+      <div class="nm-coll-banner__visual-glow"></div>
+      {%- if visual != blank -%}
+        {{
+          visual
+          | image_url: width: 1400
+          | image_tag:
+            class: 'nm-coll-banner__visual-img',
+            widths: '600, 900, 1200, 1400',
+            sizes: '(min-width: 900px) 52vw, 92vw',
+            loading: 'eager',
+            fetchpriority: 'high',
+            alt: ''
+        }}
+      {%- elsif visual_asset != blank -%}
+        <img
+          class="nm-coll-banner__visual-img"
+          src="{{ visual_asset | asset_url }}"
+          alt=""
+          width="1400"
+          height="900"
+          loading="eager"
+          fetchpriority="high"
+        >
+      {%- else -%}
+        <div class="nm-coll-banner__products-fallback">
+          {% render 'nm-placeholder-img', asset: 'placeholder-product-1.svg', alt: '', class: 'nm-coll-banner__ph nm-coll-banner__ph--1', width: 200, height: 280 %}
+          {% render 'nm-placeholder-img', asset: 'placeholder-product-2.svg', alt: '', class: 'nm-coll-banner__ph nm-coll-banner__ph--2', width: 180, height: 260 %}
+          {% render 'nm-placeholder-img', asset: 'placeholder-product-3.svg', alt: '', class: 'nm-coll-banner__ph nm-coll-banner__ph--3', width: 190, height: 270 %}
+          {% render 'nm-placeholder-img', asset: 'placeholder-product-4.svg', alt: '', class: 'nm-coll-banner__ph nm-coll-banner__ph--4', width: 170, height: 250 %}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collection banner",
+  "tag": "section",
+  "class": "shopify-section--collection-banner",
+  "settings": [
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "Premium Health & Wellness Products"
+    },
+    {
+      "type": "textarea",
+      "id": "subheadline",
+      "label": "Subheadline",
+      "default": "Trusted supplements, vitamins, and wellness essentials — selected for quality and daily performance."
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "CTA label",
+      "default": "Shop Best Sellers"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA link (optional)"
+    },
+    {
+      "type": "collection",
+      "id": "cta_collection",
+      "label": "CTA collection (if link empty)"
+    },
+    {
+      "type": "text",
+      "id": "trust_line",
+      "label": "Trust line (accessibility)",
+      "default": "Fast delivery • Quality brands • Secure checkout",
+      "info": "Shown as icon row; edit labels in section code if needed."
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Product visual (right side)"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_default_visual",
+      "label": "Use bundled product cluster image",
+      "default": true
+    }
+  ],
+  "presets": [{ "name": "Collection banner" }]
+}
+{% endschema %}
