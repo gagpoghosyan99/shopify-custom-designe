@@ -1,0 +1,55 @@
+<section class="nm-vnext-faq nm-animate" id="faq" aria-label="FAQ">
+  <div class="nm-container">
+    <header class="nm-vnext-section-head">
+      <h2 class="nm-vnext-h2">{{ section.settings.title | default: 'FAQ' }}</h2>
+      {%- if section.settings.subtitle != blank -%}
+        <p class="nm-vnext-sub">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
+    </header>
+
+    <div class="nm-vnext-faq__list" role="list">
+      {%- for block in section.blocks -%}
+        <div class="nm-vnext-faq__item" data-nm-faq-item role="listitem" {{ block.shopify_attributes }}>
+          <button type="button" class="nm-vnext-faq__q" data-nm-faq-question aria-expanded="false">
+            {{ block.settings.question }}
+          </button>
+          <div class="nm-vnext-faq__a" data-nm-faq-answer>
+            {{ block.settings.answer }}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Custom FAQ",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Title", "default": "Frequently Asked Questions" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtitle", "default": "Everything you need to know about ordering from NovaMeds." }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "Are your products pharmacist approved?" },
+        { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>We partner with licensed pharmacies and verify formulations with qualified pharmacists before listing products.</p>" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom FAQ",
+      "blocks": [
+        { "type": "question", "settings": { "question": "Are your products pharmacist approved?", "answer": "<p>We partner with licensed pharmacies and verify formulations with qualified pharmacists before listing products.</p>" } },
+        { "type": "question", "settings": { "question": "How fast is shipping?", "answer": "<p>Orders placed before 2pm ship same business day. Standard delivery is 2–5 business days; express options are available at checkout.</p>" } },
+        { "type": "question", "settings": { "question": "Is checkout secure?", "answer": "<p>All payments are processed through encrypted secure checkout with major cards and trusted payment methods.</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
+

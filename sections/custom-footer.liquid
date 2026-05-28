@@ -1,0 +1,68 @@
+<footer class="nm-vnext-footer" role="contentinfo" aria-label="Footer">
+  <div class="nm-container">
+    <div class="nm-vnext-footer__grid">
+      <div class="nm-vnext-footer__brand">
+        <a href="{{ routes.root_url }}" class="nm-vnext-footer__logo" aria-label="{{ settings.brand_name | default: 'NovaMeds' }} home">
+          {%- if settings.logo != blank -%}
+            {{ settings.logo | image_url: width: 240 | image_tag: loading: 'lazy', alt: settings.brand_name | default: 'NovaMeds' }}
+          {%- else -%}
+            <img src="{{ 'novameds-logo.png' | asset_url }}" alt="{{ settings.brand_name | default: 'NovaMeds' }}" loading="lazy" width="240" height="80">
+          {%- endif -%}
+        </a>
+        <p class="nm-vnext-footer__tagline">{{ section.settings.tagline }}</p>
+        <div class="nm-vnext-footer__social">
+          {%- if section.settings.social_instagram != blank -%}<a href="{{ section.settings.social_instagram }}" aria-label="Instagram">IG</a>{%- endif -%}
+          {%- if section.settings.social_facebook != blank -%}<a href="{{ section.settings.social_facebook }}" aria-label="Facebook">FB</a>{%- endif -%}
+          {%- if section.settings.social_linkedin != blank -%}<a href="{{ section.settings.social_linkedin }}" aria-label="LinkedIn">IN</a>{%- endif -%}
+        </div>
+      </div>
+
+      <div class="nm-vnext-footer__col">
+        <h3>Shop</h3>
+        <ul>
+          <li><a href="/pages/catalog">Catalog</a></li>
+          <li><a href="/collections/best-sellers">Best Sellers</a></li>
+          <li><a href="/collections/all">All Products</a></li>
+        </ul>
+      </div>
+
+      <div class="nm-vnext-footer__col">
+        <h3>Company</h3>
+        <ul>
+          <li><a href="/pages/about">About</a></li>
+          <li><a href="/blogs/news">Blog</a></li>
+          <li><a href="/pages/contact">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="nm-vnext-footer__col">
+        <h3>Legal</h3>
+        <ul>
+          {%- assign nm_origin = settings.public_site_url | default: 'https://novameds.shop' | strip -%}
+          {%- if nm_origin contains 'myshopify.com' -%}{%- assign nm_origin = 'https://novameds.shop' -%}{%- endif -%}
+          <li><a href="{{ nm_origin }}/policies/privacy-policy">Privacy</a></li>
+          <li><a href="{{ nm_origin }}/policies/terms-of-service">Terms</a></li>
+          <li><a href="/pages/medical-disclaimer">Medical Disclaimer</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="nm-vnext-footer__bottom">
+      <span>&copy; {{ 'now' | date: '%Y' }} {{ settings.brand_name | default: 'NovaMeds' }}. All rights reserved.</span>
+      <span class="nm-vnext-footer__payments">Visa · Mastercard · Amex · PayPal</span>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Custom footer",
+  "settings": [
+    { "type": "textarea", "id": "tagline", "label": "Tagline", "default": "Premium wellness and healthcare solutions — science-backed, pharmacist-reviewed." },
+    { "type": "url", "id": "social_facebook", "label": "Facebook" },
+    { "type": "url", "id": "social_instagram", "label": "Instagram" },
+    { "type": "url", "id": "social_linkedin", "label": "LinkedIn" }
+  ]
+}
+{% endschema %}
+

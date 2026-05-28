@@ -1,0 +1,33 @@
+<section class="nm-vnext-newsletter nm-animate" id="newsletter" aria-label="Newsletter">
+  <div class="nm-container">
+    <div class="nm-vnext-newsletter__card nm-dark-stage nm-glass nm-glow-hover">
+      <h2 class="nm-vnext-newsletter__title">{{ section.settings.title | default: 'Get wellness tips & exclusive offers' }}</h2>
+      <p class="nm-vnext-newsletter__text">{{ section.settings.text | default: 'Join NovaMeds for pharmacist-backed advice and member-only savings.' }}</p>
+
+      {% form 'customer', class: 'nm-vnext-newsletter__form' %}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <label class="visually-hidden" for="NmNewsletterEmail">Email</label>
+        <input type="email" id="NmNewsletterEmail" name="contact[email]" placeholder="Enter your email" required>
+        <button type="submit" class="nm-vnext-btn nm-vnext-btn--primary">{{ section.settings.button_label | default: 'Subscribe' }}</button>
+      {% endform %}
+
+      {%- if form.posted_successfully? -%}
+        <p class="nm-vnext-newsletter__success">Thanks for subscribing!</p>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Custom newsletter",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Title", "default": "Get wellness tips & exclusive offers" },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Join NovaMeds for pharmacist-backed advice and member-only savings." },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Subscribe" }
+  ],
+  "presets": [{ "name": "Custom newsletter" }]
+}
+{% endschema %}
+

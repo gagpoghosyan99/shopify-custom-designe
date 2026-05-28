@@ -556,4 +556,215 @@
   color: rgba(255, 255, 255, 0.72);
 }
 
+/* vNext why */
+.nm-vnext-why {
+  background: #fff;
+  padding: 0 0 3.25rem;
+}
+.nm-vnext-why__grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+@media (min-width: 900px) {
+  .nm-vnext-why__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.25rem; }
+}
+.nm-vnext-why__card {
+  border-radius: 18px;
+  background: #fff;
+  border: 1px solid rgba(10, 22, 40, 0.08);
+  box-shadow: 0 14px 45px rgba(10, 22, 40, 0.08);
+  padding: 1.25rem 1rem;
+  text-align: center;
+}
+.nm-vnext-why__icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 18px;
+  margin: 0 auto 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 201, 212, 0.08);
+  font-size: 1.5rem;
+}
+.nm-vnext-why__title {
+  margin: 0 0 0.35rem;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  font-size: 0.95rem;
+  color: #0f172a;
+}
+.nm-vnext-why__text {
+  margin: 0;
+  color: #64748b;
+  line-height: 1.6;
+  font-size: 0.875rem;
+}
+
+/* vNext testimonials */
+.nm-vnext-testimonials {
+  background: #fff;
+  padding: 0 0 3.25rem;
+}
+.nm-vnext-testimonials__row {
+  display: grid;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 0.5rem;
+  -webkit-overflow-scrolling: touch;
+}
+@media (min-width: 900px) {
+  .nm-vnext-testimonials__row {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    overflow: visible;
+  }
+}
+.nm-vnext-review {
+  min-width: 290px;
+  scroll-snap-align: start;
+  border-radius: 18px;
+  background: #fff;
+  border: 1px solid rgba(10, 22, 40, 0.08);
+  box-shadow: 0 14px 45px rgba(10, 22, 40, 0.08);
+  padding: 1.25rem;
+}
+.nm-vnext-review__head {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+.nm-vnext-review__avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(0, 201, 212, 0.1);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  color: #0a1628;
+}
+.nm-vnext-review__avatar img { width: 100%; height: 100%; object-fit: cover; }
+.nm-vnext-review__name { font-weight: 900; color: #0f172a; }
+.nm-vnext-review__stars { color: #f59e0b; font-size: 0.75rem; letter-spacing: 1px; }
+.nm-vnext-review__quote { margin: 0; color: #0f172a; line-height: 1.7; }
+.nm-vnext-review__meta { margin: 0.5rem 0 0; color: #64748b; font-size: 0.8125rem; }
+
+/* vNext newsletter */
+.nm-vnext-newsletter {
+  background: #fff;
+  padding: 0 0 3.25rem;
+}
+.nm-vnext-newsletter__card {
+  border-radius: var(--nm-radius-xl);
+  padding: 2rem 1.25rem;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+@media (min-width: 900px) {
+  .nm-vnext-newsletter__card { padding: 2.5rem 2rem; }
+}
+.nm-vnext-newsletter__title {
+  margin: 0 0 0.5rem;
+  color: #fff;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  font-size: 1.75rem;
+}
+.nm-vnext-newsletter__text {
+  margin: 0 auto 1.25rem;
+  max-width: 56ch;
+  color: rgba(255, 255, 255, 0.84);
+}
+.nm-vnext-newsletter__form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  justify-content: center;
+}
+.nm-vnext-newsletter__form input {
+  flex: 1;
+  min-width: 220px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  padding: 0.85rem 1rem;
+}
+.nm-vnext-newsletter__form input::placeholder { color: rgba(255, 255, 255, 0.7); }
+.nm-vnext-newsletter__success { margin: 1rem 0 0; color: rgba(46, 232, 240, 0.95); font-weight: 900; }
+
+/* vNext FAQ */
+.nm-vnext-faq { background: #fff; padding: 0 0 3.5rem; }
+.nm-vnext-faq__list { max-width: 860px; margin: 0 auto; }
+.nm-vnext-faq__item { border-bottom: 1px solid rgba(10, 22, 40, 0.12); }
+.nm-vnext-faq__q {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  padding: 1.1rem 0;
+  font-size: 1rem;
+  font-weight: 900;
+  color: #0f172a;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.nm-vnext-faq__q::after { content: "+"; color: #00b4c8; font-size: 1.25rem; }
+.nm-vnext-faq__item.is-open .nm-vnext-faq__q::after { content: "×"; }
+.nm-vnext-faq__a { display: none; padding: 0 0 1.1rem; color: #64748b; line-height: 1.75; }
+.nm-vnext-faq__item.is-open .nm-vnext-faq__a { display: block; }
+
+/* vNext footer */
+.nm-vnext-footer {
+  background: #0a1628;
+  color: rgba(255, 255, 255, 0.72);
+  padding: 4rem 0 2rem;
+}
+.nm-vnext-footer__grid {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 900px) {
+  .nm-vnext-footer__grid { grid-template-columns: 1.6fr 1fr 1fr 1fr; }
+}
+.nm-vnext-footer__logo img { height: 56px; width: auto; display: block; }
+.nm-vnext-footer__tagline { margin: 0.85rem 0 0; line-height: 1.7; max-width: 42ch; }
+.nm-vnext-footer__social { display: flex; gap: 0.5rem; margin-top: 1rem; }
+.nm-vnext-footer__social a {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  font-weight: 900;
+}
+.nm-vnext-footer__col h3 { margin: 0 0 0.85rem; color: #fff; font-size: 0.8125rem; letter-spacing: 0.08em; text-transform: uppercase; }
+.nm-vnext-footer__col ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.5rem; }
+.nm-vnext-footer__col a { color: rgba(255, 255, 255, 0.78); text-decoration: none; }
+.nm-vnext-footer__col a:hover { color: rgba(46, 232, 240, 0.95); }
+.nm-vnext-footer__bottom {
+  margin-top: 2.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+  font-size: 0.85rem;
+}
+.nm-vnext-footer__payments { opacity: 0.65; font-size: 0.75rem; }
+
 

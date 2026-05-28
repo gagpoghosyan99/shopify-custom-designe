@@ -1,0 +1,69 @@
+<section class="nm-vnext-testimonials nm-animate" id="testimonials" aria-label="Testimonials">
+  <div class="nm-container">
+    <header class="nm-vnext-section-head">
+      <h2 class="nm-vnext-h2">{{ section.settings.title | default: 'What Our Customers Say' }}</h2>
+      {%- if section.settings.subtitle != blank -%}
+        <p class="nm-vnext-sub">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
+    </header>
+
+    <div class="nm-vnext-testimonials__row" role="list">
+      {%- for block in section.blocks -%}
+        <article class="nm-vnext-review nm-glow-hover" role="listitem" {{ block.shopify_attributes }}>
+          <div class="nm-vnext-review__head">
+            <div class="nm-vnext-review__avatar" aria-hidden="true">
+              {%- if block.settings.avatar != blank -%}
+                {{ block.settings.avatar | image_url: width: 120 | image_tag: loading: 'lazy', alt: '' }}
+              {%- else -%}
+                <span aria-hidden="true">{{ block.settings.initials | default: 'NM' }}</span>
+              {%- endif -%}
+            </div>
+            <div>
+              <div class="nm-vnext-review__name">{{ block.settings.author | default: 'Verified Buyer' }}</div>
+              <div class="nm-vnext-review__stars" aria-hidden="true">★★★★★</div>
+            </div>
+          </div>
+          <p class="nm-vnext-review__quote">“{{ block.settings.quote }}”</p>
+          {%- if block.settings.role != blank -%}
+            <p class="nm-vnext-review__meta">{{ block.settings.role }}</p>
+          {%- endif -%}
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Custom testimonials",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Title", "default": "What Our Customers Say" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtitle", "default": "Verified reviews from real customers." }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        { "type": "image_picker", "id": "avatar", "label": "Photo (optional)" },
+        { "type": "text", "id": "initials", "label": "Initials fallback", "default": "SM" },
+        { "type": "textarea", "id": "quote", "label": "Quote", "default": "Fast shipping and exactly what my doctor recommended. Quality you can feel." },
+        { "type": "text", "id": "author", "label": "Name", "default": "Sarah M." },
+        { "type": "text", "id": "role", "label": "Subtitle", "default": "Verified buyer" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom testimonials",
+      "blocks": [
+        { "type": "review", "settings": { "initials": "SM", "author": "Sarah M.", "role": "Verified buyer · Austin, TX", "quote": "Fast shipping and exactly what my doctor recommended. Quality you can feel." } },
+        { "type": "review", "settings": { "initials": "JL", "author": "James L.", "role": "Verified buyer · Denver, CO", "quote": "Finally a professional vitamin shop with clear labels and real support." } },
+        { "type": "review", "settings": { "initials": "PK", "author": "Priya K.", "role": "Verified buyer · Seattle, WA", "quote": "My monthly refills arrive sealed and fresh. Highly recommend NovaMeds." } }
+      ]
+    }
+  ]
+}
+{% endschema %}
+

@@ -1,0 +1,54 @@
+<section class="nm-vnext-why nm-animate" id="why-choose" aria-label="Why choose NovaMeds">
+  <div class="nm-container">
+    <header class="nm-vnext-section-head">
+      <h2 class="nm-vnext-h2">{{ section.settings.title | default: 'Why Choose Us' }}</h2>
+      {%- if section.settings.subtitle != blank -%}
+        <p class="nm-vnext-sub">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
+    </header>
+
+    <div class="nm-vnext-why__grid">
+      {%- for block in section.blocks -%}
+        <article class="nm-vnext-why__card nm-glow-hover" {{ block.shopify_attributes }}>
+          <div class="nm-vnext-why__icon" aria-hidden="true">{{ block.settings.icon }}</div>
+          <h3 class="nm-vnext-why__title">{{ block.settings.title }}</h3>
+          <p class="nm-vnext-why__text">{{ block.settings.text }}</p>
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Custom why choose",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Title", "default": "Why Choose Us" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtitle", "default": "Premium care, science-backed products, and trust-first service." }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        { "type": "text", "id": "icon", "label": "Icon", "default": "💬" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Pharmacist-Backed Advice" },
+        { "type": "text", "id": "text", "label": "Text", "default": "Expert guidance on every order." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom why choose",
+      "blocks": [
+        { "type": "feature", "settings": { "icon": "💬", "title": "Pharmacist-Backed Advice", "text": "Expert guidance on every order." } },
+        { "type": "feature", "settings": { "icon": "🌿", "title": "Premium Quality", "text": "Lab-tested, pure ingredients." } },
+        { "type": "feature", "settings": { "icon": "🚚", "title": "Fast & Secure Delivery", "text": "Tracked shipping worldwide." } },
+        { "type": "feature", "settings": { "icon": "↩️", "title": "Money-Back Guarantee", "text": "Shop with confidence." } }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
