@@ -418,6 +418,32 @@
     });
 
   })();
+
+  /* Desktop: scroll right panel first, then pass scroll to the page */
+  (function () {
+    var panel = document.querySelector('.nm-product-info-scroll');
+    if (!panel) return;
+    var mq = window.matchMedia('(min-width: 991px)');
+
+    function onWheel(e) {
+      if (!mq.matches) return;
+      var el = panel;
+      var max = el.scrollHeight - el.clientHeight;
+      if (max <= 0) return;
+
+      var atTop = el.scrollTop <= 0;
+      var atBottom = el.scrollTop >= max - 1;
+
+      if ((e.deltaY > 0 && atBottom) || (e.deltaY < 0 && atTop)) {
+        return;
+      }
+
+      e.preventDefault();
+      el.scrollTop += e.deltaY;
+    }
+
+    panel.addEventListener('wheel', onWheel, { passive: false });
+  })();
 </script>
 
 {% schema %}
