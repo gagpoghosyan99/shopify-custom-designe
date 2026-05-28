@@ -9,10 +9,13 @@
 -%}
 
 
-<section class="nm-pdp nm-animate" aria-label="Product">
-  <div class="nm-container">
-    <div class="nm-pdp__grid product-layout">
-      <div class="nm-pdp__media product-media-column" aria-label="Product media">
+{{ 'novameds-pdp-sticky.js' | asset_url | script_tag }}
+
+<section class="nm-product-page nm-pdp" data-nm-product-page aria-label="Product">
+  <div class="nm-product-shell">
+    <div class="nm-product-layout" data-nm-product-layout>
+      <aside class="nm-product-media-sticky" data-nm-pdp-media aria-label="Product media">
+        <div class="nm-product-media-sticky__inner" data-nm-pdp-sticky-inner>
         <div class="nm-pdp__gallery">
           {%- if product.images.size > 0 -%}
             <div class="nm-pdp__carousel" data-nm-pdp-carousel aria-label="Swipe product images">
@@ -45,9 +48,10 @@
             {%- endfor -%}
           </div>
         {%- endif -%}
-      </div>
+        </div>
+      </aside>
 
-      <div class="nm-pdp__info product-info-column">
+      <div class="nm-product-info-scroll">
         <div class="nm-pdp__card nm-glass">
           <div class="nm-pdp__top">
             {%- if product.vendor != blank -%}
