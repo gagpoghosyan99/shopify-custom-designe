@@ -92,25 +92,88 @@
       </div>
     </div>
 
-    <nav id="nm-mobile-nav" class="nm-hdr__mobile" data-nm-mobile-nav aria-label="Mobile menu">
-      {%- if section.settings.menu != blank -%}
-        {%- for link in section.settings.menu.links -%}
-          <a href="{{ link.url }}">{{ link.title }}</a>
-          {%- if link.links.size > 0 -%}
-            {%- for child in link.links -%}
-              <a class="nm-hdr__mobile-child" href="{{ child.url }}">{{ child.title }}</a>
-            {%- endfor -%}
-          {%- endif -%}
-        {%- endfor -%}
-      {%- else -%}
-        <a href="{{ routes.root_url }}">Home</a>
-        <a href="/pages/catalog">Catalog</a>
-        <a href="/pages/about">About Us</a>
-        <a href="/blogs/news">Blog</a>
-        <a href="/pages/contact">Contact</a>
-      {%- endif -%}
-    </nav>
   </header>
+
+  <div class="nm-hdr-drawer" data-nm-hdr-drawer aria-hidden="true">
+    <div class="nm-hdr-drawer__backdrop" data-nm-hdr-drawer-close tabindex="-1" aria-hidden="true"></div>
+
+    <div
+      id="nm-mobile-nav"
+      class="nm-hdr-drawer__panel"
+      data-nm-mobile-nav
+      role="dialog"
+      aria-modal="true"
+      aria-label="Menu"
+    >
+      <button type="button" class="nm-hdr-drawer__close" data-nm-hdr-drawer-close aria-label="Close menu">
+        <span aria-hidden="true">×</span>
+      </button>
+
+      <nav class="nm-hdr-drawer__nav" aria-label="Main navigation">
+        {%- if section.blocks.size > 0 -%}
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'nav_item' -%}
+              <a class="nm-hdr-drawer__link" href="{{ block.settings.url | default: '#' }}" {{ block.shopify_attributes }}>
+                <span class="nm-hdr-drawer__link-text">{{ block.settings.title }}</span>
+                {%- if block.settings.image != blank -%}
+                  <span class="nm-hdr-drawer__link-thumb">
+                    {{ block.settings.image | image_url: width: 160 | image_tag: loading: 'lazy', widths: '80, 120, 160', alt: '' }}
+                  </span>
+                {%- endif -%}
+                <span class="nm-hdr-drawer__chevron" aria-hidden="true">›</span>
+              </a>
+            {%- endif -%}
+          {%- endfor -%}
+        {%- elsif section.settings.menu != blank -%}
+          {%- for link in section.settings.menu.links -%}
+            <a class="nm-hdr-drawer__link" href="{{ link.url }}">
+              <span class="nm-hdr-drawer__link-text">{{ link.title }}</span>
+              <span class="nm-hdr-drawer__chevron" aria-hidden="true">›</span>
+            </a>
+          {%- endfor -%}
+        {%- else -%}
+          <a class="nm-hdr-drawer__link" href="{{ routes.all_products_collection_url }}">
+            <span class="nm-hdr-drawer__link-text">Shop all products</span>
+            <span class="nm-hdr-drawer__chevron" aria-hidden="true">›</span>
+          </a>
+          <a class="nm-hdr-drawer__link" href="/pages/catalog">
+            <span class="nm-hdr-drawer__link-text">Catalog</span>
+            <span class="nm-hdr-drawer__chevron" aria-hidden="true">›</span>
+          </a>
+          <a class="nm-hdr-drawer__link" href="/pages/about">
+            <span class="nm-hdr-drawer__link-text">About us</span>
+            <span class="nm-hdr-drawer__chevron" aria-hidden="true">›</span>
+          </a>
+          <a class="nm-hdr-drawer__link" href="/blogs/news">
+            <span class="nm-hdr-drawer__link-text">Blog</span>
+            <span class="nm-hdr-drawer__chevron" aria-hidden="true">›</span>
+          </a>
+          <a class="nm-hdr-drawer__link" href="/pages/contact">
+            <span class="nm-hdr-drawer__link-text">Contact</span>
+            <span class="nm-hdr-drawer__chevron" aria-hidden="true">›</span>
+          </a>
+        {%- endif -%}
+      </nav>
+
+      {%- assign cta_label = section.settings.drawer_cta_label | default: 'Shop all' -%}
+      {%- assign cta_link = section.settings.drawer_cta_link | default: routes.all_products_collection_url -%}
+      {%- if cta_label != blank -%}
+        <div class="nm-hdr-drawer__cta-wrap">
+          <a class="nm-hdr-drawer__cta" href="{{ cta_link }}">
+            <span>{{ cta_label | upcase }}</span>
+            <span class="nm-hdr-drawer__cta-arrow" aria-hidden="true">›</span>
+          </a>
+        </div>
+      {%- endif -%}
+
+      <div class="nm-hdr-drawer__footer">
+        <a href="{{ routes.account_login_url }}">{{ section.settings.footer_login | default: 'Sign in' }}</a>
+        <a href="{{ routes.account_register_url }}">{{ section.settings.footer_register | default: 'Sign up' }}</a>
+        <a href="{{ routes.account_url }}">{{ section.settings.footer_account | default: 'Account' }}</a>
+        <a href="/pages/catalog">{{ section.settings.footer_catalog | default: 'Products' }}</a>
+      </div>
+    </div>
+  </div>
 </div>
 
 {% schema %}
@@ -124,7 +187,26 @@
     { "type": "color", "id": "promo_bg", "label": "Promo background", "default": "#00172f" },
     { "type": "color", "id": "promo_text_color", "label": "Promo text color", "default": "#ffffff" },
     { "type": "range", "id": "promo_repeat", "label": "Promo repeat count", "min": 6, "max": 22, "step": 1, "default": 14 },
-    { "type": "range", "id": "promo_speed", "label": "Marquee speed (seconds)", "min": 10, "max": 40, "step": 1, "default": 18 }
-  ]
+    { "type": "range", "id": "promo_speed", "label": "Marquee speed (seconds)", "min": 10, "max": 40, "step": 1, "default": 18 },
+
+    { "type": "text", "id": "drawer_cta_label", "label": "Drawer CTA label", "default": "Shop all" },
+    { "type": "url", "id": "drawer_cta_link", "label": "Drawer CTA link" },
+    { "type": "text", "id": "footer_login", "label": "Footer: Sign in", "default": "Sign in" },
+    { "type": "text", "id": "footer_register", "label": "Footer: Sign up", "default": "Sign up" },
+    { "type": "text", "id": "footer_account", "label": "Footer: Account", "default": "Account" },
+    { "type": "text", "id": "footer_catalog", "label": "Footer: Products", "default": "Products" }
+  ],
+  "blocks": [
+    {
+      "type": "nav_item",
+      "name": "Menu item",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Shop all products" },
+        { "type": "url", "id": "url", "label": "Link" },
+        { "type": "image_picker", "id": "image", "label": "Thumbnail (optional)" }
+      ]
+    }
+  ],
+  "max_blocks": 8
 }
 {% endschema %}
