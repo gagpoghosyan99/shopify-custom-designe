@@ -253,25 +253,62 @@
   background: radial-gradient(circle, rgba(0, 201, 212, 0.22) 0%, transparent 55%);
   pointer-events: none;
 }
-@media (max-width: 520px) {
-  .nm-vnext-hero {
-    min-height: 100svh;
-    display: flex;
-    align-items: stretch;
+@media (max-width: 767px) {
+  .nm-vnext-hero.nm-animate {
+    opacity: 1;
+    transform: none;
   }
-  .nm-vnext-hero__grid {
-    width: 100%;
-    align-content: start;
+
+  .nm-vnext-hero:not(.nm-vnext-hero--photo) {
+    min-height: 0;
+    padding: 1rem 0 1.5rem;
   }
+
+  .nm-vnext-hero:not(.nm-vnext-hero--photo) .nm-vnext-hero__grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .nm-vnext-hero__visual {
+    order: -1;
+    max-height: 240px;
+  }
+
+  .nm-vnext-hero__img {
+    aspect-ratio: 4 / 3;
+    max-height: 240px;
+    object-position: center;
+  }
+
+  .nm-vnext-hero__copy {
+    padding: 1rem;
+  }
+
+  .nm-vnext-hero__title {
+    font-size: clamp(1.45rem, 5.5vw, 1.9rem);
+    line-height: 1.12;
+  }
+
+  .nm-vnext-hero__sub {
+    font-size: 0.92rem;
+    max-width: none;
+  }
+
   .nm-vnext-hero__actions {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: 0.25rem;
+    flex-direction: column;
+    align-items: stretch;
+    overflow: visible;
   }
+
   .nm-vnext-btn {
-    flex: 0 0 auto;
-    white-space: nowrap;
+    width: 100%;
+    white-space: normal;
+  }
+
+  .nm-vnext-hero__micro {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
   }
 }
 
