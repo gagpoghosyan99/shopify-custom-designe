@@ -175,14 +175,63 @@
   (function () {
     var thumbs = document.querySelectorAll('[data-nm-pdp-thumb]');
     var main = document.getElementById('nm-pdp-main-img');
+    var carousel = document.querySelector('[data-nm-pdp-carousel]');
+    var slides = document.querySelectorAll('[data-nm-pdp-slide]');
+
+    function setActiveThumb(idx) {
+      thumbs.forEach(function (t) { t.classList.remove('is-active'); });
+      var match = null;
+      thumbs.forEach(function (t) {
+        if (String(t.getAttribute('data-index')) === String(idx)) match = t;
+      });
+      if (match) match.classList.add('is-active');
+    }
+
+    function scrollCarouselTo(idx) {
+      if (!carousel) return;
+      var slide = null;
+      slides.forEach(function (s) {
+        if (String(s.getAttribute('data-nm-pdp-slide')) === String(idx)) slide = s;
+      });
+      if (slide) {
+        carousel.scrollTo({ left: slide.offsetLeft, behavior: 'smooth' });
+      }
+    }
+
     thumbs.forEach(function (btn) {
       btn.addEventListener('click', function () {
-        if (!main) return;
-        main.src = btn.getAttribute('data-src');
-        thumbs.forEach(function (t) { t.classList.remove('is-active'); });
-        btn.classList.add('is-active');
+        var idx = btn.getAttribute('data-index') || '0';
+        if (main) main.src = btn.getAttribute('data-src');
+        setActiveThumb(idx);
+        scrollCarouselTo(idx);
       });
     });
+
+    if (carousel) {
+      var ticking = false;
+      carousel.addEventListener(
+        'scroll',
+        function () {
+          if (ticking) return;
+          ticking = true;
+          window.requestAnimationFrame(function () {
+            ticking = false;
+            var best = 0;
+            var bestDist = Infinity;
+            slides.forEach(function (s) {
+              var left = s.offsetLeft - carousel.scrollLeft;
+              var dist = Math.abs(left);
+              if (dist < bestDist) {
+                bestDist = dist;
+                best = parseInt(s.getAttribute('data-nm-pdp-slide') || '0', 10) || 0;
+              }
+            });
+            setActiveThumb(best);
+          });
+        },
+        { passive: true }
+      );
+    }
 
     var scrollBtn = document.querySelector('[data-nm-scroll-to-atc]');
     var form = document.getElementById('nm-product-form');
