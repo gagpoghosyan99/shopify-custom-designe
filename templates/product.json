@@ -12,6 +12,18 @@
     "main": {
       "type": "custom-product",
       "blocks": {
+        "benefit_kHWnQm": {
+          "type": "benefit",
+          "settings": {
+            "text": "Fast worldwide shipping"
+          }
+        },
+        "benefit_xKpGz9": {
+          "type": "benefit",
+          "settings": {
+            "text": "Clinically formulated ingredients"
+          }
+        },
         "benefit_qf3xYy": {
           "type": "benefit",
           "settings": {
@@ -20,6 +32,8 @@
         }
       },
       "block_order": [
+        "benefit_kHWnQm",
+        "benefit_xKpGz9",
         "benefit_qf3xYy"
       ],
       "settings": {
