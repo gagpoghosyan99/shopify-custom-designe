@@ -20,16 +20,23 @@
     endif
   endif
 
-  assign product_count = 0
-  if row_collection != blank
-    assign product_count = row_collection.products_count
-    if product_count > row_limit
-      assign product_count = row_limit
-    endif
+  assign has_collection_products = false
+  if row_collection != blank and row_collection.products_count > 0
+    assign has_collection_products = true
+  endif
+
+  assign can_use_tags = false
+  if source_collection != blank and fallback_tag != blank
+    assign can_use_tags = true
+  endif
+
+  assign show_row = false
+  if has_collection_products or can_use_tags or request.design_mode
+    assign show_row = true
   endif
 -%}
 
-{%- if product_count > 0 or request.design_mode -%}
+{%- if show_row -%}
   <section class="nm-collection-row" aria-labelledby="nm-row-{{ row_id }}">
     <div class="nm-collection-row__head">
       <h2 class="nm-collection-row__title" id="nm-row-{{ row_id }}">{{ row_title }}</h2>
@@ -38,7 +45,7 @@
       {%- endif -%}
     </div>
 
-    {%- if row_collection != blank and row_collection.products_count > 0 -%}
+    {%- if has_collection_products -%}
       <div class="nm-products__grid nm-products__grid--row">
         {%- for product in row_collection.products limit: row_limit -%}
           {% render 'product-card', product: product %}
@@ -55,7 +62,8 @@
             {%- assign matched = true -%}
           {%- else -%}
             {%- for tag in product.tags -%}
-              {%- if tag | handleize == fallback_slug -%}
+              {%- assign tag_slug = tag | handleize -%}
+              {%- if tag_slug == fallback_slug -%}
                 {%- assign matched = true -%}
                 {%- break -%}
               {%- endif -%}
