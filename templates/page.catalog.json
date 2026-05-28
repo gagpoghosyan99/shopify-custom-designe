@@ -1,20 +1,40 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
       "type": "page-hero",
       "settings": {
         "title": "Catalog",
-        "subtitle": "Shop pharmacy-grade vitamins, supplements and wellness essentials with fast delivery and secure checkout."
+        "subtitle": "",
+        "show_breadcrumbs": true
       }
     },
     "main": {
       "type": "catalog-page",
       "settings": {
+        "title": "Premium Wellness Catalog",
+        "subtitle": "",
+        "top_pills_menu": "",
+        "sidebar_menu": "",
+        "goals_menu": "",
+        "collection": "",
+        "grid_title": "All Products",
+        "sort_label": "All products",
         "products_to_show": 8,
-        "image_asset": "placeholder-cat-vitamins.svg"
+        "hero_asset": "placeholder-hero.svg"
       }
     }
   },
-  "order": ["hero", "main"]
+  "order": [
+    "hero",
+    "main"
+  ]
 }
-
