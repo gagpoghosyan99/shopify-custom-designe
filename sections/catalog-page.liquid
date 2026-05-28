@@ -1,70 +1,91 @@
-<section class="nm-section nm-animate">
+{%- assign picked = section.settings.collection -%}
+{%- if picked == blank -%}{%- assign picked = collections.all -%}{%- endif -%}
+
+<section class="nm-catalog-desktop nm-animate">
   <div class="nm-container">
-    <div class="nm-catalog-head">
-      <div>
-        <h2 class="nm-catalog-title">{{ section.settings.title | default: 'Shop the Catalog' }}</h2>
-        <p class="nm-catalog-sub">
-          {{ section.settings.subtitle | default: 'Browse pharmacy-grade vitamins, supplements and wellness essentials with fast delivery and secure checkout.' }}
-        </p>
-      </div>
-      <div class="nm-catalog-actions">
-        <a href="{{ routes.search_url }}" class="nm-btn nm-btn--secondary nm-btn--sm" data-nm-search-open>Search</a>
-        <a href="{{ routes.all_products_collection_url }}" class="nm-btn nm-btn--primary nm-btn--sm">View all products</a>
-      </div>
-    </div>
+    <div class="nm-catalog-desktop__hero">
+      <div class="nm-catalog-desktop__hero-bg" aria-hidden="true"></div>
 
-    <div class="nm-catalog-grid">
-      {%- assign picked = section.settings.collection -%}
-      {%- assign cat = section.settings.category_collection -%}
+      <div class="nm-catalog-desktop__hero-inner">
+        <div class="nm-catalog-desktop__hero-copy">
+          <h1 class="nm-catalog-desktop__title">{{ section.settings.title | default: 'Premium Wellness Catalog' }}</h1>
+          <p class="nm-catalog-desktop__sub">
+            {{ section.settings.subtitle | default: 'Discover scientifically formulated, pharmacist-reviewed solutions for your health journey.' }}
+          </p>
 
-      <div class="nm-catalog-card">
-        <h3>Featured collection</h3>
-        <p>{{ section.settings.featured_text | default: 'Our most popular picks — best sellers and trending wellness formulas.' }}</p>
-        {%- if picked != blank -%}
-          <a class="nm-btn nm-btn--cyan" href="{{ picked.url }}">Shop {{ picked.title }}</a>
-        {%- else -%}
-          <a class="nm-btn nm-btn--cyan" href="/collections/best-sellers">Shop Best Sellers</a>
-        {%- endif -%}
-        <ul class="nm-catalog-bullets">
-          <li>Pharmacist reviewed</li>
-          <li>Quality-focused ingredients</li>
-          <li>Worldwide shipping</li>
-        </ul>
-      </div>
-
-      <div class="nm-catalog-card nm-catalog-card--image">
-        {% render 'nm-placeholder-img',
-          asset: section.settings.image_asset | default: 'placeholder-cat-vitamins.svg',
-          alt: 'Catalog image placeholder',
-          class: 'nm-catalog-img',
-          class_wrap: 'nm-catalog-img-wrap',
-          width: 600,
-          height: 400
-        %}
-      </div>
-    </div>
-
-    <div class="nm-catalog-cats">
-      <a class="nm-catalog-cat" href="/collections/vitamins">Vitamins</a>
-      <a class="nm-catalog-cat" href="/collections/wellness">Wellness</a>
-      <a class="nm-catalog-cat" href="/collections/mens-health">Men's Health</a>
-      <a class="nm-catalog-cat" href="/collections/performance">Performance</a>
-      <a class="nm-catalog-cat" href="/collections/skincare">Skincare</a>
-    </div>
-
-    <div class="nm-catalog-products">
-      {%- assign source = picked -%}
-      {%- if source == blank -%}{%- assign source = collections.all -%}{%- endif -%}
-
-      {%- if source != blank and source.products_count > 0 -%}
-        <div class="nm-products__grid">
-          {%- for product in source.products limit: section.settings.products_to_show -%}
-            {% render 'product-card', product: product %}
-          {%- endfor -%}
+          {%- if section.settings.top_pills_menu != blank -%}
+            <nav class="nm-catalog-desktop__pills" aria-label="Catalog tabs">
+              {%- for link in linklists[section.settings.top_pills_menu].links -%}
+                <a class="nm-catalog-desktop__pill" href="{{ link.url }}">{{ link.title }}</a>
+              {%- endfor -%}
+            </nav>
+          {%- endif -%}
         </div>
-      {%- else -%}
-        <p class="nm-empty">Add products in Shopify Admin to show the catalog.</p>
-      {%- endif -%}
+
+        <div class="nm-catalog-desktop__hero-media" aria-hidden="true">
+          {% render 'nm-placeholder-img',
+            asset: section.settings.hero_asset | default: 'placeholder-hero.svg',
+            alt: 'Catalog hero',
+            class: 'nm-catalog-desktop__hero-img',
+            class_wrap: 'nm-catalog-desktop__hero-img-wrap',
+            width: 1200,
+            height: 520
+          %}
+        </div>
+      </div>
+    </div>
+
+    <div class="nm-catalog-desktop__layout">
+      <aside class="nm-catalog-desktop__sidebar" aria-label="Catalog filters">
+        {%- if section.settings.sidebar_menu != blank -%}
+          <div class="nm-catalog-desktop__side-block">
+            <h3>Categories</h3>
+            <nav class="nm-catalog-desktop__side-links" aria-label="Categories">
+              {%- for link in linklists[section.settings.sidebar_menu].links -%}
+                <a href="{{ link.url }}">{{ link.title }}</a>
+              {%- endfor -%}
+            </nav>
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.goals_menu != blank -%}
+          <div class="nm-catalog-desktop__side-block">
+            <h3>Health Goals</h3>
+            <nav class="nm-catalog-desktop__side-links" aria-label="Health goals">
+              {%- for link in linklists[section.settings.goals_menu].links -%}
+                <a href="{{ link.url }}">{{ link.title }}</a>
+              {%- endfor -%}
+            </nav>
+          </div>
+        {%- endif -%}
+
+        <div class="nm-catalog-desktop__side-block">
+          <h3>Fast Shipping</h3>
+          <p>Doctor Recommended</p>
+        </div>
+      </aside>
+
+      <div class="nm-catalog-desktop__main">
+        <div class="nm-catalog-desktop__toolbar">
+          <div class="nm-catalog-desktop__toolbar-title">
+            <strong>{{ section.settings.grid_title | default: 'All Products' }}</strong>
+          </div>
+          <div class="nm-catalog-desktop__toolbar-sort">
+            <span>Sort by</span>
+            <span class="nm-catalog-desktop__sort-pill">{{ section.settings.sort_label | default: 'All products' }}</span>
+          </div>
+        </div>
+
+        {%- if picked != blank and picked.products_count > 0 -%}
+          <div class="nm-products__grid">
+            {%- for product in picked.products limit: section.settings.products_to_show -%}
+              {% render 'product-card', product: product %}
+            {%- endfor -%}
+          </div>
+        {%- else -%}
+          <p class="nm-empty">Add products in Shopify Admin to show the catalog.</p>
+        {%- endif -%}
+      </div>
     </div>
   </div>
 </section>
@@ -74,23 +95,26 @@
   "name": "Catalog page",
   "tag": "section",
   "settings": [
-    { "type": "text", "id": "title", "label": "Title", "default": "Shop the Catalog" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Premium Wellness Catalog" },
     { "type": "textarea", "id": "subtitle", "label": "Subtitle" },
-    { "type": "collection", "id": "collection", "label": "Products source (optional)" },
-    { "type": "range", "id": "products_to_show", "min": 4, "max": 16, "step": 2, "default": 8, "label": "Products to show" },
-    { "type": "textarea", "id": "featured_text", "label": "Featured text" },
+    { "type": "link_list", "id": "top_pills_menu", "label": "Top pills menu (tabs)" },
+    { "type": "link_list", "id": "sidebar_menu", "label": "Sidebar categories menu" },
+    { "type": "link_list", "id": "goals_menu", "label": "Sidebar health goals menu" },
+    { "type": "collection", "id": "collection", "label": "Products source (collection)" },
+    { "type": "text", "id": "grid_title", "label": "Grid title", "default": "All Products" },
+    { "type": "text", "id": "sort_label", "label": "Sort label", "default": "All products" },
+    { "type": "range", "id": "products_to_show", "min": 8, "max": 24, "step": 4, "default": 12, "label": "Products to show" },
     {
       "type": "select",
-      "id": "image_asset",
-      "label": "Placeholder image",
-      "default": "placeholder-cat-vitamins.svg",
+      "id": "hero_asset",
+      "label": "Hero placeholder art",
+      "default": "placeholder-hero.svg",
       "options": [
-        { "value": "placeholder-cat-vitamins.svg", "label": "Vitamins" },
-        { "value": "placeholder-cat-wellness.svg", "label": "Wellness" },
-        { "value": "placeholder-cat-mens-health.svg", "label": "Men's Health" },
-        { "value": "placeholder-cat-energy.svg", "label": "Energy & Performance" },
-        { "value": "placeholder-cat-skincare.svg", "label": "Skincare" },
-        { "value": "placeholder-cat-accessories.svg", "label": "Accessories" }
+        { "value": "placeholder-hero.svg", "label": "Hero" },
+        { "value": "placeholder-product-1.svg", "label": "Product 1" },
+        { "value": "placeholder-product-2.svg", "label": "Product 2" },
+        { "value": "placeholder-product-3.svg", "label": "Product 3" },
+        { "value": "placeholder-product-4.svg", "label": "Product 4" }
       ]
     }
   ],
