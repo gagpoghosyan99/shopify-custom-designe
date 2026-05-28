@@ -435,15 +435,18 @@
       var atBottom = max <= 0 || panel.scrollTop >= max - 1;
 
       if (e.deltaY > 0 && atBottom) {
+        e.preventDefault();
         window.scrollBy({ top: e.deltaY, left: 0, behavior: 'auto' });
         return;
       }
       if (e.deltaY < 0 && atTop) {
+        e.preventDefault();
         window.scrollBy({ top: e.deltaY, left: 0, behavior: 'auto' });
         return;
       }
 
       if (max <= 0) {
+        e.preventDefault();
         window.scrollBy({ top: e.deltaY, left: 0, behavior: 'auto' });
         return;
       }
