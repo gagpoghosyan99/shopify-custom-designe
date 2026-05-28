@@ -145,10 +145,20 @@
   box-shadow: 0 28px 90px rgba(0, 0, 0, 0.16);
 }
 
+.nm-goals--bestsellers .nm-offer {
+  width: 306px;
+  min-height: 590px;
+}
+
 @media (max-width: 520px) {
   .nm-offer {
     width: 82vw;
     min-height: 560px;
+  }
+
+  .nm-goals--bestsellers .nm-offer {
+    width: 82vw;
+    min-height: 540px;
   }
 }
 
@@ -161,9 +171,17 @@
   text-decoration: none;
 }
 
+.nm-goals--bestsellers .nm-offer__media {
+  height: 360px;
+}
+
 @media (max-width: 520px) {
   .nm-offer__media {
     height: 280px;
+  }
+
+  .nm-goals--bestsellers .nm-offer__media {
+    height: 300px;
   }
 }
 
@@ -209,6 +227,10 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+}
+
+.nm-goals--bestsellers .nm-offer__body {
+  padding: 16px 16px 18px;
 }
 
 .nm-offer__title {
