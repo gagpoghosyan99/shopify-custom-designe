@@ -43,7 +43,9 @@
         "kicker": "Premium, pharmacist-first care",
         "heading": "Premium Wellness & Healthcare Solutions",
         "subheading": "Trusted products for modern health, performance, and vitality — backed by science and pharmacist-first care.",
+        "hero_image": "shopify://shop_images/without_shop_best_seller_and_202605281711.jpg",
         "primary_label": "Shop Now",
+        "primary_link": "",
         "secondary_label": "Best Sellers",
         "secondary_link": "/collections/best-sellers",
         "tertiary_label": "Doctor Recommended",
@@ -54,15 +56,25 @@
     "bestsellers": {
       "type": "custom-product-grid",
       "settings": {
-        "title": "LET US HELP YOU REACH YOUR HEALTH GOALS !!!",
-        "products_to_show": 12,
-        "show_view_all": false
+        "title": "Best Sellers",
+        "collection": "",
+        "products_to_show": 8,
+        "show_compare_price": true,
+        "show_ratings": true,
+        "show_arrows": true,
+        "enable_mobile_swipe": true,
+        "button_text": "Shop now"
       }
     },
     "discount": {
       "type": "custom-first-order-discount",
       "settings": {
-        "code": "WELLNESS15"
+        "badge": "Limited Time Offer",
+        "title": "15% Off Your First Order",
+        "text": "Use code WELLNESS15 at checkout. Pharmacist-reviewed essentials delivered to your door.",
+        "code": "WELLNESS15",
+        "button_label": "Claim Offer",
+        "button_link": ""
       }
     },
     "pro": {
@@ -138,23 +150,38 @@
         "s2",
         "s3"
       ],
-      "settings": {}
+      "settings": {
+        "title": "Trusted by Professionals & Science"
+      }
     },
     "why": {
       "type": "custom-why-choose-us",
-      "settings": {}
+      "settings": {
+        "title": "Why Choose Us",
+        "subtitle": "Premium care, science-backed products, and trust-first service."
+      }
     },
     "reviews": {
       "type": "custom-testimonials",
-      "settings": {}
+      "settings": {
+        "title": "What Our Customers Say",
+        "subtitle": "Verified reviews from real customers."
+      }
     },
     "newsletter": {
       "type": "custom-newsletter",
-      "settings": {}
+      "settings": {
+        "title": "Get wellness tips & exclusive offers",
+        "text": "Join NovaMeds for pharmacist-backed advice and member-only savings.",
+        "button_label": "Subscribe"
+      }
     },
     "faq": {
       "type": "custom-faq",
-      "settings": {}
+      "settings": {
+        "title": "Frequently Asked Questions",
+        "subtitle": "Everything you need to know about ordering from NovaMeds."
+      }
     }
   },
   "order": [
