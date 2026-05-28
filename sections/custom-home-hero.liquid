@@ -11,6 +11,11 @@
   if section.settings.hero_image != blank
     assign has_photo = true
   endif
+
+  assign has_overlay = false
+  if section.settings.heading != blank or section.settings.subheading != blank or section.settings.primary_label != blank or section.settings.primary_cta_label != blank
+    assign has_overlay = true
+  endif
 -%}
 
 <section class="nm-vnext-hero nm-dark-stage nm-animate{% if has_photo %} nm-vnext-hero--photo{% endif %}" id="home-hero" aria-label="NovaMeds hero">
@@ -34,32 +39,48 @@
   {%- endif -%}
 
   <div class="nm-container nm-vnext-hero__grid">
-    <div class="nm-vnext-hero__copy nm-glass">
-      {%- if section.settings.kicker != blank -%}
-        <div class="nm-vnext-hero__kicker">{{ section.settings.kicker }}</div>
-      {%- endif -%}
-      <h1 class="nm-vnext-hero__title">{{ heading }}</h1>
-      <p class="nm-vnext-hero__sub">{{ sub }}</p>
+    {%- if has_overlay -%}
+      <div class="nm-vnext-hero__copy nm-glass">
+        {%- if section.settings.kicker != blank -%}
+          <div class="nm-vnext-hero__kicker">{{ section.settings.kicker }}</div>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h1 class="nm-vnext-hero__title">{{ section.settings.heading }}</h1>
+        {%- endif -%}
+        {%- if section.settings.subheading != blank -%}
+          <p class="nm-vnext-hero__sub">{{ section.settings.subheading }}</p>
+        {%- endif -%}
 
-      <div class="nm-vnext-hero__actions" role="group" aria-label="Primary actions">
-        <a class="nm-vnext-btn nm-vnext-btn--primary" href="{{ primary_link }}">{{ primary_label }}</a>
-        <a class="nm-vnext-btn nm-vnext-btn--ghost" href="{{ secondary_link }}">{{ secondary_label }}</a>
-        <a class="nm-vnext-btn nm-vnext-btn--ghost" href="{{ tertiary_link }}">{{ tertiary_label }}</a>
-      </div>
-
-      {%- if section.settings.show_micro_trust -%}
-        <div class="nm-vnext-hero__micro" aria-label="Trust highlights">
-          {%- for block in section.blocks -%}
-            {%- if block.type == 'micro_trust' -%}
-              <span class="nm-vnext-hero__micro-item" {{ block.shopify_attributes }}>
-                <span aria-hidden="true">{{ block.settings.icon }}</span>
-                <span>{{ block.settings.label }}</span>
-              </span>
+        {%- if section.settings.primary_label != blank or section.settings.secondary_label != blank or section.settings.tertiary_label != blank -%}
+          <div class="nm-vnext-hero__actions" role="group" aria-label="Primary actions">
+            {%- if section.settings.primary_label != blank -%}
+              <a class="nm-vnext-btn nm-vnext-btn--primary" href="{{ primary_link }}">{{ section.settings.primary_label }}</a>
             {%- endif -%}
-          {%- endfor -%}
-        </div>
-      {%- endif -%}
-    </div>
+            {%- if section.settings.secondary_label != blank -%}
+              <a class="nm-vnext-btn nm-vnext-btn--ghost" href="{{ secondary_link }}">{{ section.settings.secondary_label }}</a>
+            {%- endif -%}
+            {%- if section.settings.tertiary_label != blank -%}
+              <a class="nm-vnext-btn nm-vnext-btn--ghost" href="{{ tertiary_link }}">{{ section.settings.tertiary_label }}</a>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.show_micro_trust -%}
+          <div class="nm-vnext-hero__micro" aria-label="Trust highlights">
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'micro_trust' and block.settings.label != blank -%}
+                <span class="nm-vnext-hero__micro-item" {{ block.shopify_attributes }}>
+                  {%- if block.settings.icon != blank -%}
+                    <span aria-hidden="true">{{ block.settings.icon }}</span>
+                  {%- endif -%}
+                  <span>{{ block.settings.label }}</span>
+                </span>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
 
     {%- unless has_photo -%}
       <div class="nm-vnext-hero__visual" aria-hidden="true">
