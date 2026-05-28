@@ -51,12 +51,6 @@
         "show_micro_trust": true
       }
     },
-    "cats": {
-      "type": "custom-categories",
-      "settings": {
-        "title": "Shop by Category"
-      }
-    },
     "bestsellers": {
       "type": "custom-product-grid",
       "settings": {
@@ -165,7 +159,6 @@
   },
   "order": [
     "hero",
-    "cats",
     "bestsellers",
     "discount",
     "pro",
