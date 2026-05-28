@@ -1,0 +1,53 @@
+<section class="nm-catalog-home nm-animate" id="catalog-home">
+  <div class="nm-container">
+    <div class="nm-catalog-home__head">
+      <h2 class="nm-catalog-home__title">{{ section.settings.title | default: 'Premium Wellness Catalog' }}</h2>
+      {%- if section.settings.subtitle != blank -%}
+        <p class="nm-catalog-home__sub">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.menu != blank -%}
+      <nav class="nm-catalog-home__pills" aria-label="Catalog categories">
+        {%- for link in linklists[section.settings.menu].links -%}
+          <a class="nm-catalog-home__pill" href="{{ link.url }}">{{ link.title }}</a>
+        {%- endfor -%}
+      </nav>
+    {%- endif -%}
+
+    <div class="nm-catalog-home__toolbar" aria-label="Catalog toolbar">
+      <span class="nm-catalog-home__sort">Sort by: <strong>Best Sellers</strong></span>
+    </div>
+
+    {%- assign source = section.settings.collection -%}
+    {%- if source == blank -%}{%- assign source = collections.all -%}{%- endif -%}
+
+    {%- if source != blank and source.products_count > 0 -%}
+      <div class="nm-catalog-home__grid">
+        {%- for product in source.products limit: section.settings.products_to_show -%}
+          {% render 'product-card', product: product %}
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      {%- if request.design_mode -%}
+        <p class="nm-demo-note">Pick a collection for the Catalog section to show products.</p>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Catalog (home)",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Title", "default": "Premium Wellness Catalog" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtitle", "default": "Scientifically formulated, pharmacist-reviewed solutions for your health journey." },
+    { "type": "link_list", "id": "menu", "label": "Category pills menu" },
+    { "type": "collection", "id": "collection", "label": "Products source (collection)" },
+    { "type": "range", "id": "products_to_show", "min": 4, "max": 12, "step": 2, "default": 4, "label": "Products to show" }
+  ],
+  "presets": [{ "name": "Catalog (home)" }]
+}
+{% endschema %}
+

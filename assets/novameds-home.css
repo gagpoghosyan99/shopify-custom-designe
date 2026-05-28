@@ -878,6 +878,114 @@
   padding: 4rem 0;
   background: #f4f8fa;
 }
+
+/* ─────────────────────────────────────────────────────────
+   Catalog (home) — app-like mobile section
+   ───────────────────────────────────────────────────────── */
+.nm-catalog-home {
+  padding: 0 0 2.5rem;
+  background: linear-gradient(180deg, #0a1628 0%, #0d3d4a 45%, #0a1628 100%);
+  color: #fff;
+}
+.nm-catalog-home__head {
+  padding: 2.75rem 0 1rem;
+  text-align: center;
+}
+.nm-catalog-home__title {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+}
+.nm-catalog-home__sub {
+  margin: 0.5rem auto 0;
+  max-width: 42ch;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.nm-catalog-home__pills {
+  display: flex;
+  gap: 0.55rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 0.75rem 0 0.25rem;
+  justify-content: flex-start;
+}
+.nm-catalog-home__pill {
+  flex: 0 0 auto;
+  padding: 0.45rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 700;
+  font-size: 0.8125rem;
+  text-decoration: none;
+  backdrop-filter: blur(10px);
+}
+.nm-catalog-home__pill:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+
+.nm-catalog-home__toolbar {
+  margin-top: 0.75rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(10, 22, 40, 0.35);
+  backdrop-filter: blur(10px);
+  padding: 0.6rem 0.9rem;
+}
+.nm-catalog-home__sort {
+  font-size: 0.8125rem;
+  color: rgba(255, 255, 255, 0.78);
+}
+.nm-catalog-home__sort strong {
+  color: #fff;
+}
+
+.nm-catalog-home__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.9rem;
+  padding: 1rem 0 0;
+}
+
+/* Make product cards match the dark “app” look inside catalog section */
+.nm-catalog-home .nm-product-card-v2 {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.25);
+}
+.nm-catalog-home .nm-product-card-v2__price {
+  color: #fff;
+}
+.nm-catalog-home .nm-product-card-v2__title,
+.nm-catalog-home .nm-product-card-v2__rating {
+  color: rgba(255, 255, 255, 0.86);
+}
+.nm-catalog-home .nm-btn--primary {
+  background: linear-gradient(135deg, var(--nm-cyan), var(--nm-cyan-bright));
+  color: var(--nm-navy);
+  border: none;
+}
+
+@media (min-width: 900px) {
+  .nm-catalog-home {
+    padding: 1.5rem 0 4rem;
+    border-radius: 28px;
+    margin: 2rem 0;
+  }
+  .nm-catalog-home__head {
+    padding-top: 3.25rem;
+  }
+  .nm-catalog-home__grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+}
 .nm-pro-section__wrap {
   border-radius: 24px;
   padding: 3rem 2rem;
