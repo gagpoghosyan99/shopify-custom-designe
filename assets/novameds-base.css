@@ -31,6 +31,12 @@ html {
   scroll-behavior: smooth;
 }
 
+@media (max-width: 767px) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
 body.nm-body {
   margin: 0;
   font-family: var(--nm-font);

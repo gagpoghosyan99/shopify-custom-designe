@@ -780,7 +780,8 @@
   }
 
   body.template-index .nm-main {
-    overflow-x: hidden;
+    overflow-x: clip;
+    overflow-y: visible;
   }
 
   .nm-vnext-discount,
