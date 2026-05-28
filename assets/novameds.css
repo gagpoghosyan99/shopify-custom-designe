@@ -913,15 +913,6 @@
     gap: 0.45rem;
   }
 
-  .nm-pdp__cta-row {
-    position: sticky;
-    bottom: calc(0.5rem + env(safe-area-inset-bottom));
-    z-index: 30;
-    margin: 0.5rem -0.25rem 0;
-    padding: 0.5rem 0.25rem;
-    background: linear-gradient(to top, #fff 78%, rgba(255, 255, 255, 0));
-  }
-
   .nm-pdp__atc {
     min-height: 50px;
     font-size: 1rem;
