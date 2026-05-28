@@ -51,54 +51,6 @@
         "show_micro_trust": true
       }
     },
-    "trust": {
-      "type": "custom-trust",
-      "blocks": {
-        "t1": {
-          "type": "pill",
-          "settings": {
-            "icon": "🛡️",
-            "label": "Licensed Products"
-          }
-        },
-        "t2": {
-          "type": "pill",
-          "settings": {
-            "icon": "✓",
-            "label": "Pharmacist Approved"
-          }
-        },
-        "t3": {
-          "type": "pill",
-          "settings": {
-            "icon": "🚚",
-            "label": "Worldwide Shipping"
-          }
-        },
-        "t4": {
-          "type": "pill",
-          "settings": {
-            "icon": "🔒",
-            "label": "Secure Payments"
-          }
-        },
-        "t5": {
-          "type": "pill",
-          "settings": {
-            "icon": "✓",
-            "label": "Verified Quality"
-          }
-        }
-      },
-      "block_order": [
-        "t1",
-        "t2",
-        "t3",
-        "t4",
-        "t5"
-      ],
-      "settings": {}
-    },
     "cats": {
       "type": "custom-categories",
       "settings": {
@@ -213,7 +165,6 @@
   },
   "order": [
     "hero",
-    "trust",
     "cats",
     "bestsellers",
     "discount",
