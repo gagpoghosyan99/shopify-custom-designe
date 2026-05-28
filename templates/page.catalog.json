@@ -13,23 +13,13 @@
       "type": "page-hero",
       "settings": {
         "title": "Catalog",
-        "subtitle": "",
-        "show_breadcrumbs": true
+        "subtitle": "Shop pharmacy-grade vitamins, supplements and wellness essentials with fast delivery and secure checkout."
       }
     },
     "main": {
       "type": "catalog-page",
       "settings": {
-        "title": "Premium Wellness Catalog",
-        "subtitle": "",
-        "top_pills_menu": "",
-        "sidebar_menu": "",
-        "goals_menu": "",
-        "collection": "",
-        "grid_title": "All Products",
-        "sort_label": "All products",
-        "products_to_show": 8,
-        "hero_asset": "placeholder-hero.svg"
+        "products_to_show": 8
       }
     }
   },

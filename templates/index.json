@@ -49,7 +49,6 @@
         "price_save": "Save 33%",
         "mini_description": "Collagen Peptides — supports hair, skin, nails & joints. Unflavoured. Easy daily mix.",
         "button_label": "Shop Now",
-        "button_link": "",
         "button_secondary_label": "Best Sellers",
         "button_secondary_link": "/collections/best-sellers",
         "button_tertiary_label": "Doctor Recommended",
@@ -110,7 +109,6 @@
         "c1": {
           "type": "category",
           "settings": {
-            "collection": "",
             "link": "/collections/vitamins",
             "title": "Vitamins"
           }
@@ -118,7 +116,6 @@
         "c2": {
           "type": "category",
           "settings": {
-            "collection": "",
             "link": "/collections/mens-health",
             "title": "Men's Health"
           }
@@ -126,7 +123,6 @@
         "c3": {
           "type": "category",
           "settings": {
-            "collection": "",
             "link": "/collections/wellness",
             "title": "Wellness"
           }
@@ -134,7 +130,6 @@
         "c4": {
           "type": "category",
           "settings": {
-            "collection": "",
             "link": "/collections/energy",
             "title": "Energy & Performance"
           }
@@ -142,7 +137,6 @@
         "c5": {
           "type": "category",
           "settings": {
-            "collection": "",
             "link": "/collections/skincare",
             "title": "Skincare"
           }
@@ -150,7 +144,6 @@
         "c6": {
           "type": "category",
           "settings": {
-            "collection": "",
             "link": "/collections/accessories",
             "title": "Accessories"
           }
@@ -164,20 +157,7 @@
         "c5",
         "c6"
       ],
-      "settings": {
-        "title": "Shop by Category",
-        "subtitle": ""
-      }
-    },
-    "bestsellers": {
-      "type": "best-sellers",
-      "settings": {
-        "title": "Best Sellers",
-        "subtitle": "Top-rated formulas loved by our community.",
-        "collection": "",
-        "products_to_show": 8,
-        "show_view_all": true
-      }
+      "settings": {}
     },
     "promo": {
       "type": "promo-eye",
@@ -185,8 +165,16 @@
         "badge": "🔥 Limited offer",
         "title": "15% Off Your First Order",
         "text": "Use code WELLNESS15 at checkout. Pharmacist-reviewed essentials delivered to your door.",
-        "button_label": "Claim Offer",
-        "button_link": ""
+        "button_label": "Claim Offer"
+      }
+    },
+    "bestsellers": {
+      "type": "best-sellers",
+      "settings": {
+        "title": "Best Sellers",
+        "subtitle": "Top-rated formulas loved by our community.",
+        "products_to_show": 8,
+        "show_view_all": true
       }
     },
     "professionals": {
@@ -262,9 +250,7 @@
         "s2",
         "s3"
       ],
-      "settings": {
-        "title": "Trusted by Professionals & Science"
-      }
+      "settings": {}
     },
     "why": {
       "type": "why-choose-us",
@@ -308,10 +294,7 @@
         "f3",
         "f4"
       ],
-      "settings": {
-        "title": "Why Choose NovaMeds",
-        "subtitle": ""
-      }
+      "settings": {}
     },
     "reviews": {
       "type": "testimonials",
@@ -346,36 +329,16 @@
         "r2",
         "r3"
       ],
-      "settings": {
-        "title": "What Our Customers Say",
-        "subtitle": ""
-      }
+      "settings": {}
     },
     "newsletter": {
       "type": "newsletter",
-      "settings": {
-        "title": "Get wellness tips and exclusive offers",
-        "text": "",
-        "button_label": "Subscribe"
-      }
+      "settings": {}
     },
     "faq": {
       "type": "faq",
       "settings": {
-        "eyebrow": "FAQ",
-        "title": "Frequently Asked Questions",
-        "subtitle": "Everything you need to know about ordering from NovaMeds."
-      }
-    },
-    "catalog_home_6i6P6k": {
-      "type": "catalog-home",
-      "name": "Catalog (home)",
-      "settings": {
-        "title": "Premium Wellness Catalog",
-        "subtitle": "Scientifically formulated, pharmacist-reviewed solutions for your health journey.",
-        "menu": "",
-        "collection": "",
-        "products_to_show": 4
+        "title": "Frequently Asked Questions"
       }
     }
   },
@@ -389,7 +352,6 @@
     "why",
     "reviews",
     "newsletter",
-    "faq",
-    "catalog_home_6i6P6k"
+    "faq"
   ]
 }
