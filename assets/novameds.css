@@ -782,77 +782,17 @@
   margin-inline: auto;
 }
 
-/* Desktop PDP: smooth native page scroll + sticky left gallery */
+/* Desktop PDP: simple 2-column layout, normal page scroll */
 @media (min-width: 991px) {
-  body.template-product .shopify-section:has(.nm-product-page),
-  body.template-product #MainContent,
-  body.template-product .nm-main,
-  .nm-product-page,
-  .nm-product-shell,
-  .nm-product-layout {
-    overflow: visible !important;
-    transform: none !important;
-    contain: none !important;
-    filter: none !important;
-    perspective: none !important;
-  }
-
-  .nm-product-page {
-    --nm-pdp-sticky-top: 115px;
-    height: auto;
-    overflow: visible;
-  }
-
-  .nm-product-shell {
-    height: auto;
-    display: block;
-    padding-top: 0;
-  }
-
   .nm-product-layout {
     display: grid !important;
     grid-template-columns: minmax(0, 1.1fr) minmax(380px, 520px) !important;
     gap: 48px !important;
     align-items: start !important;
-    overflow: visible !important;
-  }
-
-  .nm-product-media-sticky {
-    position: relative !important;
-    top: auto !important;
-    align-self: start !important;
-    z-index: 2;
-  }
-
-  .nm-product-media-sticky__spacer {
-    display: block;
-    width: 100%;
-    height: 0;
-    pointer-events: none;
-  }
-
-  .nm-product-media-sticky__inner.is-photo-fixed {
-    position: fixed !important;
-    top: var(--nm-pdp-sticky-top) !important;
-    z-index: 25 !important;
-    margin: 0 !important;
-  }
-
-  .nm-product-media-sticky__inner.is-photo-pinned {
-    position: absolute !important;
-    top: auto !important;
-    bottom: 0 !important;
-    left: 0 !important;
-    width: 100% !important;
-    z-index: 2 !important;
   }
 
   .nm-product-info-track,
   .nm-product-info-scroll {
-    height: auto !important;
-    max-height: none !important;
-    overflow: visible !important;
-    position: static !important;
     display: flex !important;
     flex-direction: column !important;
     gap: 18px !important;
@@ -867,17 +807,9 @@
   .nm-product-layout {
     display: block !important;
   }
-
-  .nm-product-media-sticky {
-    position: relative !important;
-    top: auto !important;
-  }
-
-  .nm-product-info-scroll {
-    min-height: 0 !important;
-  }
 }
 
+.nm-product-media__inner,
 .nm-product-media-sticky__inner {
   border-radius: 18px;
   background: #fff;

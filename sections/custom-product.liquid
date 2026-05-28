@@ -9,14 +9,11 @@
 -%}
 
 
-<script src="{{ 'novameds-pdp-lock.js' | asset_url }}" defer></script>
-
 <section class="nm-product-page nm-pdp" data-nm-product-page aria-label="Product">
   <div class="nm-product-shell">
     <div class="nm-product-layout" data-nm-product-layout>
-      <aside class="nm-product-media-sticky" data-nm-pdp-media aria-label="Product media">
-        <div class="nm-product-media-sticky__spacer" data-nm-pdp-spacer aria-hidden="true"></div>
-        <div class="nm-product-media-sticky__inner" data-nm-pdp-sticky-inner>
+      <aside class="nm-product-media" aria-label="Product media">
+        <div class="nm-product-media__inner">
         <div class="nm-pdp__gallery">
           {%- if product.images.size > 0 -%}
             <div class="nm-pdp__carousel" data-nm-pdp-carousel aria-label="Swipe product images">
@@ -422,9 +419,6 @@
     });
 
   })();
-</script>
-<script>
-  if (window.NovaMedsPdpLock) window.NovaMedsPdpLock.boot();
 </script>
 
 {% schema %}

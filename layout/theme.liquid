@@ -62,9 +62,6 @@
 
     <script src="{{ 'novameds.js' | asset_url }}" defer></script>
     <script src="{{ 'novameds-vnext.js' | asset_url }}" defer></script>
-    {%- if template.name == 'product' -%}
-      <script src="{{ 'novameds-pdp-lock.js' | asset_url }}" defer></script>
-    {%- endif -%}
 
     <script>
       document.documentElement.classList.remove('no-js');
