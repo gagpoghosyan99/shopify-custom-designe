@@ -799,6 +799,19 @@
   .nm-pdp { padding-top: 0.5rem; }
 }
 
+/* Sticky fails if any ancestor has overflow/transform.
+   Keep PDP wrappers sticky-safe on desktop. */
+@media (min-width: 991px) {
+  .nm-pdp,
+  .nm-pdp .nm-container,
+  .product-layout {
+    overflow: visible !important;
+  }
+  .product-media-column {
+    position: sticky !important;
+  }
+}
+
 @media (max-width: 990px) {
   .product-layout {
     display: block;
