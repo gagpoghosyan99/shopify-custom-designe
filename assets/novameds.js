@@ -64,13 +64,17 @@
     if (menuToggle) menuToggle.setAttribute('aria-expanded', 'false');
   }
 
-  function closeAll() {
+  function closePanels() {
     hideEl(searchModal);
     hideEl(cartDrawer);
     hideEl(overlay);
+    activeModal = null;
+  }
+
+  function closeAll() {
+    closePanels();
     closeMenuDrawer();
     lockBody(false);
-    activeModal = null;
   }
 
   function openPanel(name) {
@@ -382,6 +386,9 @@
       }
     });
   });
+
+  cfg.closePanels = closePanels;
+  cfg.closeAll = closeAll;
 
   /* Initial cart badge from page */
   fetchCart()

@@ -35,11 +35,16 @@
     }
 
     function toggleDrawer() {
-      setOpen(!drawer.classList.contains('is-open'));
+      var willOpen = !drawer.classList.contains('is-open');
+      if (willOpen && window.NovaMeds && window.NovaMeds.closePanels) {
+        window.NovaMeds.closePanels();
+      }
+      setOpen(willOpen);
     }
 
     menuToggle.addEventListener('click', function (e) {
       e.preventDefault();
+      e.stopPropagation();
       toggleDrawer();
     });
 
