@@ -1,0 +1,207 @@
+{%- liquid
+  assign variant = product.selected_or_first_available_variant
+  assign money_price = variant.price | money
+  assign compare_at = variant.compare_at_price
+  assign on_sale = false
+  if compare_at > variant.price
+    assign on_sale = true
+  endif
+-%}
+
+<section class="nm-pdp nm-animate" aria-label="Product">
+  <div class="nm-container">
+    <div class="nm-pdp__grid">
+      <div class="nm-pdp__media nm-glass" aria-label="Product media">
+        <div class="nm-pdp__gallery">
+          {%- if product.featured_image -%}
+            {{ product.featured_image | image_url: width: 1400 | image_tag: loading: 'eager', alt: product.featured_image.alt, class: 'nm-pdp__img', id: 'nm-pdp-main-img' }}
+          {%- endif -%}
+        </div>
+        {%- if product.images.size > 1 -%}
+          <div class="nm-pdp__thumbs" aria-label="More product images">
+            {%- for image in product.images -%}
+              <button
+                type="button"
+                class="nm-pdp__thumb{% if forloop.first %} is-active{% endif %}"
+                data-nm-pdp-thumb
+                data-src="{{ image | image_url: width: 1400 }}"
+                aria-label="View image {{ forloop.index }}"
+              >
+                {{ image | image_url: width: 140 | image_tag: loading: 'lazy', alt: image.alt }}
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div class="nm-pdp__info">
+        <div class="nm-pdp__card nm-glass">
+          <div class="nm-pdp__top">
+            {%- if product.vendor != blank -%}
+              <div class="nm-pdp__vendor">{{ product.vendor }}</div>
+            {%- endif -%}
+            <h1 class="nm-pdp__title">{{ product.title }}</h1>
+            <div class="nm-pdp__rating" aria-label="Rated 4.9 out of 5">
+              <span class="nm-pdp__stars" aria-hidden="true">★★★★★</span>
+              <span class="nm-pdp__score">4.9</span>
+            </div>
+          </div>
+
+          <div class="nm-pdp__price" data-nm-product-price>
+            <span class="nm-pdp__now">{{ money_price }}</span>
+            {%- if on_sale -%}
+              <span class="nm-pdp__was">{{ compare_at | money }}</span>
+              <span class="nm-pdp__save">Save</span>
+            {%- endif -%}
+          </div>
+
+          {%- if section.blocks.size > 0 -%}
+            <ul class="nm-pdp__bullets" aria-label="Benefits">
+              {%- for block in section.blocks -%}
+                {%- if block.type == 'benefit' -%}
+                  <li {{ block.shopify_attributes }}>
+                    <span aria-hidden="true">✅</span>
+                    <span>{{ block.settings.text }}</span>
+                  </li>
+                {%- endif -%}
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+
+          {% form 'product', product, class: 'nm-pdp__form', id: 'nm-product-form' %}
+            <input type="hidden" name="id" value="{{ variant.id }}">
+
+            {%- unless product.has_only_default_variant -%}
+              <label class="nm-pdp__label" for="nm-variant">Options</label>
+              <select class="nm-pdp__select" id="nm-variant" name="id" data-nm-variant-select>
+                {%- for v in product.variants -%}
+                  <option
+                    value="{{ v.id }}"
+                    {% if v.id == variant.id %}selected{% endif %}
+                    {% unless v.available %}disabled{% endunless %}
+                    data-price="{{ v.price | money }}"
+                  >
+                    {{ v.title }} — {{ v.price | money }}{% unless v.available %} (Sold out){% endunless %}
+                  </option>
+                {%- endfor -%}
+              </select>
+            {%- endunless -%}
+
+            <div class="nm-pdp__cta-row">
+              <button type="submit" name="add" class="nm-vnext-btn nm-vnext-btn--primary nm-pdp__atc" {% unless variant.available %}disabled{% endunless %}>
+                {%- if variant.available -%}Add to cart{%- else -%}Sold out{%- endif -%}
+              </button>
+              <button type="button" class="nm-pdp__wish" aria-label="Save {{ product.title }}">
+                ♡
+              </button>
+            </div>
+
+            <p class="nm-pdp__note">Secure checkout · Fast shipping · Trusted by professionals</p>
+          {% endform %}
+        </div>
+
+        <div class="nm-pdp__details nm-glass">
+          <h2 class="nm-pdp__h2">{{ section.settings.details_title | default: 'Details' }}</h2>
+          <div class="rte nm-pdp__rte">{{ product.description }}</div>
+        </div>
+
+        {%- if section.settings.show_faq -%}
+          <div class="nm-pdp__faq nm-glass" aria-label="Product FAQ">
+            <h2 class="nm-pdp__h2">{{ section.settings.faq_title | default: 'FAQ' }}</h2>
+            <div class="nm-vnext-faq__list" role="list">
+              {%- for block in section.blocks -%}
+                {%- if block.type == 'faq' -%}
+                  <div class="nm-vnext-faq__item" data-nm-faq-item role="listitem" {{ block.shopify_attributes }}>
+                    <button type="button" class="nm-vnext-faq__q" data-nm-faq-question aria-expanded="false">
+                      {{ block.settings.question }}
+                    </button>
+                    <div class="nm-vnext-faq__a" data-nm-faq-answer>
+                      {{ block.settings.answer }}
+                    </div>
+                  </div>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+
+  <div class="nm-pdp-sticky" data-nm-checkout-bar aria-label="Sticky checkout bar">
+    <div class="nm-pdp-sticky__inner">
+      <div class="nm-pdp-sticky__left">
+        <strong class="nm-pdp-sticky__name">{{ product.title }}</strong>
+        <span class="nm-pdp-sticky__price">{{ money_price }}</span>
+      </div>
+      <button class="nm-vnext-btn nm-vnext-btn--primary nm-pdp-sticky__btn" type="button" data-nm-scroll-to-atc>
+        Add to cart
+      </button>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    var thumbs = document.querySelectorAll('[data-nm-pdp-thumb]');
+    var main = document.getElementById('nm-pdp-main-img');
+    thumbs.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        if (!main) return;
+        main.src = btn.getAttribute('data-src');
+        thumbs.forEach(function (t) { t.classList.remove('is-active'); });
+        btn.classList.add('is-active');
+      });
+    });
+
+    var scrollBtn = document.querySelector('[data-nm-scroll-to-atc]');
+    var form = document.getElementById('nm-product-form');
+    if (scrollBtn && form) {
+      scrollBtn.addEventListener('click', function () {
+        form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Custom product",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "details_title", "label": "Details title", "default": "Details" },
+    { "type": "checkbox", "id": "show_faq", "label": "Show product FAQ", "default": true },
+    { "type": "text", "id": "faq_title", "label": "FAQ title", "default": "FAQ" }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefit bullet",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Text", "default": "Unlimited workouts & challenges" }
+      ]
+    },
+    {
+      "type": "faq",
+      "name": "FAQ item",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "How do I cancel?" },
+        { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>Cancel anytime from your account portal. Contact support if you need help.</p>" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom product",
+      "blocks": [
+        { "type": "benefit", "settings": { "text": "Unlimited workouts & challenges" } },
+        { "type": "benefit", "settings": { "text": "Access to accountability community" } },
+        { "type": "benefit", "settings": { "text": "New content added monthly" } },
+        { "type": "benefit", "settings": { "text": "Meal prep guides & recipes" } },
+        { "type": "faq", "settings": { "question": "How do I cancel my membership?", "answer": "<p>Cancel anytime from your subscription portal. If you need help, contact support.</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
