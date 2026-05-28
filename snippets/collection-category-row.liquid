@@ -1,64 +1,60 @@
-{%- comment -%}
-  @param row_id {string}
-  @param title {string}
-  @param row_collection {collection}
-  @param source_collection {collection}
-  @param fallback_tag {string}
-  @param limit {number}
-  @param show_view_all {boolean}
-{%- endcomment -%}
-
 {%- liquid
   assign row_limit = limit | default: 4
   assign row_title = title
   assign view_url = ''
+  assign coll_handle = collection_handle | default: fallback_tag | handleize
+  assign resolved_collection = row_collection
+  assign cards_rendered = 0
 
-  if row_collection != blank
-    assign view_url = row_collection.url
-    if row_title == blank
-      assign row_title = row_collection.title
+  if resolved_collection == blank or resolved_collection.products_count == 0
+    if coll_handle != blank
+      assign resolved_collection = collections[coll_handle]
     endif
   endif
 
-  assign has_collection_products = false
-  if row_collection != blank and row_collection.products_count > 0
-    assign has_collection_products = true
+  if resolved_collection != blank and resolved_collection.products_count > 0
+    assign view_url = resolved_collection.url
+    if row_title == blank
+      assign row_title = resolved_collection.title
+    endif
   endif
 
-  assign can_use_tags = false
-  if source_collection != blank and fallback_tag != blank
-    assign can_use_tags = true
-  endif
-
-  assign show_row = false
-  if has_collection_products or can_use_tags or request.design_mode
-    assign show_row = true
-  endif
+  assign keyword_list = match_keywords | split: ','
+  assign fallback_slug = fallback_tag | handleize
 -%}
 
-{%- if show_row -%}
-  <section class="nm-collection-row" aria-labelledby="nm-row-{{ row_id }}">
-    <div class="nm-collection-row__head">
-      <h2 class="nm-collection-row__title" id="nm-row-{{ row_id }}">{{ row_title }}</h2>
-      {%- if show_view_all and view_url != blank -%}
-        <a class="nm-collection-row__link" href="{{ view_url }}">View all</a>
-      {%- endif -%}
-    </div>
+<section class="nm-collection-row" aria-labelledby="nm-row-{{ row_id }}">
+  <div class="nm-collection-row__head">
+    <h2 class="nm-collection-row__title" id="nm-row-{{ row_id }}">{{ row_title }}</h2>
+    {%- if show_view_all and view_url != blank -%}
+      <a class="nm-collection-row__link" href="{{ view_url }}">View all</a>
+    {%- endif -%}
+  </div>
 
-    {%- if has_collection_products -%}
-      <div class="nm-products__grid nm-products__grid--row">
-        {%- for product in row_collection.products limit: row_limit -%}
-          {% render 'product-card', product: product %}
-        {%- endfor -%}
-      </div>
-    {%- elsif source_collection != blank and fallback_tag != blank -%}
-      {%- assign tag_count = 0 -%}
-      {%- assign fallback_slug = fallback_tag | handleize -%}
-      <div class="nm-products__grid nm-products__grid--row">
-        {%- for product in source_collection.products -%}
-          {%- if tag_count >= row_limit -%}{%- break -%}{%- endif -%}
-          {%- assign matched = false -%}
-          {%- if product.tags contains fallback_tag -%}
+  <div class="nm-products__grid nm-products__grid--row">
+    {%- if resolved_collection != blank and resolved_collection.products_count > 0 -%}
+      {%- for product in resolved_collection.products limit: row_limit -%}
+        {% render 'product-card', product: product %}
+        {%- assign cards_rendered = cards_rendered | plus: 1 -%}
+      {%- endfor -%}
+    {%- endif -%}
+
+    {%- if cards_rendered == 0 and source_collection != blank -%}
+      {%- for product in source_collection.products -%}
+        {%- if cards_rendered >= row_limit -%}{%- break -%}{%- endif -%}
+        {%- assign matched = false -%}
+
+        {%- if coll_handle != blank -%}
+          {%- for coll in product.collections -%}
+            {%- if coll.handle == coll_handle -%}
+              {%- assign matched = true -%}
+              {%- break -%}
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endif -%}
+
+        {%- unless matched -%}
+          {%- if fallback_tag != blank and product.tags contains fallback_tag -%}
             {%- assign matched = true -%}
           {%- else -%}
             {%- for tag in product.tags -%}
@@ -69,21 +65,42 @@
               {%- endif -%}
             {%- endfor -%}
           {%- endif -%}
-          {%- if matched -%}
-            {% render 'product-card', product: product %}
-            {%- assign tag_count = tag_count | plus: 1 -%}
-          {%- endif -%}
-        {%- endfor -%}
-      </div>
-      {%- if tag_count == 0 and request.design_mode -%}
-        <p class="nm-empty nm-collection-row__empty">
-          Assign a collection for “{{ row_title }}”, or tag products with <strong>{{ fallback_tag }}</strong>.
-        </p>
-      {%- endif -%}
-    {%- elsif request.design_mode -%}
-      <p class="nm-empty nm-collection-row__empty">
-        Assign a collection for “{{ row_title }}” in Theme Editor.
-      </p>
+        {%- endunless -%}
+
+        {%- unless matched -%}
+          {%- assign title_down = product.title | downcase -%}
+          {%- for kw in keyword_list -%}
+            {%- assign kw_trim = kw | strip | downcase -%}
+            {%- if kw_trim != blank and title_down contains kw_trim -%}
+              {%- assign matched = true -%}
+              {%- break -%}
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endunless -%}
+
+        {%- if matched -%}
+          {% render 'product-card', product: product %}
+          {%- assign cards_rendered = cards_rendered | plus: 1 -%}
+        {%- endif -%}
+      {%- endfor -%}
     {%- endif -%}
-  </section>
-{%- endif -%}
+
+    {%- if cards_rendered == 0 and auto_split and source_collection != blank and row_index != nil -%}
+      {%- assign start_at = row_index | times: row_limit -%}
+      {%- assign end_at = start_at | plus: row_limit -%}
+      {%- for product in source_collection.products -%}
+        {%- assign idx = forloop.index0 -%}
+        {%- if idx >= start_at and idx < end_at -%}
+          {% render 'product-card', product: product %}
+          {%- assign cards_rendered = cards_rendered | plus: 1 -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endif -%}
+  </div>
+
+  {%- if cards_rendered == 0 and request.design_mode -%}
+    <p class="nm-empty nm-collection-row__empty">
+      Add products to <strong>{{ coll_handle }}</strong>, tag them, or assign a collection in Theme Editor.
+    </p>
+  {%- endif -%}
+</section>
