@@ -456,13 +456,15 @@
    Header section (nm-hdr) — the one used in header.liquid
    ───────────────────────────────────────────────────────── */
 .nm-hdr {
-  position: relative;
+  position: sticky;
+  top: 0;
   z-index: 120;
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Display",
     "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
   --nm-hdr-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --nm-hdr-promo-h: 64px;
   --nm-hdr-header-h: 84px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.08);
 }
 
 @media (max-width: 1024px) {
@@ -523,13 +525,12 @@
 }
 
 .nm-hdr__header {
-  position: sticky;
-  top: 0;
-  z-index: 130;
+  position: relative;
+  z-index: 1;
   height: var(--nm-hdr-header-h);
   background: #fff;
   border-bottom: 1px solid rgba(0,0,0,0.10);
-  box-shadow: 0 8px 40px rgba(0,0,0,0.08);
+  box-shadow: none;
   display: flex;
   align-items: center;
 }
