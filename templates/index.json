@@ -11,34 +11,6 @@
   "sections": {
     "hero": {
       "type": "custom-home-hero",
-      "blocks": {
-        "mt1": {
-          "type": "micro_trust",
-          "settings": {
-            "icon": "🛡️",
-            "label": "Licensed Products"
-          }
-        },
-        "mt2": {
-          "type": "micro_trust",
-          "settings": {
-            "icon": "✓",
-            "label": "Pharmacist Approved"
-          }
-        },
-        "mt3": {
-          "type": "micro_trust",
-          "settings": {
-            "icon": "🚚",
-            "label": "Worldwide Shipping"
-          }
-        }
-      },
-      "block_order": [
-        "mt1",
-        "mt2",
-        "mt3"
-      ],
       "settings": {
         "kicker": "",
         "heading": "",
