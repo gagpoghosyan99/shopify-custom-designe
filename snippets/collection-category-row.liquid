@@ -1,0 +1,69 @@
+{%- comment -%}
+  @param row_id {string}
+  @param title {string}
+  @param row_collection {collection}
+  @param source_collection {collection}
+  @param fallback_tag {string}
+  @param limit {number}
+  @param show_view_all {boolean}
+{%- endcomment -%}
+
+{%- liquid
+  assign row_limit = limit | default: 4
+  assign row_title = title
+  assign view_url = ''
+
+  if row_collection != blank
+    assign view_url = row_collection.url
+    if row_title == blank
+      assign row_title = row_collection.title
+    endif
+  endif
+
+  assign product_count = 0
+  if row_collection != blank
+    assign product_count = row_collection.products_count
+    if product_count > row_limit
+      assign product_count = row_limit
+    endif
+  endif
+-%}
+
+{%- if product_count > 0 or request.design_mode -%}
+  <section class="nm-collection-row" aria-labelledby="nm-row-{{ row_id }}">
+    <div class="nm-collection-row__head">
+      <h2 class="nm-collection-row__title" id="nm-row-{{ row_id }}">{{ row_title }}</h2>
+      {%- if show_view_all and view_url != blank -%}
+        <a class="nm-collection-row__link" href="{{ view_url }}">View all</a>
+      {%- endif -%}
+    </div>
+
+    {%- if row_collection != blank and row_collection.products_count > 0 -%}
+      <div class="nm-products__grid nm-products__grid--row">
+        {%- for product in row_collection.products limit: row_limit -%}
+          {% render 'product-card', product: product %}
+        {%- endfor -%}
+      </div>
+    {%- elsif source_collection != blank and fallback_tag != blank -%}
+      {%- assign tag_count = 0 -%}
+      <div class="nm-products__grid nm-products__grid--row">
+        {%- for product in source_collection.products -%}
+          {%- if tag_count >= row_limit -%}{%- break -%}{%- endif -%}
+          {%- if product.tags contains fallback_tag -%}
+            {% render 'product-card', product: product %}
+            {%- assign tag_count = tag_count | plus: 1 -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+      {%- if tag_count == 0 and request.design_mode -%}
+        <p class="nm-empty nm-collection-row__empty">
+          Assign a collection for “{{ row_title }}”, or tag products with <strong>{{ fallback_tag }}</strong>.
+        </p>
+      {%- endif -%}
+    {%- elsif request.design_mode -%}
+      <p class="nm-empty nm-collection-row__empty">
+        Assign a collection for “{{ row_title }}” in Theme Editor.
+      </p>
+    {%- endif -%}
+  </section>
+{%- endif -%}
