@@ -1,55 +1,138 @@
-<header class="nm-header nm-header--v2" role="banner" data-nm-header>
-  <div class="nm-container">
-    <div class="nm-header__inner">
-      <button type="button" class="nm-menu-toggle nm-menu-toggle--left" data-nm-menu-toggle aria-expanded="false" aria-controls="nm-mobile-nav" aria-label="Menu">
-        <span></span><span></span><span></span>
-      </button>
+<header class="nm-header">
 
-      <a href="{{ routes.root_url }}" class="nm-header__logo" aria-label="{{ settings.brand_name | default: 'NovaMeds' }} home">
-        {%- if settings.logo != blank -%}
-          {{ settings.logo | image_url: width: 220 | image_tag: alt: settings.brand_name | default: 'NovaMeds', loading: 'eager', class: 'nm-header__logo-img' }}
-        {%- else -%}
-          <img src="{{ 'novameds-logo.png' | asset_url }}" alt="NovaMeds" class="nm-header__logo-img" loading="eager">
-        {%- endif -%}
-      </a>
+  <div class="nm-left">
 
-      <nav class="nm-nav nm-nav--center" aria-label="Main">
-        <a href="{{ routes.root_url }}" class="nm-nav__link">Home</a>
-        <a href="/pages/catalog" class="nm-nav__link">Catalog</a>
-        <a href="/pages/about" class="nm-nav__link">About Us</a>
-        <a href="/blogs/news" class="nm-nav__link">Blog</a>
-        <a href="/pages/contact" class="nm-nav__link">Contact</a>
-      </nav>
+    <button class="nm-menu-btn">
+      ☰
+    </button>
 
-      <div class="nm-header__actions">
-        <button type="button" class="nm-header__icon-btn" data-nm-search-open aria-label="Search">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3-3"/></svg>
-        </button>
-        <a href="{{ routes.account_url }}" class="nm-header__icon-btn nm-header__icon-btn--account" aria-label="Account">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>
-        </a>
-        <button type="button" class="nm-header__cart" data-nm-cart-open aria-label="Cart">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg>
-          <span class="nm-header__cart-count" data-nm-header-cart-count>{% if cart.item_count > 0 %}{{ cart.item_count }}{% endif %}</span>
-        </button>
-      </div>
-    </div>
+    <span>Menu</span>
 
-    <nav id="nm-mobile-nav" class="nm-mobile-nav" data-nm-mobile-nav aria-label="Mobile menu">
-      <a href="{{ routes.root_url }}">Home</a>
-      <a href="/pages/catalog">Catalog</a>
-      <a href="/pages/about">About Us</a>
-      <a href="/blogs/news">Blog</a>
-      <a href="/pages/contact">Contact</a>
-    </nav>
   </div>
+
+  <a href="/" class="nm-logo">
+    NOVAMEDS
+  </a>
+
+  <div class="nm-right">
+
+    <a href="/search" class="nm-search">
+      ⌕ <span>Search</span>
+    </a>
+
+    <a href="/cart" class="nm-cart">
+
+      🛒
+
+      <span class="nm-cart-count">
+        {{ cart.item_count }}
+      </span>
+
+      <span>Cart</span>
+
+    </a>
+
+  </div>
+
 </header>
+
+<style>
+.nm-header{
+  width:100%;
+  height:82px;
+  background:#fff;
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  align-items:center;
+  padding:0 28px;
+  border-bottom:1px solid #eee;
+  font-family:Arial,sans-serif;
+}
+
+.nm-left,
+.nm-right{
+  display:flex;
+  align-items:center;
+  gap:18px;
+}
+
+.nm-right{
+  justify-content:flex-end;
+}
+
+.nm-menu-btn{
+  background:none;
+  border:none;
+  font-size:34px;
+  cursor:pointer;
+}
+
+.nm-logo{
+  font-size:42px;
+  font-weight:900;
+  color:#000;
+  text-decoration:none;
+  letter-spacing:-2px;
+}
+
+.nm-search,
+.nm-cart{
+  color:#000;
+  text-decoration:none;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:24px;
+  position:relative;
+}
+
+.nm-cart-count{
+  position:absolute;
+  top:-10px;
+  right:38px;
+  width:20px;
+  height:20px;
+  border-radius:50%;
+  background:#111;
+  color:#fff;
+  font-size:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+@media(max-width:768px){
+
+  .nm-header{
+    height:68px;
+    padding:0 16px;
+  }
+
+  .nm-logo{
+    font-size:26px;
+  }
+
+  .nm-left span,
+  .nm-right span:not(.nm-cart-count){
+    display:none;
+  }
+
+  .nm-search,
+  .nm-cart{
+    font-size:22px;
+  }
+
+}
+</style>
 
 {% schema %}
 {
-  "name": "Header",
-  "settings": [
-    { "type": "link_list", "id": "menu", "label": "Main menu", "default": "main-menu" }
+  "name":"NovaMeds Header",
+  "settings":[],
+  "presets":[
+    {
+      "name":"NovaMeds Header"
+    }
   ]
 }
 {% endschema %}
