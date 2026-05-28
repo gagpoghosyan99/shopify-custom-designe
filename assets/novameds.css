@@ -372,4 +372,77 @@
   .nm-vnext-products__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.25rem; }
 }
 
+/* vNext discount */
+.nm-vnext-discount {
+  background: #fff;
+  padding: 0 0 3.25rem;
+}
+.nm-vnext-discount__card {
+  display: grid;
+  gap: 1rem;
+  align-items: center;
+  padding: 1.25rem;
+  border-radius: var(--nm-radius-xl);
+  background: linear-gradient(140deg, rgba(10, 22, 40, 0.78), rgba(13, 61, 74, 0.75));
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.26);
+  color: #fff;
+}
+@media (min-width: 900px) {
+  .nm-vnext-discount__card {
+    grid-template-columns: 1fr auto;
+    padding: 1.8rem 2rem;
+  }
+}
+.nm-vnext-discount__badge {
+  display: inline-flex;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(46, 232, 240, 0.24);
+  color: rgba(46, 232, 240, 0.95);
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+.nm-vnext-discount__title {
+  margin: 0 0 0.4rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  font-size: clamp(1.55rem, 2.4vw, 2rem);
+}
+.nm-vnext-discount__text {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.82);
+  line-height: 1.65;
+  max-width: 62ch;
+}
+.nm-vnext-discount__cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.6rem;
+}
+@media (min-width: 900px) {
+  .nm-vnext-discount__cta {
+    justify-content: flex-end;
+  }
+}
+.nm-vnext-discount__code {
+  border: 1px dashed rgba(255, 255, 255, 0.24);
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.92);
+  border-radius: 999px;
+  padding: 0.75rem 0.95rem;
+  font-weight: 800;
+  cursor: pointer;
+  min-height: 44px;
+}
+.nm-vnext-discount__code strong {
+  color: #fff;
+}
+
 
