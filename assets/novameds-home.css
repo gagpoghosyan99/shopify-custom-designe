@@ -414,12 +414,58 @@
    Mobile & tablet polish (app-like)
    ───────────────────────────────────────────────────────── */
 @media (max-width: 900px) {
+  .nm-hero-premium {
+    /* Make the hero feel like a single “app screen” on mobile */
+    padding-top: 0.25rem;
+  }
+
   .nm-hero-premium__grid {
-    padding: 2.75rem 0 3.5rem;
+    grid-template-columns: 1fr;
+    padding: 2.75rem 0 3.25rem;
     min-height: unset;
   }
+
+  /* Turn the hero image into a background layer on mobile */
+  .nm-hero-premium__visual {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    min-height: unset;
+    pointer-events: none;
+  }
+
+  .nm-hero-premium__products {
+    position: absolute;
+    inset: 0;
+    padding: 0;
+    align-items: stretch;
+    justify-content: stretch;
+  }
+
+  .nm-hero-premium__product-img,
+  .nm-hero-premium__ph .nm-ph__img {
+    width: 100%;
+    height: 100%;
+    max-height: none;
+    object-fit: cover;
+    object-position: 72% 28%;
+    filter: none;
+  }
+
+  /* Dark overlay so text stays readable on top */
+  .nm-hero-premium__visual::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(10, 22, 40, 0.55) 0%, rgba(10, 22, 40, 0.82) 48%, rgba(10, 22, 40, 0.95) 100%),
+      radial-gradient(circle at 80% 20%, rgba(46, 232, 240, 0.22), transparent 52%);
+  }
+
   .nm-hero-premium__content {
     text-align: left;
+    position: relative;
+    z-index: 2;
   }
   .nm-hero-premium__text {
     max-width: 40rem;
@@ -456,7 +502,7 @@
   }
   .nm-hero-premium__grid {
     gap: 1.25rem;
-    padding: 2.25rem 0 3rem;
+    padding: 2.25rem 0 2.75rem;
   }
   .nm-hero-premium__title {
     font-size: clamp(2.35rem, 12vw, 3.6rem);
@@ -467,6 +513,18 @@
   }
   .nm-hero-premium__text {
     font-size: 1rem;
+  }
+
+  .nm-hero-premium__text {
+    margin-bottom: 1rem;
+  }
+
+  .nm-hero-premium__mini {
+    margin-top: 0.6rem;
+  }
+
+  .nm-hero-premium__mesh {
+    opacity: 0.08;
   }
   .nm-hero-price {
     gap: 0.45rem 0.55rem;
