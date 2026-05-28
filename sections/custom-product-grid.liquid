@@ -1,30 +1,66 @@
 {%- assign col = section.settings.collection -%}
 {%- if col == blank -%}{%- assign col = collections.all -%}{%- endif -%}
 
-<section class="nm-vnext-products nm-animate" id="best-sellers" aria-label="Best sellers">
-  <div class="nm-container">
-    <header class="nm-vnext-section-head">
-      <h2 class="nm-vnext-h2">{{ section.settings.title | default: 'Best Sellers' }}</h2>
-      {%- if section.settings.subtitle != blank -%}
-        <p class="nm-vnext-sub">{{ section.settings.subtitle }}</p>
-      {%- endif -%}
+{%- liquid
+  assign heading = section.settings.title | default: 'BEST SELLERS!'
+  assign limit = section.settings.products_to_show | default: 10
+  assign show_arrows = section.settings.show_arrows
+  assign enable_mobile_swipe = section.settings.enable_mobile_swipe
+  assign show_compare = section.settings.show_compare_price
+  assign show_ratings = section.settings.show_ratings
+  assign button_text = section.settings.button_text | default: 'Shop now'
+-%}
+
+{{ 'novameds-carousel.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'novameds-carousel.js' | asset_url }}" defer></script>
+
+<section class="nm-goals nm-animate" id="best-sellers" data-nm-goals data-section-id="{{ section.id }}">
+  <div class="nm-goals__inner">
+    <header class="nm-goals__head">
+      <h2 class="nm-goals__title">{{ heading }}</h2>
     </header>
 
-    {%- if col != blank and col.products_count > 0 -%}
-      <div class="nm-vnext-products__grid">
-        {%- for product in col.products limit: section.settings.products_to_show -%}
-          {% render 'product-card', product: product %}
-        {%- endfor -%}
+    <div class="nm-goals__carousel" data-nm-goals-carousel>
+      {%- if show_arrows -%}
+        <button class="nm-goals__arrow nm-goals__arrow--prev" type="button" data-nm-goals-prev aria-label="Scroll products left">
+          <span aria-hidden="true">‹</span>
+        </button>
+      {%- endif -%}
+
+      <div
+        class="nm-goals__track{% if enable_mobile_swipe %} nm-goals__track--swipe{% endif %}"
+        data-nm-goals-track
+        role="region"
+        aria-label="Best sellers carousel"
+        tabindex="0"
+      >
+        {%- if col != blank and col.products_count > 0 -%}
+          {%- for product in col.products limit: limit -%}
+            {%- render 'novameds-product-offer-card',
+              product: product,
+              show_compare: show_compare,
+              show_ratings: show_ratings,
+              button_text: button_text
+            -%}
+          {%- endfor -%}
+        {%- else -%}
+          {%- if request.design_mode -%}
+            <p class="nm-demo-note">Choose a collection in this section settings to show products.</p>
+          {%- endif -%}
+        {%- endif -%}
       </div>
-      {%- if section.settings.show_view_all and col.url != blank -%}
-        <div class="nm-vnext-center">
-          <a class="nm-vnext-btn nm-vnext-btn--primary" href="{{ col.url }}">View all</a>
-        </div>
+
+      {%- if show_arrows -%}
+        <button class="nm-goals__arrow nm-goals__arrow--next" type="button" data-nm-goals-next aria-label="Scroll products right">
+          <span aria-hidden="true">›</span>
+        </button>
       {%- endif -%}
-    {%- else -%}
-      {%- if request.design_mode -%}
-        <p class="nm-demo-note">Choose a collection in this section settings to show products.</p>
-      {%- endif -%}
+    </div>
+
+    {%- if section.settings.show_view_all and col.url != blank -%}
+      <p style="text-align:center; margin-top: 14px;">
+        <a href="{{ col.url }}" class="nm-offer__btn" style="max-width: 280px;">View all</a>
+      </p>
     {%- endif -%}
   </div>
 </section>
@@ -34,10 +70,14 @@
   "name": "Custom product grid",
   "tag": "section",
   "settings": [
-    { "type": "text", "id": "title", "label": "Title", "default": "Best Sellers" },
-    { "type": "textarea", "id": "subtitle", "label": "Subtitle", "default": "Top-rated formulas trusted by our customers." },
+    { "type": "text", "id": "title", "label": "Title", "default": "BEST SELLERS!" },
     { "type": "collection", "id": "collection", "label": "Collection" },
     { "type": "range", "id": "products_to_show", "min": 4, "max": 16, "step": 2, "default": 8, "label": "Products to show" },
+    { "type": "checkbox", "id": "show_compare_price", "label": "Show compare-at price", "default": true },
+    { "type": "checkbox", "id": "show_ratings", "label": "Show ratings (metafields if available)", "default": true },
+    { "type": "checkbox", "id": "show_arrows", "label": "Show arrows", "default": true },
+    { "type": "checkbox", "id": "enable_mobile_swipe", "label": "Enable mobile swipe", "default": true },
+    { "type": "text", "id": "button_text", "label": "Button text", "default": "Shop now" },
     { "type": "checkbox", "id": "show_view_all", "label": "Show view all", "default": true }
   ],
   "presets": [{ "name": "Custom product grid" }]
