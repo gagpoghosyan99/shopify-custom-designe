@@ -1,0 +1,102 @@
+<section class="nm-vnext-pro nm-animate" id="trusted" aria-label="Trusted by professionals and science">
+  <div class="nm-container">
+    <div class="nm-vnext-pro__wrap nm-dark-stage nm-glass nm-glow-hover">
+      <h2 class="nm-vnext-pro__title">{{ section.settings.title | default: 'Trusted by Professionals & Science' }}</h2>
+
+      <div class="nm-vnext-pro__certs" aria-label="Certifications">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'cert' -%}
+            <div class="nm-vnext-pro__cert" {{ block.shopify_attributes }}>
+              <span>{{ block.settings.label }}</span>
+              <strong>{{ block.settings.value }}</strong>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      <div class="nm-vnext-pro__doctors" aria-label="Doctor recommendations">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'doctor' -%}
+            <article class="nm-vnext-doc" {{ block.shopify_attributes }}>
+              <div class="nm-vnext-doc__avatar" aria-hidden="true">
+                {%- if block.settings.photo != blank -%}
+                  {{ block.settings.photo | image_url: width: 160 | image_tag: loading: 'lazy', alt: '' }}
+                {%- else -%}
+                  <span aria-hidden="true">👨‍⚕️</span>
+                {%- endif -%}
+              </div>
+              <h3 class="nm-vnext-doc__name">{{ block.settings.name }}</h3>
+              <p class="nm-vnext-doc__cred">{{ block.settings.credentials }}</p>
+              <p class="nm-vnext-doc__quote">“{{ block.settings.quote }}”</p>
+            </article>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      <div class="nm-vnext-pro__stats" aria-label="NovaMeds stats">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'stat' -%}
+            <div class="nm-vnext-stat" {{ block.shopify_attributes }}>
+              <strong>{{ block.settings.value }}</strong>
+              <span>{{ block.settings.label }}</span>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Professionals & stats",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Title", "default": "Trusted by Professionals & Science" }
+  ],
+  "blocks": [
+    {
+      "type": "cert",
+      "name": "Certification",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Certifications" },
+        { "type": "text", "id": "value", "label": "Value", "default": "GMP · FDA" }
+      ]
+    },
+    {
+      "type": "doctor",
+      "name": "Doctor card",
+      "settings": [
+        { "type": "image_picker", "id": "photo", "label": "Photo (optional)" },
+        { "type": "text", "id": "name", "label": "Name", "default": "Dr. Emily Chen" },
+        { "type": "text", "id": "credentials", "label": "Credentials", "default": "PharmD, Wellness Specialist" },
+        { "type": "text", "id": "quote", "label": "Quote", "default": "Exceptional quality and full transparency on every label." }
+      ]
+    },
+    {
+      "type": "stat",
+      "name": "Stat",
+      "settings": [
+        { "type": "text", "id": "value", "label": "Value", "default": "50,000+" },
+        { "type": "text", "id": "label", "label": "Label", "default": "Happy Customers" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Professionals & stats",
+      "blocks": [
+        { "type": "cert", "settings": { "label": "Certifications", "value": "GMP · FDA" } },
+        { "type": "cert", "settings": { "label": "Security", "value": "SSL · PCI" } },
+        { "type": "doctor", "settings": { "name": "Dr. Emily Chen", "credentials": "PharmD, Wellness Specialist", "quote": "Exceptional quality and full transparency on every label." } },
+        { "type": "doctor", "settings": { "name": "Dr. Michael Davis", "credentials": "MD, Integrative Medicine", "quote": "I confidently recommend NovaMeds to my patients." } },
+        { "type": "doctor", "settings": { "name": "Dr. Sarah Lee", "credentials": "PharmD", "quote": "Science-backed formulas you can trust daily." } },
+        { "type": "stat", "settings": { "value": "50,000+", "label": "Happy Customers" } },
+        { "type": "stat", "settings": { "value": "98%", "label": "Satisfaction Rate" } },
+        { "type": "stat", "settings": { "value": "24h", "label": "Worldwide Shipping" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
