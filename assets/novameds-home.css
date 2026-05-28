@@ -638,9 +638,9 @@
 .nm-vnext-hero--photo .nm-vnext-hero__copy {
   max-width: 720px;
   padding: 2rem 2rem 2.1rem;
-  background: rgba(10, 22, 40, 0.46);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  backdrop-filter: blur(14px);
+  background: transparent;
+  border: none;
+  backdrop-filter: none;
 }
 
 .nm-vnext-hero__photo {
@@ -657,18 +657,8 @@
   display: block;
 }
 
-.nm-vnext-hero__photo-shade {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(90deg, rgba(3, 18, 37, 0.72) 0%, rgba(3, 18, 37, 0.58) 38%, rgba(3, 18, 37, 0.22) 70%, rgba(3, 18, 37, 0.12) 100%),
-    radial-gradient(circle at 62% 30%, rgba(46, 232, 240, 0.18), transparent 56%),
-    radial-gradient(circle at 18% 55%, rgba(0, 201, 212, 0.14), transparent 55%);
-}
-
-.nm-vnext-hero--photo .nm-vnext-hero__bg,
-.nm-vnext-hero--photo .nm-vnext-hero__molecules {
-  opacity: 0.22;
+.nm-vnext-hero--photo.nm-dark-stage {
+  background: transparent;
 }
 
 @media (max-width: 900px) {
