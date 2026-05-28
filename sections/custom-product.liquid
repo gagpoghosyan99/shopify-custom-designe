@@ -421,30 +421,38 @@
 
   })();
 
-  /* Desktop: scroll right panel first, then pass scroll to the page */
+  /* Desktop: scroll right panel first, then scroll the full page (footer) */
   (function () {
     var panel = document.querySelector('[data-nm-pdp-info-scroll]');
-    if (!panel) return;
+    var page = document.querySelector('[data-nm-product-page]');
+    if (!panel || !page) return;
     var mq = window.matchMedia('(min-width: 991px)');
 
     function onWheel(e) {
       if (!mq.matches) return;
-      var el = panel;
-      var max = el.scrollHeight - el.clientHeight;
-      if (max <= 0) return;
+      var max = panel.scrollHeight - panel.clientHeight;
+      var atTop = panel.scrollTop <= 0;
+      var atBottom = max <= 0 || panel.scrollTop >= max - 1;
 
-      var atTop = el.scrollTop <= 0;
-      var atBottom = el.scrollTop >= max - 1;
+      if (e.deltaY > 0 && atBottom) {
+        window.scrollBy({ top: e.deltaY, left: 0, behavior: 'auto' });
+        return;
+      }
+      if (e.deltaY < 0 && atTop) {
+        window.scrollBy({ top: e.deltaY, left: 0, behavior: 'auto' });
+        return;
+      }
 
-      if ((e.deltaY > 0 && atBottom) || (e.deltaY < 0 && atTop)) {
+      if (max <= 0) {
+        window.scrollBy({ top: e.deltaY, left: 0, behavior: 'auto' });
         return;
       }
 
       e.preventDefault();
-      el.scrollTop += e.deltaY;
+      panel.scrollTop += e.deltaY;
     }
 
-    panel.addEventListener('wheel', onWheel, { passive: false });
+    page.addEventListener('wheel', onWheel, { passive: false });
   })();
 </script>
 
