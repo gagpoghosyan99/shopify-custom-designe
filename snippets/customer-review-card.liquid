@@ -8,6 +8,20 @@
   endif
   assign pct = stars | times: 20
   assign card_index = card_index | default: forloop.index
+
+  assign customer_slug = 'sarah'
+  case card_index
+    when 2
+      assign customer_slug = 'james'
+    when 3
+      assign customer_slug = 'priya'
+    when 4
+      assign customer_slug = 'marcus'
+  endcase
+
+  assign fallback_avatar = 'review-customer-' | append: customer_slug | append: '-avatar.png'
+  assign fallback_before = 'review-customer-' | append: customer_slug | append: '-before.png'
+  assign fallback_after = 'review-customer-' | append: customer_slug | append: '-after.png'
 -%}
 
 <article class="nm-creviews__card" role="listitem"{% unless editor_attrs %} aria-hidden="true"{% endunless %}{% if editor_attrs %} {{ block.shopify_attributes }}{% endif %}>
@@ -25,7 +39,15 @@
             alt: block.settings.before_label | default: 'Before'
         }}
       {%- else -%}
-        <div class="nm-creviews__ba-ph nm-creviews__ba-ph--before" role="img" aria-label="{{ block.settings.before_label | default: 'Before' }}"></div>
+        <img
+          class="nm-creviews__ba-img"
+          src="{{ fallback_before | asset_url }}"
+          alt="{{ block.settings.before_label | default: 'Before' | escape }}"
+          width="320"
+          height="336"
+          loading="lazy"
+          decoding="async"
+        >
       {%- endif -%}
       <span class="nm-creviews__ba-tag">{{ block.settings.before_label | default: 'Before' }}</span>
     </div>
@@ -43,7 +65,15 @@
             alt: block.settings.after_label | default: 'After'
         }}
       {%- else -%}
-        <div class="nm-creviews__ba-ph nm-creviews__ba-ph--after" role="img" aria-label="{{ block.settings.after_label | default: 'After' }}"></div>
+        <img
+          class="nm-creviews__ba-img"
+          src="{{ fallback_after | asset_url }}"
+          alt="{{ block.settings.after_label | default: 'After' | escape }}"
+          width="320"
+          height="336"
+          loading="lazy"
+          decoding="async"
+        >
       {%- endif -%}
       <span class="nm-creviews__ba-tag nm-creviews__ba-tag--after">{{ block.settings.after_label | default: 'After' }}</span>
     </div>
@@ -62,14 +92,14 @@
               alt: block.settings.author
           }}
         {%- else -%}
-          {%- assign av_i = card_index | modulo: 3 | plus: 1 -%}
           <img
             class="nm-creviews__avatar-img"
-            src="{{ 'placeholder-avatar-' | append: av_i | append: '.svg' | asset_url }}"
-            alt=""
+            src="{{ fallback_avatar | asset_url }}"
+            alt="{{ block.settings.author | default: 'Verified buyer' | escape }}"
             width="56"
             height="56"
             loading="lazy"
+            decoding="async"
           >
         {%- endif -%}
       </div>
