@@ -1575,11 +1575,29 @@
 
 .template-index #best-sellers.nm-goals,
 .template-index .nm-vitamins,
-.template-index .nm-vnext-why,
+.template-index .nm-why-fs,
 .template-index .nm-creviews,
 .template-index .nm-trust-nl,
 .template-index .nm-vnext-faq {
   margin-block: 0;
+}
+
+/* Homepage: unified product card carousels */
+.template-index .nm-goals__track,
+.template-index .nm-vitamins__carousel .nm-goals__track {
+  gap: 24px;
+}
+
+.template-index .nm-offer__title {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  min-height: calc(1.2em * 3);
+}
+
+.template-index .nm-offer__btn {
+  margin-top: auto;
 }
 
 .template-index #best-sellers.nm-goals {

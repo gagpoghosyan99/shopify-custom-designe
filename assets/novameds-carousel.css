@@ -126,10 +126,13 @@
   }
 }
 
-/* Cards */
+/* Cards — unified homepage proportions (reference: bestsellers row) */
 .nm-offer {
-  width: 330px;
-  min-height: 620px;
+  --nm-offer-w: 306px;
+  --nm-offer-min-h: 590px;
+  --nm-offer-media-h: 360px;
+  width: var(--nm-offer-w);
+  min-height: var(--nm-offer-min-h);
   flex: 0 0 auto;
   border-radius: 14px;
   background: #fff;
@@ -147,11 +150,6 @@
   box-shadow: 0 28px 90px rgba(0, 0, 0, 0.16);
 }
 
-.nm-goals--bestsellers .nm-offer {
-  width: 306px;
-  min-height: 590px;
-}
-
 @media (max-width: 767px) {
   .nm-goals {
     padding-left: 0;
@@ -167,16 +165,13 @@
     hyphens: auto;
   }
 
-  .nm-offer,
-  .nm-goals--bestsellers .nm-offer {
-    width: min(272px, 78vw);
-    min-height: 0;
+  .nm-offer {
+    --nm-offer-w: min(272px, 78vw);
+    --nm-offer-min-h: 0;
+    --nm-offer-media-h: 200px;
+    width: var(--nm-offer-w);
+    min-height: var(--nm-offer-min-h);
     max-width: 100%;
-  }
-
-  .nm-offer__media,
-  .nm-goals--bestsellers .nm-offer__media {
-    height: 200px;
   }
 
   .nm-offer__body {
@@ -192,24 +187,16 @@
 .nm-offer__media {
   position: relative;
   display: block;
-  height: 330px;
+  height: var(--nm-offer-media-h, 360px);
   flex: 0 0 auto;
   background: #f3f7fb;
   overflow: hidden;
   text-decoration: none;
 }
 
-.nm-goals--bestsellers .nm-offer__media {
-  height: 360px;
-}
-
 @media (max-width: 520px) {
-  .nm-offer__media {
-    height: 280px;
-  }
-
-  .nm-goals--bestsellers .nm-offer__media {
-    height: 300px;
+  .nm-offer {
+    --nm-offer-media-h: 280px;
   }
 }
 
@@ -251,16 +238,12 @@
 }
 
 .nm-offer__body {
-  padding: 18px 18px 20px;
+  padding: 16px 16px 18px;
   display: flex;
   flex-direction: column;
   gap: 12px;
   flex: 1 1 auto;
   min-height: 0;
-}
-
-.nm-goals--bestsellers .nm-offer__body {
-  padding: 16px 16px 18px;
 }
 
 .nm-offer__title {
