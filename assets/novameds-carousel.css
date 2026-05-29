@@ -2,7 +2,7 @@
 
 .nm-goals {
   background: #ffffff;
-  padding: 80px 0;
+  padding: 36px 0;
   color: #00172f;
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Display",
     "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
@@ -10,7 +10,7 @@
 
 @media (max-width: 520px) {
   .nm-goals {
-    padding: 24px 0;
+    padding: 18px 0;
   }
 }
 
@@ -28,7 +28,7 @@
 
 .nm-goals__head {
   text-align: center;
-  margin-bottom: 32px;
+  margin-bottom: 16px;
 }
 
 .nm-goals__title {
@@ -42,7 +42,7 @@
 
 @media (max-width: 520px) {
   .nm-goals__head {
-    margin-bottom: 18px;
+    margin-bottom: 12px;
   }
   .nm-goals__title {
     font-size: 28px;
@@ -152,15 +152,40 @@
   min-height: 590px;
 }
 
-@media (max-width: 520px) {
-  .nm-offer {
-    width: 82vw;
-    min-height: 560px;
+@media (max-width: 767px) {
+  .nm-goals {
+    padding-left: 0;
+    padding-right: 0;
   }
 
+  .nm-goals__inner {
+    padding-inline: 0.65rem;
+  }
+
+  .nm-goals__title {
+    font-size: clamp(1.1rem, 4.2vw, 1.35rem);
+    hyphens: auto;
+  }
+
+  .nm-offer,
   .nm-goals--bestsellers .nm-offer {
-    width: 82vw;
-    min-height: 540px;
+    width: min(272px, 78vw);
+    min-height: 0;
+    max-width: 100%;
+  }
+
+  .nm-offer__media,
+  .nm-goals--bestsellers .nm-offer__media {
+    height: 200px;
+  }
+
+  .nm-offer__body {
+    padding: 0.85rem 0.9rem 1rem;
+  }
+
+  .nm-goals__arrow {
+    width: 40px;
+    height: 40px;
   }
 }
 

@@ -315,7 +315,7 @@
 /* vNext shared section head */
 .nm-vnext-section-head {
   text-align: center;
-  padding: 2.5rem 0 1.25rem;
+  padding: 1rem 0 0.65rem;
 }
 .nm-vnext-h2 {
   margin: 0;
@@ -596,7 +596,7 @@
 /* vNext why */
 .nm-vnext-why {
   background: #fff;
-  padding: clamp(2.5rem, 5vw, 3.5rem) 0;
+  padding: clamp(1.25rem, 2.5vw, 1.75rem) 0;
 }
 .nm-vnext-why__eyebrow {
   margin: 0 0 0.45rem;
@@ -759,7 +759,7 @@
 .nm-vnext-newsletter__success { margin: 1rem 0 0; color: rgba(46, 232, 240, 0.95); font-weight: 900; }
 
 /* vNext FAQ */
-.nm-vnext-faq { background: #fff; padding: 0 0 3.5rem; }
+.nm-vnext-faq { background: #fff; padding: 0 0 1.75rem; }
 .nm-vnext-faq__list { max-width: 860px; margin: 0 auto; }
 .nm-vnext-faq__item { border-bottom: 1px solid rgba(10, 22, 40, 0.12); }
 .nm-vnext-faq__q {

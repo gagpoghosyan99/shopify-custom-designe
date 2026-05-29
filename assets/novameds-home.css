@@ -1560,9 +1560,9 @@
   }
 }
 
-/* Homepage: hero → best sellers closer together */
+/* Homepage: tighter gaps between all sections */
 .template-index #home-hero.nm-vnext-hero {
-  padding-bottom: 1.25rem;
+  padding-bottom: 0.5rem;
 }
 
 .template-index #home-hero.nm-vnext-hero--banner-only {
@@ -1570,38 +1570,59 @@
 }
 
 .template-index .nm-vnext-hero--photo .nm-container.nm-vnext-hero__grid {
-  padding-bottom: 2rem;
+  padding-bottom: 1rem;
+}
+
+.template-index #best-sellers.nm-goals,
+.template-index .nm-vitamins,
+.template-index .nm-vnext-why,
+.template-index .nm-creviews,
+.template-index .nm-trust-nl,
+.template-index .nm-vnext-faq {
+  margin-block: 0;
 }
 
 .template-index #best-sellers.nm-goals {
-  padding-top: 2.5rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.template-index #best-sellers .nm-goals__head,
+.template-index .nm-vitamins__head {
+  margin-bottom: 0.75rem;
+}
+
+.template-index .nm-vnext-section-head {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.template-index .nm-creviews__head {
+  margin-bottom: 0.75rem;
 }
 
 @media (max-width: 767px) {
   .template-index #home-hero.nm-vnext-hero {
-    padding-bottom: 0.5rem;
-  }
-
-  .template-index #home-hero.nm-vnext-hero--banner-only {
-    padding-bottom: 0;
+    padding-bottom: 0.25rem;
   }
 
   .template-index .nm-vnext-hero--photo .nm-container.nm-vnext-hero__grid {
-    padding-bottom: 0.35rem;
+    padding-bottom: 0.25rem;
   }
 
   .template-index #best-sellers.nm-goals {
-    padding-top: 0.85rem;
-    padding-bottom: 1.75rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
   }
 
   .template-index #best-sellers .nm-goals__head {
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
   }
 }
 
 @media (min-width: 768px) {
   .template-index #best-sellers.nm-goals {
-    padding-top: 3rem;
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
   }
 }

@@ -1,0 +1,87 @@
+/* Home vitamins collection row */
+
+.nm-vitamins {
+  background: #fff;
+  padding: clamp(1.25rem, 2.5vw, 1.75rem) 0;
+}
+
+.nm-vitamins__inner {
+  width: min(100% - 2rem, var(--nm-max, 1200px));
+  margin-inline: auto;
+}
+
+.nm-vitamins__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem 1.5rem;
+  margin-bottom: 0.85rem;
+}
+
+.nm-vitamins__eyebrow {
+  margin: 0 0 0.4rem;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #00a8b5;
+}
+
+.nm-vitamins__title {
+  margin: 0 0 0.45rem;
+  font-size: clamp(1.65rem, 3.2vw, 2.15rem);
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+  font-weight: 900;
+  color: #0a1628;
+}
+
+.nm-vitamins__sub {
+  margin: 0;
+  max-width: 58ch;
+  color: #64748b;
+  line-height: 1.65;
+}
+
+.nm-vitamins__view-all {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0.65rem 1.1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 201, 212, 0.35);
+  color: #0a1628;
+  font-weight: 800;
+  text-decoration: none;
+  background: rgba(0, 201, 212, 0.06);
+  transition: background 180ms ease, transform 180ms ease;
+}
+
+.nm-vitamins__view-all:hover {
+  background: rgba(0, 201, 212, 0.12);
+  transform: translateY(-1px);
+}
+
+.nm-vitamins__carousel {
+  margin-top: 0.25rem;
+}
+
+@media (max-width: 767px) {
+  .nm-vitamins {
+    padding: 1rem 0 1.15rem;
+  }
+
+  .nm-vitamins__inner {
+    width: min(100% - 1.25rem, var(--nm-max, 1200px));
+  }
+
+  .nm-vitamins__head {
+    align-items: flex-start;
+  }
+
+  .nm-vitamins__view-all {
+    width: 100%;
+    justify-content: center;
+  }
+}
