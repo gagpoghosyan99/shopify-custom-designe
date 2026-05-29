@@ -632,7 +632,28 @@
   background: #031225;
 }
 
-.nm-vnext-hero--banner-only .nm-vnext-hero__photo {
+/* Full image visible at 100% width — no vertical crop */
+.nm-vnext-hero--banner-only.nm-vnext-hero--banner-full .nm-vnext-hero__photo {
+  position: relative;
+  inset: auto;
+  width: 100%;
+  height: auto;
+  max-height: none;
+  aspect-ratio: unset;
+  line-height: 0;
+}
+
+.nm-vnext-hero--banner-only.nm-vnext-hero--banner-full .nm-vnext-hero__photo-img {
+  width: 100%;
+  height: auto;
+  max-height: none;
+  object-fit: contain;
+  object-position: center center;
+  display: block;
+}
+
+/* Cropped banner — fixed aspect ratio + max height */
+.nm-vnext-hero--banner-only:not(.nm-vnext-hero--banner-full) .nm-vnext-hero__photo {
   position: relative;
   inset: auto;
   width: 100%;
@@ -640,7 +661,7 @@
   max-height: min(56vw, var(--nm-hero-banner-max-h, 520px));
 }
 
-.nm-vnext-hero--banner-only .nm-vnext-hero__photo-img {
+.nm-vnext-hero--banner-only:not(.nm-vnext-hero--banner-full) .nm-vnext-hero__photo-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -649,13 +670,13 @@
 }
 
 @media (max-width: 767px) {
-  .nm-vnext-hero--banner-only .nm-vnext-hero__photo {
+  .nm-vnext-hero--banner-only:not(.nm-vnext-hero--banner-full) .nm-vnext-hero__photo {
     aspect-ratio: var(--nm-hero-banner-ratio-mobile, 16 / 10);
     max-height: none;
     height: auto;
   }
 
-  .nm-vnext-hero--banner-only .nm-vnext-hero__photo-img {
+  .nm-vnext-hero--banner-only:not(.nm-vnext-hero--banner-full) .nm-vnext-hero__photo-img {
     object-fit: cover;
     object-position: var(--nm-hero-banner-focus, center 42%);
   }
