@@ -77,47 +77,6 @@
             {%- if shown >= limit -%}{%- break -%}{%- endif -%}
             {%- assign id_token = ',' | append: product.id | append: ',' -%}
             {%- if shown_ids contains id_token -%}{%- continue -%}{%- endif -%}
-            {%- assign include = true -%}
-            {%- if filter_kw != blank -%}
-              {%- assign include = false -%}
-              {%- if product.tags contains filter_kw -%}
-                {%- assign include = true -%}
-              {%- else -%}
-                {%- assign pt = product.title | downcase -%}
-                {%- if pt contains filter_kw
-                  or pt contains 'vitamin'
-                  or pt contains 'b-complex'
-                  or pt contains 'b complex'
-                  or pt contains 'multivitamin'
-                  or pt contains 'omega'
-                  or pt contains 'probiotic'
-                  or pt contains 'collagen'
-                  or pt contains 'mineral'
-                  or pt contains 'd3'
-                  or pt contains 'daily essential'
-                -%}
-                  {%- assign include = true -%}
-                {%- endif -%}
-              {%- endif -%}
-            {%- endif -%}
-            {%- if include -%}
-              {%- render 'novameds-product-offer-card',
-                product: product,
-                show_compare: show_compare,
-                show_ratings: show_ratings,
-                button_text: button_text
-              -%}
-              {%- assign shown = shown | plus: 1 -%}
-              {%- assign shown_ids = shown_ids | append: product.id | append: ',' -%}
-            {%- endif -%}
-          {%- endfor -%}
-        {%- endif -%}
-
-        {%- if col != blank and shown < limit and filter_kw != blank -%}
-          {%- for product in col.products -%}
-            {%- if shown >= limit -%}{%- break -%}{%- endif -%}
-            {%- assign id_token = ',' | append: product.id | append: ',' -%}
-            {%- if shown_ids contains id_token -%}{%- continue -%}{%- endif -%}
             {%- render 'novameds-product-offer-card',
               product: product,
               show_compare: show_compare,
@@ -134,13 +93,26 @@
             {%- if shown >= limit -%}{%- break -%}{%- endif -%}
             {%- assign id_token = ',' | append: product.id | append: ',' -%}
             {%- if shown_ids contains id_token -%}{%- continue -%}{%- endif -%}
-            {%- assign include = true -%}
+            {%- assign include = false -%}
+            {%- assign pt = product.title | downcase -%}
             {%- if filter_kw != blank -%}
-              {%- assign include = false -%}
-              {%- assign pt = product.title | downcase -%}
-              {%- if product.tags contains filter_kw or pt contains filter_kw or pt contains 'vitamin' or pt contains 'b-complex' or pt contains 'b complex' or pt contains 'multivitamin' or pt contains 'omega' or pt contains 'probiotic' or pt contains 'collagen' or pt contains 'mineral' or pt contains ' d3' or pt contains 'daily essential' -%}
+              {%- if product.tags contains filter_kw
+                or pt contains filter_kw
+                or pt contains 'vitamin'
+                or pt contains 'b-complex'
+                or pt contains 'b complex'
+                or pt contains 'multivitamin'
+                or pt contains 'omega'
+                or pt contains 'probiotic'
+                or pt contains 'collagen'
+                or pt contains 'mineral'
+                or pt contains ' d3'
+                or pt contains 'daily essential'
+              -%}
                 {%- assign include = true -%}
               {%- endif -%}
+            {%- else -%}
+              {%- assign include = true -%}
             {%- endif -%}
             {%- if include -%}
               {%- render 'novameds-product-offer-card',
@@ -152,6 +124,22 @@
               {%- assign shown = shown | plus: 1 -%}
               {%- assign shown_ids = shown_ids | append: product.id | append: ',' -%}
             {%- endif -%}
+          {%- endfor -%}
+        {%- endif -%}
+
+        {%- if shown < limit and collections.all != blank -%}
+          {%- for product in collections.all.products -%}
+            {%- if shown >= limit -%}{%- break -%}{%- endif -%}
+            {%- assign id_token = ',' | append: product.id | append: ',' -%}
+            {%- if shown_ids contains id_token -%}{%- continue -%}{%- endif -%}
+            {%- render 'novameds-product-offer-card',
+              product: product,
+              show_compare: show_compare,
+              show_ratings: show_ratings,
+              button_text: button_text
+            -%}
+            {%- assign shown = shown | plus: 1 -%}
+            {%- assign shown_ids = shown_ids | append: product.id | append: ',' -%}
           {%- endfor -%}
         {%- endif -%}
 

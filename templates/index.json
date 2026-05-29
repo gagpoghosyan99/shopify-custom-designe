@@ -106,6 +106,17 @@
       "settings": {
         "title": "Vitamins & Daily Essentials",
         "subtitle": "Pharmacist-trusted formulas for energy, immunity, and everyday wellness.",
+        "featured_products": [
+          "advanced-multi-vitamin",
+          "life-extension-bioactive-complete-b-complex-60-vegetarian-capsules",
+          "omega-3-fish-oil",
+          "collagen-peptides",
+          "collagen",
+          "collagen-2",
+          "collagen-3",
+          "collagen-4",
+          "men-s-performance-stack"
+        ],
         "collection_handle": "vitamins",
         "filter_tag": "vitamins",
         "products_to_show": 12,
