@@ -634,6 +634,52 @@
     width: 40px;
     height: 40px;
   }
+
+  /* ── Collection page (mobile) ── */
+  body.template-collection .nm-coll-banner {
+    min-height: 0 !important;
+    height: auto !important;
+  }
+
+  body.template-collection .nm-coll-banner__inner {
+    min-height: 0 !important;
+  }
+
+  body.template-collection .nm-section--collection {
+    padding-top: 0;
+    overflow: visible !important;
+  }
+
+  body.template-collection .shopify-section--collection-banner + .shopify-section {
+    margin-top: 0;
+  }
+
+  /* Homepage — avoid oversized sections on small screens */
+  .nm-why-fs,
+  .nm-trust-nl,
+  .nm-fsvideo {
+    min-height: auto !important;
+  }
+
+  .nm-vnext-hero--photo:not(.nm-vnext-hero--banner-only) .nm-vnext-hero__copy {
+    padding-inline: var(--nm-mobile-gutter);
+  }
+
+  /* Buttons site-wide touch targets */
+  .nm-btn,
+  .nm-vnext-btn,
+  a.nm-btn {
+    min-height: 44px;
+  }
+
+  .nm-btn--sm {
+    min-height: 40px;
+  }
+
+  /* Footer clearance above mobile bar */
+  .nm-vnext-footer {
+    padding-bottom: calc(1.5rem + var(--nm-mobile-bar-h) + env(safe-area-inset-bottom));
+  }
 }
 
 @media (max-width: 767px) and (prefers-reduced-motion: reduce) {
