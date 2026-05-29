@@ -21,6 +21,7 @@
 
   assign keyword_list = match_keywords | split: ','
   assign fallback_slug = fallback_tag | handleize
+  assign rendered_handles = ''
 
   assign split_size = max_products
   if auto_split and total_rows != blank and total_rows > 0 and source_collection != blank
@@ -57,10 +58,11 @@
             {% render 'product-card', product: product %}
           </div>
           {%- assign cards_rendered = cards_rendered | plus: 1 -%}
+          {%- assign rendered_handles = rendered_handles | append: product.handle | append: '||' -%}
         {%- endfor -%}
       {%- endif -%}
 
-      {%- if cards_rendered == 0 and source_collection != blank -%}
+      {%- if cards_rendered < max_products and source_collection != blank -%}
         {%- for product in source_collection.products -%}
           {%- if cards_rendered >= max_products -%}{%- break -%}{%- endif -%}
           {%- assign matched = false -%}
@@ -100,10 +102,14 @@
           {%- endunless -%}
 
           {%- if matched -%}
-            <div class="nm-collection-row__item">
-              {% render 'product-card', product: product %}
-            </div>
-            {%- assign cards_rendered = cards_rendered | plus: 1 -%}
+            {%- assign handle_marker = product.handle | append: '||' -%}
+            {%- unless rendered_handles contains handle_marker -%}
+              <div class="nm-collection-row__item">
+                {% render 'product-card', product: product %}
+              </div>
+              {%- assign cards_rendered = cards_rendered | plus: 1 -%}
+              {%- assign rendered_handles = rendered_handles | append: handle_marker -%}
+            {%- endunless -%}
           {%- endif -%}
         {%- endfor -%}
       {%- endif -%}
@@ -114,11 +120,34 @@
         {%- for product in source_collection.products -%}
           {%- assign idx = forloop.index0 -%}
           {%- if idx >= start_at and idx < end_at and cards_rendered < max_products -%}
+            {%- assign handle_marker = product.handle | append: '||' -%}
+            {%- unless rendered_handles contains handle_marker -%}
+              <div class="nm-collection-row__item">
+                {% render 'product-card', product: product %}
+              </div>
+              {%- assign cards_rendered = cards_rendered | plus: 1 -%}
+              {%- assign rendered_handles = rendered_handles | append: handle_marker -%}
+            {%- endunless -%}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endif -%}
+
+      {%- comment -%} Fill row with remaining catalog products so each section looks full {%- endcomment -%}
+      {%- if cards_rendered > 0 and cards_rendered < max_products and source_collection != blank -%}
+        {%- for product in source_collection.products -%}
+          {%- if cards_rendered >= max_products -%}{%- break -%}{%- endif -%}
+          {%- assign handle_marker = product.handle | append: '||' -%}
+          {%- assign already_in_row = false -%}
+          {%- if rendered_handles != blank and rendered_handles contains handle_marker -%}
+            {%- assign already_in_row = true -%}
+          {%- endif -%}
+          {%- unless already_in_row -%}
             <div class="nm-collection-row__item">
               {% render 'product-card', product: product %}
             </div>
             {%- assign cards_rendered = cards_rendered | plus: 1 -%}
-          {%- endif -%}
+            {%- assign rendered_handles = rendered_handles | append: handle_marker -%}
+          {%- endunless -%}
         {%- endfor -%}
       {%- endif -%}
     </div>

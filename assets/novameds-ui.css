@@ -801,13 +801,13 @@ body.nm-modal-open {
 
 .nm-collection-toolbar {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  margin-bottom: 1.5rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid var(--nm-border);
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
 }
 .nm-collection-toolbar__count {
   font-size: 0.875rem;

@@ -23,32 +23,32 @@ body.template-collection:has(.nm-hdr__promo) {
 }
 
 .nm-collection-fs .nm-collection-toolbar {
+  position: relative;
+  z-index: 2;
   width: 100%;
   max-width: none;
   margin: 0;
   padding: 0.85rem clamp(1.25rem, 3vw, 3rem);
-  border-bottom: 1px solid rgba(10, 22, 40, 0.06);
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(8px);
-  position: sticky;
-  top: var(--nm-coll-top-offset, 84px);
-  z-index: 4;
+  border-bottom: 1px solid rgba(10, 22, 40, 0.08);
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: nowrap;
 }
 
 .nm-collection-fs .nm-collection-rows {
   gap: 0;
   margin: 0;
-  scroll-snap-type: y proximity;
 }
 
 .nm-collection-fs .nm-collection-row {
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
-  min-height: var(--nm-coll-stage-h);
+  min-height: auto;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding: clamp(1.25rem, 3vw, 2rem) clamp(1.25rem, 3vw, 3rem);
+  justify-content: flex-start;
+  padding: clamp(1.75rem, 4vw, 2.75rem) clamp(1.25rem, 3vw, 3rem);
   border-bottom: 1px solid rgba(10, 22, 40, 0.06);
   box-sizing: border-box;
 }
@@ -67,16 +67,16 @@ body.template-collection:has(.nm-hdr__promo) {
 }
 
 .nm-collection-fs .nm-collection-row__carousel {
-  flex: 1;
+  flex: none;
   min-height: 0;
   display: flex;
-  align-items: center;
-  max-height: calc(var(--nm-coll-stage-h) - 120px);
+  align-items: stretch;
+  max-height: none;
 }
 
 .nm-collection-fs .nm-collection-row__track {
   align-items: stretch;
-  min-height: min(480px, calc(var(--nm-coll-stage-h) - 140px));
+  min-height: 0;
   padding-block: 0.35rem 0.85rem;
 }
 
@@ -211,13 +211,14 @@ body.template-collection:has(.nm-hdr__promo) {
   }
 
   .nm-collection-fs .nm-collection-row {
-    min-height: min(var(--nm-coll-stage-h), auto);
+    min-height: auto;
     padding-inline: var(--nm-mobile-gutter, 16px);
+    padding-block: 1.5rem;
   }
 
   .nm-collection-fs .nm-collection-toolbar {
     padding-inline: var(--nm-mobile-gutter, 16px);
-    top: var(--nm-coll-top-offset);
+    padding-block: 0.75rem;
   }
 
   .nm-collection-row__carousel {
@@ -272,8 +273,8 @@ body.template-collection:has(.nm-hdr__promo) {
   }
 
   .template-collection .nm-collection-toolbar {
-    margin-bottom: 0.25rem;
-    padding: 0.35rem 0;
+    margin-bottom: 0;
+    padding: 0.75rem var(--nm-mobile-gutter, 16px);
   }
 
   .template-collection .nm-collection-toolbar__count {

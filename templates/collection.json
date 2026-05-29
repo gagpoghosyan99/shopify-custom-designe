@@ -24,10 +24,10 @@
       "settings": {
         "enable_category_rows": true,
         "only_on_all_collection": true,
-        "max_products_per_row": 16,
+        "max_products_per_row": 24,
         "show_view_all_links": true,
-        "auto_split_products": true,
-        "products_per_page": 16
+        "auto_split_products": false,
+        "products_per_page": 24
       },
       "blocks": {
         "row_vitamins": {
@@ -36,7 +36,7 @@
             "title": "Vitamins",
             "collection_handle": "vitamins",
             "fallback_tag": "vitamins",
-            "match_keywords": "vitamin,collagen,probiotic,omega,zinc,d3,multivitamin,fish oil,softgel"
+            "match_keywords": "vitamin,b-complex,b complex,multivitamin,d3,d-3,collagen,probiotic,omega,zinc,softgel,fish oil,folate,iron,calcium,magnesium"
           }
         },
         "row_sports": {
@@ -45,7 +45,7 @@
             "title": "Sports Nutrition",
             "collection_handle": "sports-nutrition",
             "fallback_tag": "sports-nutrition",
-            "match_keywords": "creatine,bcaa,protein,energy,sport,pre-workout,whey,performance"
+            "match_keywords": "creatine,bcaa,protein,energy,sport,pre-workout,whey,performance,workout,athletic,evl,iso"
           }
         },
         "row_recovery": {
@@ -54,11 +54,29 @@
             "title": "Recovery & Sleep",
             "collection_handle": "recovery-sleep",
             "fallback_tag": "recovery-sleep",
-            "match_keywords": "sleep,recovery,melatonin,ashwagandha,rest,night"
+            "match_keywords": "sleep,recovery,melatonin,ashwagandha,rest,night,calm,stress,relax"
+          }
+        },
+        "row_immunity": {
+          "type": "category_row",
+          "settings": {
+            "title": "Immunity & Wellness",
+            "collection_handle": "immunity",
+            "fallback_tag": "immunity",
+            "match_keywords": "immune,immunity,elderberry,vitamin c,zinc,wellness,health,defense"
+          }
+        },
+        "row_beauty": {
+          "type": "category_row",
+          "settings": {
+            "title": "Beauty & Skin",
+            "collection_handle": "beauty",
+            "fallback_tag": "beauty",
+            "match_keywords": "collagen,skin,beauty,hair,nail,glow,hyaluronic,biotin"
           }
         }
       },
-      "block_order": ["row_vitamins", "row_sports", "row_recovery"]
+      "block_order": ["row_vitamins", "row_sports", "row_recovery", "row_immunity", "row_beauty"]
     }
   },
   "order": ["hero", "main"]
