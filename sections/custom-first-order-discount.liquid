@@ -1,12 +1,15 @@
 {%- liquid
   assign pct = section.settings.discount_percent | default: 15
-  assign badge = section.settings.badge | default: 'Limited Time Offer'
-  assign title_rest = section.settings.title | default: 'Off Your First Order'
-  assign text = section.settings.text | default: 'Use code WELLNESS15 at checkout. Pharmacist-reviewed essentials delivered to your door.'
+  assign headline = section.settings.headline | default: '15% OFF YOUR FIRST ORDER'
+  assign text = section.settings.text | default: 'Premium vitamins, supplements, and wellness essentials delivered to your door.'
   assign code = section.settings.code | default: 'WELLNESS15'
-  assign btn_label = section.settings.button_label | default: 'Claim Offer'
+  assign btn_label = section.settings.button_label | default: 'Claim Your Discount'
   assign btn_link = section.settings.button_link | default: routes.all_products_collection_url
   assign anim = section.settings.animations_enabled
+
+  assign trust_1 = section.settings.trust_1 | default: 'Fast Delivery'
+  assign trust_2 = section.settings.trust_2 | default: 'Trusted Quality'
+  assign trust_3 = section.settings.trust_3 | default: 'Secure Checkout'
 -%}
 
 {{ 'novameds-discount.css' | asset_url | stylesheet_tag }}
@@ -26,38 +29,30 @@
 >
   <div class="nm-discount-hero__bg" aria-hidden="true">
     <div class="nm-discount-hero__grad"></div>
-    <div class="nm-discount-hero__mesh"></div>
+    <div class="nm-discount-hero__molecules"></div>
     <div class="nm-discount-hero__orb nm-discount-hero__orb--1"></div>
     <div class="nm-discount-hero__orb nm-discount-hero__orb--2"></div>
-    <div class="nm-discount-hero__orb nm-discount-hero__orb--3"></div>
-    <div class="nm-discount-hero__rings">
-      <span></span><span></span><span></span>
-    </div>
     <canvas class="nm-discount-hero__particles" data-nm-discount-particles aria-hidden="true"></canvas>
     <div class="nm-discount-hero__vignette"></div>
   </div>
 
   <div class="nm-discount-hero__wrap">
     <div class="nm-discount-hero__grid">
-      <div class="nm-discount-hero__visual" data-nm-discount-entrance>
-        <div class="nm-discount-hero__pct-wrap">
-          <span class="nm-discount-hero__pct" aria-hidden="true">{{ pct }}<sup>%</sup></span>
-          <span class="nm-discount-hero__pct-glow" aria-hidden="true"></span>
-        </div>
-        <p class="nm-discount-hero__pct-label">First order savings</p>
-      </div>
-
       <div class="nm-discount-hero__copy">
-        {%- if badge != blank -%}
+        {%- if section.settings.badge != blank -%}
           <div class="nm-discount-hero__badge" data-nm-discount-entrance>
             <span class="nm-discount-hero__badge-dot" aria-hidden="true"></span>
-            <span>{{ badge }}</span>
+            <span>{{ section.settings.badge }}</span>
           </div>
         {%- endif -%}
 
-        <h2 class="nm-discount-hero__title" data-nm-discount-entrance>
-          <span class="nm-discount-hero__title-accent">{{ pct }}%</span>
-          {{ title_rest }}
+        <h2 class="nm-discount-hero__headline" data-nm-discount-entrance>
+          {%- if section.settings.use_auto_headline -%}
+            <span class="nm-discount-hero__headline-pct">{{ pct }}%</span>
+            <span class="nm-discount-hero__headline-rest">{{ section.settings.title | default: 'OFF YOUR FIRST ORDER' }}</span>
+          {%- else -%}
+            {{ headline }}
+          {%- endif -%}
         </h2>
 
         {%- if text != blank -%}
@@ -65,31 +60,58 @@
         {%- endif -%}
 
         <ul class="nm-discount-hero__trust" data-nm-discount-entrance aria-label="Offer highlights">
-          <li>Pharmacist reviewed</li>
-          <li>Free shipping eligible</li>
-          <li>Secure checkout</li>
+          {%- if trust_1 != blank -%}<li>{{ trust_1 }}</li>{%- endif -%}
+          {%- if trust_2 != blank -%}<li>{{ trust_2 }}</li>{%- endif -%}
+          {%- if trust_3 != blank -%}<li>{{ trust_3 }}</li>{%- endif -%}
         </ul>
 
-        <div class="nm-discount-hero__actions" data-nm-discount-entrance>
-          <a class="nm-discount-hero__btn nm-discount-hero__btn--primary" href="{{ btn_link }}">
-            <span class="nm-discount-hero__btn-shine" aria-hidden="true"></span>
+        <div class="nm-discount-hero__cta-block" data-nm-discount-entrance>
+          <a class="nm-discount-hero__btn nm-discount-hero__btn--cta" href="{{ btn_link }}">
+            <span class="nm-discount-hero__btn-glow" aria-hidden="true"></span>
             <span class="nm-discount-hero__btn-label">{{ btn_label }}</span>
           </a>
 
           {%- if code != blank -%}
-            <button
-              type="button"
-              class="nm-discount-hero__code"
-              data-nm-copy-code
-              data-code="{{ code }}"
-              aria-label="Copy discount code {{ code }}"
-            >
-              <span class="nm-discount-hero__code-label">Code</span>
-              <strong class="nm-discount-hero__code-val">{{ code }}</strong>
-              <span class="nm-discount-hero__code-hint" aria-hidden="true">Tap to copy</span>
-            </button>
+            <p class="nm-discount-hero__promo">
+              Promo code:
+              <button
+                type="button"
+                class="nm-discount-hero__promo-code"
+                data-nm-copy-code
+                data-code="{{ code }}"
+                aria-label="Copy discount code {{ code }}"
+              >
+                <strong>{{ code }}</strong>
+              </button>
+            </p>
           {%- endif -%}
         </div>
+      </div>
+
+      <div class="nm-discount-hero__visual" data-nm-discount-entrance aria-hidden="true">
+        <div class="nm-discount-hero__visual-glow"></div>
+        {%- if section.settings.product_image != blank -%}
+          {{
+            section.settings.product_image
+            | image_url: width: 900
+            | image_tag:
+              widths: '400, 560, 720, 900',
+              sizes: '(min-width: 900px) 42vw, 88vw',
+              loading: 'lazy',
+              decoding: 'async',
+              class: 'nm-discount-hero__products',
+              alt: ''
+          }}
+        {%- else -%}
+          <img
+            class="nm-discount-hero__products"
+            src="{{ 'discount-offer-visual.png' | asset_url }}"
+            alt=""
+            loading="lazy"
+            width="900"
+            height="600"
+          >
+        {%- endif -%}
       </div>
     </div>
   </div>
@@ -102,12 +124,18 @@
   "settings": [
     { "type": "checkbox", "id": "animations_enabled", "label": "Enable animations", "default": true },
     { "type": "range", "id": "discount_percent", "label": "Discount percent", "min": 5, "max": 50, "step": 5, "default": 15 },
+    { "type": "checkbox", "id": "use_auto_headline", "label": "Auto headline from percent", "default": true },
     { "type": "text", "id": "badge", "label": "Badge", "default": "Limited Time Offer" },
-    { "type": "text", "id": "title", "label": "Title (after percent)", "default": "Off Your First Order" },
-    { "type": "textarea", "id": "text", "label": "Text", "default": "Use code WELLNESS15 at checkout. Pharmacist-reviewed essentials delivered to your door." },
+    { "type": "text", "id": "headline", "label": "Full headline (if auto off)", "default": "15% OFF YOUR FIRST ORDER" },
+    { "type": "text", "id": "title", "label": "Headline suffix (if auto on)", "default": "OFF YOUR FIRST ORDER" },
+    { "type": "textarea", "id": "text", "label": "Subtext", "default": "Premium vitamins, supplements, and wellness essentials delivered to your door." },
+    { "type": "text", "id": "trust_1", "label": "Trust line 1", "default": "Fast Delivery" },
+    { "type": "text", "id": "trust_2", "label": "Trust line 2", "default": "Trusted Quality" },
+    { "type": "text", "id": "trust_3", "label": "Trust line 3", "default": "Secure Checkout" },
     { "type": "text", "id": "code", "label": "Discount code", "default": "WELLNESS15" },
-    { "type": "text", "id": "button_label", "label": "Button label", "default": "Claim Offer" },
-    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "text", "id": "button_label", "label": "CTA button", "default": "Claim Your Discount" },
+    { "type": "url", "id": "button_link", "label": "CTA link" },
+    { "type": "image_picker", "id": "product_image", "label": "Product visual (right side)" },
     { "type": "color", "id": "bg_base", "label": "Background base", "default": "#031225" },
     { "type": "color", "id": "accent_cyan", "label": "Accent cyan", "default": "#00c9d4" },
     { "type": "color", "id": "glow_cyan", "label": "Glow cyan", "default": "#2ee8f0" }
