@@ -22,13 +22,11 @@
         </p>
       {%- endif -%}
     {%- else -%}
-      <p class="nm-demo-note">Demo products shown — add your catalog in Shopify Admin, then pick a collection here.</p>
-      <div class="nm-products__grid nm-products__grid--demo" style="margin-bottom:1.5rem;">
-        {% render 'demo-product-card', index: 1, title: 'Premium Multivitamin Complex', price: '$34.99' %}
-        {% render 'demo-product-card', index: 2, title: 'Omega-3 Fish Oil', price: '$28.50' %}
-        {% render 'demo-product-card', index: 3, title: 'Collagen Beauty Blend', price: '$42.00' %}
-        {% render 'demo-product-card', index: 4, title: "Men's Performance Stack", price: '$49.99' %}
-      </div>
+      {%- if request.design_mode -%}
+        <p class="nm-demo-note">
+          No products found. Pick a collection in this section’s settings.
+        </p>
+      {%- endif -%}
     {%- endif -%}
   </div>
 </section>

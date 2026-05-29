@@ -49,6 +49,8 @@
     {%- if template.name == 'index' -%}
       {{ 'novameds-home.css' | asset_url | stylesheet_tag }}
     {%- endif -%}
+    {{ 'novameds.css' | asset_url | stylesheet_tag }}
+    {{ 'novameds-mobile.css' | asset_url | stylesheet_tag }}
 
     <style>
       :root {
@@ -60,6 +62,7 @@
     </style>
 
     <script src="{{ 'novameds.js' | asset_url }}" defer></script>
+    <script src="{{ 'novameds-vnext.js' | asset_url }}" defer></script>
 
     <script>
       document.documentElement.classList.remove('no-js');
@@ -89,14 +92,13 @@
 
     <a class="nm-skip-link" href="#MainContent">{{ 'accessibility.skip_to_content' | t }}</a>
 
-    {% section 'announcement-bar' %}
     {% section 'header' %}
 
     <main id="MainContent" class="nm-main" role="main" tabindex="-1">
       {{ content_for_layout }}
     </main>
 
-    {% section 'footer' %}
+    {% section 'custom-footer' %}
 
     {% render 'modal-overlay' %}
     {% render 'cart-drawer' %}

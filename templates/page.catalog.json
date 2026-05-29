@@ -19,11 +19,12 @@
     "main": {
       "type": "catalog-page",
       "settings": {
-        "products_to_show": 8,
-        "image_asset": "placeholder-cat-vitamins.svg"
+        "products_to_show": 8
       }
     }
   },
-  "order": ["hero", "main"]
+  "order": [
+    "hero",
+    "main"
+  ]
 }
-
