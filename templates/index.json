@@ -278,7 +278,10 @@
     },
     "faq": {
       "type": "custom-faq",
-      "settings": {}
+      "settings": {
+        "title": "",
+        "subtitle": ""
+      }
     }
   },
   "order": [

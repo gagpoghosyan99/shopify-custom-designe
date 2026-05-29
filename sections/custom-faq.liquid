@@ -1,11 +1,15 @@
-<section class="nm-vnext-faq nm-animate" id="faq" aria-label="FAQ">
+<section class="nm-vnext-faq nm-animate" id="faq" aria-label="{{ section.settings.title | default: 'FAQ' | escape }}">
   <div class="nm-container">
-    <header class="nm-vnext-section-head">
-      <h2 class="nm-vnext-h2">{{ section.settings.title | default: 'FAQ' }}</h2>
-      {%- if section.settings.subtitle != blank -%}
-        <p class="nm-vnext-sub">{{ section.settings.subtitle }}</p>
-      {%- endif -%}
-    </header>
+    {%- if section.settings.title != blank or section.settings.subtitle != blank -%}
+      <header class="nm-vnext-section-head">
+        {%- if section.settings.title != blank -%}
+          <h2 class="nm-vnext-h2">{{ section.settings.title }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subtitle != blank -%}
+          <p class="nm-vnext-sub">{{ section.settings.subtitle }}</p>
+        {%- endif -%}
+      </header>
+    {%- endif -%}
 
     <div class="nm-vnext-faq__list" role="list">
       {%- for block in section.blocks -%}
@@ -27,8 +31,8 @@
   "name": "Custom FAQ",
   "tag": "section",
   "settings": [
-    { "type": "text", "id": "title", "label": "Title", "default": "Frequently Asked Questions" },
-    { "type": "textarea", "id": "subtitle", "label": "Subtitle", "default": "Everything you need to know about ordering from NovaMeds." }
+    { "type": "text", "id": "title", "label": "Title" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtitle" }
   ],
   "blocks": [
     {
