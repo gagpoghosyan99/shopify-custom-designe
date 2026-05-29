@@ -35,10 +35,14 @@
       var code = btn.getAttribute('data-code') || '';
       if (!code) return;
       var done = function () {
-        var prev = btn.innerHTML;
-        btn.innerHTML = 'Copied <strong>' + code + '</strong>';
+        btn.classList.add('is-copied');
+        var val = btn.querySelector('.nm-discount-hero__code-val, strong');
+        var hint = btn.querySelector('.nm-discount-hero__code-hint');
+        if (val) val.textContent = code;
+        if (hint) hint.textContent = 'Copied!';
         setTimeout(function () {
-          btn.innerHTML = prev;
+          btn.classList.remove('is-copied');
+          if (hint) hint.textContent = 'Tap to copy';
         }, 1400);
       };
       if (navigator.clipboard && navigator.clipboard.writeText) {

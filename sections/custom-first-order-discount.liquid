@@ -1,22 +1,95 @@
-<section class="nm-vnext-discount nm-animate" id="first-order" aria-label="First order discount">
-  <div class="nm-container">
-    <div class="nm-vnext-discount__card nm-glass nm-glow-hover">
-      <div class="nm-vnext-discount__copy">
-        {%- if section.settings.badge != blank -%}
-          <div class="nm-vnext-discount__badge">{{ section.settings.badge }}</div>
-        {%- endif -%}
-        <h2 class="nm-vnext-discount__title">{{ section.settings.title | default: '15% Off Your First Order' }}</h2>
-        <p class="nm-vnext-discount__text">{{ section.settings.text | default: 'Use code WELLNESS15 at checkout. Pharmacist-reviewed essentials delivered to your door.' }}</p>
+{%- liquid
+  assign pct = section.settings.discount_percent | default: 15
+  assign badge = section.settings.badge | default: 'Limited Time Offer'
+  assign title_rest = section.settings.title | default: 'Off Your First Order'
+  assign text = section.settings.text | default: 'Use code WELLNESS15 at checkout. Pharmacist-reviewed essentials delivered to your door.'
+  assign code = section.settings.code | default: 'WELLNESS15'
+  assign btn_label = section.settings.button_label | default: 'Claim Offer'
+  assign btn_link = section.settings.button_link | default: routes.all_products_collection_url
+  assign anim = section.settings.animations_enabled
+-%}
+
+{{ 'novameds-discount.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'novameds-discount.js' | asset_url }}" defer></script>
+
+<section
+  class="nm-discount-hero{% if anim %} nm-discount-hero--anim{% endif %}"
+  id="first-order"
+  data-nm-discount-hero
+  data-anim="{{ anim }}"
+  aria-label="First order discount"
+  style="
+    --nm-discount-bg: {{ section.settings.bg_base | default: '#031225' }};
+    --nm-discount-cyan: {{ section.settings.accent_cyan | default: '#00c9d4' }};
+    --nm-discount-glow: {{ section.settings.glow_cyan | default: '#2ee8f0' }};
+  "
+>
+  <div class="nm-discount-hero__bg" aria-hidden="true">
+    <div class="nm-discount-hero__grad"></div>
+    <div class="nm-discount-hero__mesh"></div>
+    <div class="nm-discount-hero__orb nm-discount-hero__orb--1"></div>
+    <div class="nm-discount-hero__orb nm-discount-hero__orb--2"></div>
+    <div class="nm-discount-hero__orb nm-discount-hero__orb--3"></div>
+    <div class="nm-discount-hero__rings">
+      <span></span><span></span><span></span>
+    </div>
+    <canvas class="nm-discount-hero__particles" data-nm-discount-particles aria-hidden="true"></canvas>
+    <div class="nm-discount-hero__vignette"></div>
+  </div>
+
+  <div class="nm-discount-hero__wrap">
+    <div class="nm-discount-hero__grid">
+      <div class="nm-discount-hero__visual" data-nm-discount-entrance>
+        <div class="nm-discount-hero__pct-wrap">
+          <span class="nm-discount-hero__pct" aria-hidden="true">{{ pct }}<sup>%</sup></span>
+          <span class="nm-discount-hero__pct-glow" aria-hidden="true"></span>
+        </div>
+        <p class="nm-discount-hero__pct-label">First order savings</p>
       </div>
-      <div class="nm-vnext-discount__cta">
-        <a class="nm-vnext-btn nm-vnext-btn--primary" href="{{ section.settings.button_link | default: routes.all_products_collection_url }}">
-          {{ section.settings.button_label | default: 'Claim Offer' }}
-        </a>
-        {%- if section.settings.code != blank -%}
-          <button type="button" class="nm-vnext-discount__code" data-nm-copy-code data-code="{{ section.settings.code }}" aria-label="Copy discount code">
-            Code: <strong>{{ section.settings.code }}</strong>
-          </button>
+
+      <div class="nm-discount-hero__copy">
+        {%- if badge != blank -%}
+          <div class="nm-discount-hero__badge" data-nm-discount-entrance>
+            <span class="nm-discount-hero__badge-dot" aria-hidden="true"></span>
+            <span>{{ badge }}</span>
+          </div>
         {%- endif -%}
+
+        <h2 class="nm-discount-hero__title" data-nm-discount-entrance>
+          <span class="nm-discount-hero__title-accent">{{ pct }}%</span>
+          {{ title_rest }}
+        </h2>
+
+        {%- if text != blank -%}
+          <p class="nm-discount-hero__text" data-nm-discount-entrance>{{ text }}</p>
+        {%- endif -%}
+
+        <ul class="nm-discount-hero__trust" data-nm-discount-entrance aria-label="Offer highlights">
+          <li>Pharmacist reviewed</li>
+          <li>Free shipping eligible</li>
+          <li>Secure checkout</li>
+        </ul>
+
+        <div class="nm-discount-hero__actions" data-nm-discount-entrance>
+          <a class="nm-discount-hero__btn nm-discount-hero__btn--primary" href="{{ btn_link }}">
+            <span class="nm-discount-hero__btn-shine" aria-hidden="true"></span>
+            <span class="nm-discount-hero__btn-label">{{ btn_label }}</span>
+          </a>
+
+          {%- if code != blank -%}
+            <button
+              type="button"
+              class="nm-discount-hero__code"
+              data-nm-copy-code
+              data-code="{{ code }}"
+              aria-label="Copy discount code {{ code }}"
+            >
+              <span class="nm-discount-hero__code-label">Code</span>
+              <strong class="nm-discount-hero__code-val">{{ code }}</strong>
+              <span class="nm-discount-hero__code-hint" aria-hidden="true">Tap to copy</span>
+            </button>
+          {%- endif -%}
+        </div>
       </div>
     </div>
   </div>
@@ -27,14 +100,18 @@
   "name": "First order discount",
   "tag": "section",
   "settings": [
+    { "type": "checkbox", "id": "animations_enabled", "label": "Enable animations", "default": true },
+    { "type": "range", "id": "discount_percent", "label": "Discount percent", "min": 5, "max": 50, "step": 5, "default": 15 },
     { "type": "text", "id": "badge", "label": "Badge", "default": "Limited Time Offer" },
-    { "type": "text", "id": "title", "label": "Title", "default": "15% Off Your First Order" },
+    { "type": "text", "id": "title", "label": "Title (after percent)", "default": "Off Your First Order" },
     { "type": "textarea", "id": "text", "label": "Text", "default": "Use code WELLNESS15 at checkout. Pharmacist-reviewed essentials delivered to your door." },
-    { "type": "text", "id": "code", "label": "Discount code (optional)", "default": "WELLNESS15" },
+    { "type": "text", "id": "code", "label": "Discount code", "default": "WELLNESS15" },
     { "type": "text", "id": "button_label", "label": "Button label", "default": "Claim Offer" },
-    { "type": "url", "id": "button_link", "label": "Button link" }
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "color", "id": "bg_base", "label": "Background base", "default": "#031225" },
+    { "type": "color", "id": "accent_cyan", "label": "Accent cyan", "default": "#00c9d4" },
+    { "type": "color", "id": "glow_cyan", "label": "Glow cyan", "default": "#2ee8f0" }
   ],
   "presets": [{ "name": "Custom first-order discount" }]
 }
 {% endschema %}
-
