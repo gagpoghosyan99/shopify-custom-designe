@@ -180,6 +180,19 @@
         "button_label": "Explore products"
       }
     },
+    "wellness_collection": {
+      "type": "custom-home-vitamins",
+      "settings": {
+        "eyebrow": "Shop collection",
+        "title": "Recovery, Sleep & Wellness",
+        "subtitle": "Rest deeper, recover faster, and support daily balance with pharmacist-trusted essentials.",
+        "collection_handle": "all",
+        "filter_tag": "wellness",
+        "products_to_show": 8,
+        "show_view_all": true,
+        "show_ratings": true
+      }
+    },
     "pro": {
       "type": "custom-professionals-trust",
       "blocks": {
@@ -273,6 +286,7 @@
     "why",
     "sports_nutrition",
     "brand_video",
+    "wellness_collection",
     "pro",
     "newsletter",
     "faq"
