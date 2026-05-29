@@ -1,0 +1,443 @@
+/* NovaMeds — Why Choose Us (full-screen animated) */
+
+.nm-why-fs {
+  position: relative;
+  width: 100%;
+  min-height: 75svh;
+  max-height: none;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  overflow: clip;
+  color: #fff;
+  background: var(--nm-why-bg, #031225);
+  padding: clamp(1.5rem, 5vh, 2.5rem) 0 clamp(1rem, 2vh, 1.5rem);
+  --nm-why-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Display",
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.nm-why-fs__bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.nm-why-fs__grad {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 18% 22%, rgba(0, 201, 212, 0.34) 0%, transparent 50%),
+    radial-gradient(circle at 82% 78%, rgba(46, 232, 240, 0.28) 0%, transparent 52%),
+    radial-gradient(circle at 50% 50%, rgba(0, 168, 181, 0.08) 0%, transparent 65%),
+    linear-gradient(165deg, var(--nm-why-bg, #031225) 0%, #0a3040 42%, #062636 100%);
+}
+
+.nm-why-fs__mesh {
+  position: absolute;
+  inset: -25%;
+  opacity: 0.14;
+  background-image:
+    radial-gradient(circle at 28% 38%, rgba(46, 232, 240, 0.7) 0%, transparent 42%),
+    radial-gradient(circle at 72% 62%, rgba(0, 201, 212, 0.6) 0%, transparent 40%);
+}
+
+.nm-why-fs__molecules {
+  position: absolute;
+  inset: 0;
+  opacity: 0.22;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='500' viewBox='0 0 900 500'%3E%3Cg fill='none' stroke='%232ee8f0' stroke-width='1' opacity='0.45'%3E%3Ccircle cx='80' cy='90' r='7'/%3E%3Ccircle cx='150' cy='160' r='5'/%3E%3Cline x1='80' y1='90' x2='150' y2='160'/%3E%3Ccircle cx='760' cy='110' r='6'/%3E%3Ccircle cx='830' cy='190' r='4'/%3E%3Cline x1='760' y1='110' x2='830' y2='190'/%3E%3Ccircle cx='420' cy='380' r='5'/%3E%3Ccircle cx='490' cy='420' r='4'/%3E%3Cline x1='420' y1='380' x2='490' y2='420'/%3E%3Ccircle cx='620' cy='300' r='6'/%3E%3Ccircle cx='680' cy='340' r='4'/%3E%3Cline x1='620' y1='300' x2='680' y2='340'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: cover;
+  background-position: center;
+}
+
+.nm-why-fs__orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(48px);
+  opacity: 0.55;
+}
+
+.nm-why-fs__orb--1 {
+  width: min(32vw, 380px);
+  height: min(32vw, 380px);
+  left: -6%;
+  top: 8%;
+  background: radial-gradient(circle, var(--nm-why-cyan, #00c9d4) 0%, transparent 70%);
+}
+
+.nm-why-fs__orb--2 {
+  width: min(26vw, 320px);
+  height: min(26vw, 320px);
+  right: -4%;
+  bottom: 10%;
+  background: radial-gradient(circle, var(--nm-why-glow, #2ee8f0) 0%, transparent 72%);
+}
+
+.nm-why-fs__orb--3 {
+  width: min(18vw, 220px);
+  height: min(18vw, 220px);
+  left: 42%;
+  bottom: -4%;
+  background: radial-gradient(circle, rgba(0, 201, 212, 0.5) 0%, transparent 70%);
+}
+
+.nm-why-fs__vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(3, 18, 37, 0.4) 0%, transparent 28%, transparent 72%, rgba(3, 18, 37, 0.5) 100%),
+    linear-gradient(90deg, rgba(3, 18, 37, 0.25) 0%, transparent 12%, transparent 88%, rgba(3, 18, 37, 0.25) 100%);
+}
+
+.nm-why-fs__wrap {
+  position: relative;
+  z-index: 2;
+  width: min(1200px, 100% - 2rem);
+  margin: 0 auto;
+  padding:
+    calc(0.25rem + env(safe-area-inset-top))
+    max(1rem, env(safe-area-inset-right))
+    calc(0.25rem + env(safe-area-inset-bottom))
+    max(1rem, env(safe-area-inset-left));
+}
+
+.nm-why-fs__head {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto clamp(0.85rem, 2vw, 1.25rem);
+}
+
+.nm-why-fs__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 0.75rem;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--nm-why-glow, #2ee8f0);
+}
+
+.nm-why-fs__eyebrow-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--nm-why-cyan, #00c9d4);
+  box-shadow: 0 0 12px var(--nm-why-glow, #2ee8f0);
+}
+
+.nm-why-fs__title {
+  margin: 0 0 0.5rem;
+  font-size: clamp(2rem, 4.5vw, 3.25rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  color: #fff;
+  text-shadow: 0 2px 40px rgba(0, 201, 212, 0.2);
+}
+
+.nm-why-fs__sub {
+  margin: 0 auto;
+  max-width: 52ch;
+  font-size: clamp(0.95rem, 1.6vw, 1.05rem);
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.nm-why-fs__grid {
+  display: grid;
+  gap: clamp(0.85rem, 2vw, 1.25rem);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (min-width: 900px) {
+  .nm-why-fs__grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.15rem;
+  }
+}
+
+.nm-why-fs__card {
+  position: relative;
+  border-radius: 22px;
+  overflow: hidden;
+  transition:
+    transform 500ms var(--nm-why-ease),
+    box-shadow 500ms var(--nm-why-ease);
+}
+
+.nm-why-fs__card-glow {
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(46, 232, 240, 0.45), rgba(0, 201, 212, 0.15), rgba(46, 232, 240, 0.35));
+  opacity: 0;
+  transition: opacity 500ms var(--nm-why-ease);
+  pointer-events: none;
+}
+
+.nm-why-fs__card-inner {
+  position: relative;
+  height: 100%;
+  padding: clamp(1.15rem, 2.2vw, 1.5rem) clamp(1rem, 2vw, 1.25rem);
+  border-radius: inherit;
+  border: 1px solid rgba(46, 232, 240, 0.2);
+  background: rgba(10, 22, 40, 0.52);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow:
+    0 0 40px rgba(0, 201, 212, 0.08),
+    0 20px 60px rgba(0, 0, 0, 0.28);
+  text-align: center;
+  transition:
+    border-color 500ms var(--nm-why-ease),
+    background 500ms var(--nm-why-ease);
+}
+
+.nm-why-fs__card:hover,
+.nm-why-fs__card:focus-within {
+  transform: translateY(-6px);
+}
+
+.nm-why-fs__card:hover .nm-why-fs__card-glow,
+.nm-why-fs__card:focus-within .nm-why-fs__card-glow {
+  opacity: 1;
+}
+
+.nm-why-fs__card:hover .nm-why-fs__card-inner,
+.nm-why-fs__card:focus-within .nm-why-fs__card-inner {
+  border-color: rgba(46, 232, 240, 0.45);
+  background: rgba(10, 22, 40, 0.68);
+  box-shadow:
+    0 0 60px rgba(0, 201, 212, 0.18),
+    0 28px 70px rgba(0, 0, 0, 0.35);
+}
+
+.nm-why-fs__media {
+  width: 72px;
+  height: 72px;
+  border-radius: 20px;
+  margin: 0 auto 0.85rem;
+  overflow: hidden;
+  border: 2px solid rgba(46, 232, 240, 0.35);
+  box-shadow: 0 12px 32px rgba(0, 201, 212, 0.22);
+}
+
+.nm-why-fs__photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.nm-why-fs__icon {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nm-why-fs__icon-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  border: 2px solid rgba(46, 232, 240, 0.35);
+  background: rgba(0, 201, 212, 0.1);
+  box-shadow: 0 12px 32px rgba(0, 201, 212, 0.18);
+}
+
+.nm-why-fs__icon-emoji {
+  position: relative;
+  z-index: 1;
+  font-size: 1.65rem;
+  line-height: 1;
+}
+
+.nm-why-fs__card-title {
+  margin: 0 0 0.4rem;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  font-size: clamp(0.9rem, 1.4vw, 1rem);
+  color: #fff;
+}
+
+.nm-why-fs__card-text {
+  margin: 0;
+  font-size: clamp(0.8rem, 1.2vw, 0.875rem);
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.nm-why-fs__scroll {
+  display: none;
+}
+
+.nm-why-fs__scroll-line {
+  display: block;
+  width: 2px;
+  height: 36px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--nm-why-glow, #2ee8f0), transparent);
+  opacity: 0.6;
+}
+
+/* Animations */
+.nm-why-fs--anim .nm-why-fs__orb--1 {
+  animation: nm-why-float-a 18s ease-in-out infinite;
+}
+
+.nm-why-fs--anim .nm-why-fs__orb--2 {
+  animation: nm-why-float-b 22s ease-in-out infinite;
+}
+
+.nm-why-fs--anim .nm-why-fs__orb--3 {
+  animation: nm-why-float-c 14s ease-in-out infinite;
+}
+
+.nm-why-fs--anim .nm-why-fs__molecules {
+  animation: nm-why-drift 40s linear infinite;
+}
+
+.nm-why-fs--anim .nm-why-fs__eyebrow-dot {
+  animation: nm-why-pulse 2.2s ease-in-out infinite;
+}
+
+.nm-why-fs--anim .nm-why-fs__scroll-line {
+  animation: nm-why-scroll 2.4s ease-in-out infinite;
+}
+
+.nm-why-fs--anim [data-nm-why-entrance] {
+  opacity: 0;
+  transform: translateY(28px);
+}
+
+.nm-why-fs--anim.is-visible [data-nm-why-entrance] {
+  animation: nm-why-rise 900ms var(--nm-why-ease) forwards;
+  animation-delay: var(--nm-why-delay, 0ms);
+}
+
+.nm-why-fs--anim.is-visible .nm-why-fs__head {
+  animation-delay: 0ms;
+}
+
+.nm-why-fs--anim.is-visible .nm-why-fs__scroll {
+  animation-delay: 720ms;
+}
+
+.nm-why-fs--anim.is-visible .nm-why-fs__card .nm-why-fs__icon-ring {
+  animation: nm-why-icon-glow 3s ease-in-out infinite;
+  animation-delay: calc(var(--nm-why-delay, 0ms) + 400ms);
+}
+
+@keyframes nm-why-float-a {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(20px, -16px) scale(1.05); }
+}
+
+@keyframes nm-why-float-b {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-18px, 14px) scale(1.04); }
+}
+
+@keyframes nm-why-float-c {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(10px, -20px); }
+}
+
+@keyframes nm-why-drift {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-3%, -2%); }
+}
+
+@keyframes nm-why-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; box-shadow: 0 0 12px var(--nm-why-glow, #2ee8f0); }
+  50% { transform: scale(1.25); opacity: 0.8; box-shadow: 0 0 22px var(--nm-why-glow, #2ee8f0); }
+}
+
+@keyframes nm-why-scroll {
+  0%, 100% { transform: scaleY(1); opacity: 0.6; }
+  50% { transform: scaleY(0.55); opacity: 0.35; }
+}
+
+@keyframes nm-why-rise {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes nm-why-icon-glow {
+  0%, 100% { box-shadow: 0 12px 32px rgba(0, 201, 212, 0.18); border-color: rgba(46, 232, 240, 0.35); }
+  50% { box-shadow: 0 12px 40px rgba(0, 201, 212, 0.35); border-color: rgba(46, 232, 240, 0.55); }
+}
+
+@media (max-width: 767px) {
+  .nm-why-fs {
+    min-height: 75svh;
+    padding: 1rem 0 0.85rem;
+  }
+
+  .nm-why-fs__wrap {
+    width: min(100% - 1.25rem, 1200px);
+  }
+
+  .nm-why-fs__head {
+    text-align: left;
+    margin-bottom: 0.75rem;
+  }
+
+  .nm-why-fs__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .nm-why-fs__card-inner {
+    text-align: left;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto;
+    column-gap: 0.85rem;
+    row-gap: 0.25rem;
+    align-items: start;
+  }
+
+  .nm-why-fs__icon,
+  .nm-why-fs__media {
+    grid-row: 1 / span 2;
+    margin: 0;
+    width: 52px;
+    height: 52px;
+  }
+
+  .nm-why-fs__icon-ring {
+    border-radius: 16px;
+  }
+
+  .nm-why-fs__icon-emoji {
+    font-size: 1.35rem;
+  }
+
+  .nm-why-fs__card-title {
+    margin-bottom: 0.15rem;
+  }
+
+  .nm-why-fs__scroll {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nm-why-fs--anim [data-nm-why-entrance],
+  .nm-why-fs--anim .nm-why-fs__orb,
+  .nm-why-fs--anim .nm-why-fs__molecules,
+  .nm-why-fs--anim .nm-why-fs__eyebrow-dot,
+  .nm-why-fs--anim .nm-why-fs__scroll-line,
+  .nm-why-fs--anim .nm-why-fs__icon-ring {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
