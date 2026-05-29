@@ -1,0 +1,135 @@
+{%- liquid
+  assign heading = section.settings.title | default: 'See NovaMeds in Action'
+  assign sub = section.settings.subheading
+  assign btn_label = section.settings.button_label
+  assign btn_link = section.settings.button_link | default: routes.all_products_collection_url
+  assign external = section.settings.video_url | strip
+  assign video_id = blank
+
+  if external != blank
+    if external contains 'youtu.be/'
+      assign yt_parts = external | split: 'youtu.be/'
+      assign video_id = yt_parts[1] | split: '?' | first | split: '&' | first
+    elsif external contains 'watch?v='
+      assign yt_parts = external | split: 'watch?v='
+      assign video_id = yt_parts[1] | split: '&' | first
+    elsif external contains 'youtube.com/embed/'
+      assign yt_parts = external | split: 'youtube.com/embed/'
+      assign video_id = yt_parts[1] | split: '?' | first
+    endif
+  endif
+
+  assign has_shopify_video = false
+  if section.settings.video != blank
+    assign has_shopify_video = true
+  endif
+
+  assign has_youtube = false
+  if video_id != blank
+    assign has_youtube = true
+  endif
+
+  assign has_media = false
+  if has_shopify_video or has_youtube or section.settings.poster != blank
+    assign has_media = true
+  endif
+
+  assign show_copy = false
+  if heading != blank or sub != blank or btn_label != blank
+    assign show_copy = true
+  endif
+-%}
+
+{{ 'novameds-fullscreen-video.css' | asset_url | stylesheet_tag }}
+
+<section
+  class="nm-fsvideo{% if section.settings.autoplay %} nm-fsvideo--autoplay{% endif %}"
+  id="brand-video"
+  aria-label="{{ heading | escape }}"
+  data-nm-fsvideo
+>
+  <div class="nm-fsvideo__media" aria-hidden="true">
+    {%- if has_shopify_video -%}
+      {{
+        section.settings.video
+        | video_tag:
+          image_size: '2000x',
+          autoplay: section.settings.autoplay,
+          loop: section.settings.loop,
+          muted: true,
+          controls: false,
+          playsinline: true,
+          class: 'nm-fsvideo__video'
+      }}
+    {%- elsif has_youtube -%}
+      <div class="nm-fsvideo__embed">
+        <iframe
+          class="nm-fsvideo__iframe"
+          src="https://www.youtube.com/embed/{{ video_id }}?autoplay=1&mute=1&loop=1&playlist={{ video_id }}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3"
+          title="{{ heading | escape }}"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          loading="lazy"
+        ></iframe>
+      </div>
+    {%- elsif section.settings.poster != blank -%}
+      {{
+        section.settings.poster
+        | image_url: width: 2400
+        | image_tag:
+          widths: '960, 1200, 1600, 2000, 2400',
+          sizes: '100vw',
+          loading: 'lazy',
+          decoding: 'async',
+          class: 'nm-fsvideo__poster',
+          alt: heading
+      }}
+    {%- else -%}
+      <div class="nm-fsvideo__poster-ph" role="img" aria-label="Video placeholder"></div>
+    {%- endif -%}
+
+    <div class="nm-fsvideo__shade"></div>
+  </div>
+
+  {%- if show_copy -%}
+    <div class="nm-fsvideo__content">
+      <div class="nm-fsvideo__inner">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="nm-fsvideo__eyebrow">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        {%- if heading != blank -%}
+          <h2 class="nm-fsvideo__title">{{ heading }}</h2>
+        {%- endif -%}
+        {%- if sub != blank -%}
+          <p class="nm-fsvideo__sub">{{ sub }}</p>
+        {%- endif -%}
+        {%- if btn_label != blank -%}
+          <a class="nm-fsvideo__btn" href="{{ btn_link }}">{{ btn_label }}</a>
+        {%- endif -%}
+        {%- unless has_media -%}
+          <p class="nm-fsvideo__hint">Upload a video or poster in Theme Editor → Fullscreen video.</p>
+        {%- endunless -%}
+      </div>
+    </div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Fullscreen video",
+  "tag": "section",
+  "settings": [
+    { "type": "video", "id": "video", "label": "Shopify-hosted video (recommended)" },
+    { "type": "text", "id": "video_url", "label": "YouTube URL (optional)", "info": "Used if no Shopify video is uploaded." },
+    { "type": "image_picker", "id": "poster", "label": "Poster / fallback image" },
+    { "type": "checkbox", "id": "autoplay", "label": "Autoplay (muted)", "default": true },
+    { "type": "checkbox", "id": "loop", "label": "Loop video", "default": true },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Watch our story" },
+    { "type": "text", "id": "title", "label": "Heading", "default": "See NovaMeds in Action" },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Discover how pharmacist-first care, premium formulas, and real customer results come together." },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Explore products" },
+    { "type": "url", "id": "button_link", "label": "Button link" }
+  ],
+  "presets": [{ "name": "Fullscreen video" }]
+}
+{% endschema %}

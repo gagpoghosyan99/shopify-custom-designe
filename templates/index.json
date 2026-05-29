@@ -92,7 +92,9 @@
       ],
       "settings": {
         "title": "What Our Customers Say",
-        "subtitle": "Real results from real people — verified buyers sharing their wellness journey."
+        "subtitle": "Real results from real people — verified buyers sharing their wellness journey.",
+        "scroll_speed": 45,
+        "pause_on_hover": true
       }
     },
     "vitamins": {
@@ -154,54 +156,28 @@
         "subtitle": "Premium care, science-backed products, and trust-first service — built for people who take their health seriously."
       }
     },
-    "choose_reasons": {
-      "type": "custom-choose-reasons",
-      "blocks": {
-        "r1": {
-          "type": "reason",
-          "settings": {
-            "icon": "🧪",
-            "title": "Lab-tested quality you can trust",
-            "text": "Every formula is checked for purity, potency, and label accuracy — no mystery blends, no shortcuts."
-          }
-        },
-        "r2": {
-          "type": "reason",
-          "settings": {
-            "icon": "💊",
-            "title": "Pharmacist-first guidance",
-            "text": "Our team prioritizes safe, science-backed recommendations — the same standard you'd expect from a pharmacy."
-          }
-        },
-        "r3": {
-          "type": "reason",
-          "settings": {
-            "icon": "🌍",
-            "title": "Fast, secure worldwide delivery",
-            "text": "Sealed packaging, tracked shipping, and responsive support — wellness delivered to your door with care."
-          }
-        },
-        "r4": {
-          "type": "reason",
-          "settings": {
-            "icon": "✨",
-            "title": "Real results, real people",
-            "text": "Thousands of verified customers choose NovaMeds for energy, sleep, skin, and daily health goals that actually stick."
-          }
-        }
-      },
-      "block_order": [
-        "r1",
-        "r2",
-        "r3",
-        "r4"
-      ],
+    "sports_nutrition": {
+      "type": "custom-home-vitamins",
       "settings": {
-        "title": "The Best Reasons to Choose NovaMeds",
-        "subtitle": "We make wellness simple — premium quality, transparent labels, and pharmacist-first care you can trust every day.",
-        "stat_value": "50,000+",
-        "stat_label": "Happy customers worldwide",
-        "button_label": "Shop with confidence"
+        "eyebrow": "Shop collection",
+        "title": "Sports Nutrition & Performance",
+        "subtitle": "Fuel recovery, strength, and endurance with pharmacist-reviewed performance essentials.",
+        "collection_handle": "best-sellers",
+        "filter_tag": "sports",
+        "products_to_show": 8,
+        "show_view_all": true,
+        "show_ratings": true
+      }
+    },
+    "brand_video": {
+      "type": "custom-fullscreen-video",
+      "settings": {
+        "autoplay": true,
+        "loop": true,
+        "eyebrow": "Watch our story",
+        "title": "See NovaMeds in Action",
+        "subheading": "Discover how pharmacist-first care, premium formulas, and real customer results come together.",
+        "button_label": "Explore products"
       }
     },
     "pro": {
@@ -295,7 +271,8 @@
     "customer_reviews",
     "vitamins",
     "why",
-    "choose_reasons",
+    "sports_nutrition",
+    "brand_video",
     "pro",
     "newsletter",
     "faq"
