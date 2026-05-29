@@ -1,0 +1,225 @@
+{%- liquid
+  assign nm_brand = settings.brand_name | default: 'NovaMeds'
+  assign animations = section.settings.animations_enabled
+  assign mobile_image_first = section.settings.mobile_image_first
+
+  assign bg_base = section.settings.bg_base
+  assign bg_cyan_a = section.settings.bg_cyan_a
+  assign bg_cyan_b = section.settings.bg_cyan_b
+  assign glow_intensity = section.settings.glow_intensity | default: 0.75
+
+  assign h = section.settings.headline
+  assign sub = section.settings.subtext
+-%}
+
+{{ 'novameds-hero.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'novameds-hero.js' | asset_url }}" defer></script>
+
+<section
+  class="nm-hero"
+  data-nm-hero
+  data-anim="{{ animations }}"
+  data-parallax="{{ section.settings.parallax_enabled }}"
+  style="
+    --nm-hero-bg: {{ bg_base }};
+    --nm-hero-cyan-a: {{ bg_cyan_a }};
+    --nm-hero-cyan-b: {{ bg_cyan_b }};
+    --nm-hero-glow: {{ glow_intensity }};
+  "
+>
+  <div class="nm-hero__bg" aria-hidden="true">
+    <div class="nm-hero__bg-grad"></div>
+    <div class="nm-hero__bg-molecules"></div>
+    <div class="nm-hero__bg-streaks"></div>
+    <div class="nm-hero__bg-particles" data-nm-hero-particles></div>
+    <div class="nm-hero__bg-vignette"></div>
+  </div>
+
+  <div class="nm-hero__wrap">
+    <div class="nm-hero__grid{% if mobile_image_first %} nm-hero__grid--imgfirst{% endif %}">
+      <div class="nm-hero__copy">
+        {%- if section.settings.badge_text != blank -%}
+          <div class="nm-hero__badge" data-nm-hero-entrance>
+            <span class="nm-hero__badge-dot" aria-hidden="true"></span>
+            <span class="nm-hero__badge-text">{{ section.settings.badge_text }}</span>
+          </div>
+        {%- endif -%}
+
+        {%- if h != blank -%}
+          <h1 class="nm-hero__h1" data-nm-hero-entrance>
+            <span class="nm-hero__h1-grad">{{ h }}</span>
+          </h1>
+        {%- endif -%}
+
+        {%- if sub != blank -%}
+          <p class="nm-hero__sub" data-nm-hero-entrance>{{ sub }}</p>
+        {%- endif -%}
+
+        <div class="nm-hero__ctas" data-nm-hero-entrance>
+          {%- if section.settings.cta1_text != blank -%}
+            <a class="nm-hero__btn nm-hero__btn--primary" href="{{ section.settings.cta1_link | default: routes.all_products_collection_url }}">
+              <span class="nm-hero__btn-glow" aria-hidden="true"></span>
+              <span class="nm-hero__btn-label">{{ section.settings.cta1_text }}</span>
+            </a>
+          {%- endif -%}
+
+          {%- if section.settings.cta2_text != blank -%}
+            <a class="nm-hero__btn nm-hero__btn--glass" href="{{ section.settings.cta2_link | default: routes.root_url }}">
+              <span class="nm-hero__btn-label">{{ section.settings.cta2_text }}</span>
+            </a>
+          {%- endif -%}
+
+          {%- if section.settings.cta3_text != blank -%}
+            <a class="nm-hero__btn nm-hero__btn--outline" href="{{ section.settings.cta3_link | default: routes.root_url }}">
+              <span class="nm-hero__btn-label">{{ section.settings.cta3_text }}</span>
+            </a>
+          {%- endif -%}
+        </div>
+
+        <div class="nm-hero__trust" data-nm-hero-entrance aria-label="Trust highlights">
+          {%- for i in (1..5) -%}
+            {%- assign id = 'trust_' | append: i -%}
+            {%- assign txt = section.settings[id] -%}
+            {%- if txt != blank -%}
+              <div class="nm-hero__trust-item">
+                <span class="nm-hero__trust-ic" aria-hidden="true">
+                  {%- render 'icon-check-circle' -%}
+                </span>
+                <span class="nm-hero__trust-txt">{{ txt }}</span>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+
+      <div class="nm-hero__visual" aria-label="{{ nm_brand }} featured products" data-nm-hero-visual>
+        <div class="nm-hero__glass" aria-hidden="true"></div>
+
+        <div class="nm-hero__stage" data-nm-hero-parallax>
+          {%- comment -%}
+            Use multiple images for depth. If not provided, show cinematic placeholders.
+          {%- endcomment -%}
+
+          <div class="nm-hero__product nm-hero__product--a">
+            {%- if section.settings.product_img_1 != blank -%}
+              {{ section.settings.product_img_1
+                | image_url: width: 900
+                | image_tag:
+                  widths: '420, 560, 700, 820, 900',
+                  sizes: '(min-width: 900px) 520px, 92vw',
+                  loading: 'eager',
+                  fetchpriority: 'high',
+                  decoding: 'async',
+                  class: 'nm-hero__img',
+                  alt: section.settings.product_img_1.alt | default: nm_brand
+              }}
+            {%- else -%}
+              <div class="nm-hero__ph nm-hero__ph--a" role="img" aria-label="Premium supplement bottle"></div>
+            {%- endif -%}
+          </div>
+
+          <div class="nm-hero__product nm-hero__product--b">
+            {%- if section.settings.product_img_2 != blank -%}
+              {{ section.settings.product_img_2
+                | image_url: width: 700
+                | image_tag:
+                  widths: '320, 420, 560, 700',
+                  sizes: '(min-width: 900px) 320px, 62vw',
+                  loading: 'lazy',
+                  decoding: 'async',
+                  class: 'nm-hero__img',
+                  alt: section.settings.product_img_2.alt | default: nm_brand
+              }}
+            {%- else -%}
+              <div class="nm-hero__ph nm-hero__ph--b" role="img" aria-label="Luxury skincare"></div>
+            {%- endif -%}
+          </div>
+
+          <div class="nm-hero__product nm-hero__product--c">
+            {%- if section.settings.product_img_3 != blank -%}
+              {{ section.settings.product_img_3
+                | image_url: width: 700
+                | image_tag:
+                  widths: '320, 420, 560, 700',
+                  sizes: '(min-width: 900px) 340px, 62vw',
+                  loading: 'lazy',
+                  decoding: 'async',
+                  class: 'nm-hero__img',
+                  alt: section.settings.product_img_3.alt | default: nm_brand
+              }}
+            {%- else -%}
+              <div class="nm-hero__ph nm-hero__ph--c" role="img" aria-label="Vitamin container"></div>
+            {%- endif -%}
+          </div>
+
+          <div class="nm-hero__product nm-hero__product--d">
+            {%- if section.settings.product_img_4 != blank -%}
+              {{ section.settings.product_img_4
+                | image_url: width: 700
+                | image_tag:
+                  widths: '320, 420, 560, 700',
+                  sizes: '(min-width: 900px) 300px, 56vw',
+                  loading: 'lazy',
+                  decoding: 'async',
+                  class: 'nm-hero__img',
+                  alt: section.settings.product_img_4.alt | default: nm_brand
+              }}
+            {%- else -%}
+              <div class="nm-hero__ph nm-hero__ph--d" role="img" aria-label="Wellness device"></div>
+            {%- endif -%}
+          </div>
+
+          <div class="nm-hero__shine" aria-hidden="true"></div>
+          <div class="nm-hero__shadow" aria-hidden="true"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Cinematic hero",
+  "settings": [
+    { "type": "checkbox", "id": "animations_enabled", "label": "Enable animations", "default": true },
+    { "type": "checkbox", "id": "parallax_enabled", "label": "Enable scroll parallax", "default": true },
+    { "type": "checkbox", "id": "mobile_image_first", "label": "Mobile: image first", "default": true },
+
+    { "type": "text", "id": "badge_text", "label": "Top badge text", "default": "LIMITED TIME OFFER" },
+    { "type": "textarea", "id": "headline", "label": "Headline", "default": "Premium Wellness &\nHealthcare Solutions" },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "Trusted pharmacy-grade supplements, vitamins, and healthcare essentials backed by science and delivered worldwide."
+    },
+
+    { "type": "text", "id": "cta1_text", "label": "CTA 1 text", "default": "Shop Now" },
+    { "type": "url", "id": "cta1_link", "label": "CTA 1 link" },
+    { "type": "text", "id": "cta2_text", "label": "CTA 2 text", "default": "Best Sellers" },
+    { "type": "url", "id": "cta2_link", "label": "CTA 2 link" },
+    { "type": "text", "id": "cta3_text", "label": "CTA 3 text", "default": "Doctor Recommended" },
+    { "type": "url", "id": "cta3_link", "label": "CTA 3 link" },
+
+    { "type": "text", "id": "trust_1", "label": "Trust item 1", "default": "Licensed Products" },
+    { "type": "text", "id": "trust_2", "label": "Trust item 2", "default": "Pharmacist Approved" },
+    { "type": "text", "id": "trust_3", "label": "Trust item 3", "default": "Worldwide Shipping" },
+    { "type": "text", "id": "trust_4", "label": "Trust item 4", "default": "Secure Payments" },
+    { "type": "text", "id": "trust_5", "label": "Trust item 5", "default": "Verified Quality" },
+
+    { "type": "image_picker", "id": "product_img_1", "label": "Product image 1 (main)" },
+    { "type": "image_picker", "id": "product_img_2", "label": "Product image 2" },
+    { "type": "image_picker", "id": "product_img_3", "label": "Product image 3" },
+    { "type": "image_picker", "id": "product_img_4", "label": "Product image 4" },
+
+    { "type": "color", "id": "bg_base", "label": "Background base", "default": "#031225" },
+    { "type": "color", "id": "bg_cyan_a", "label": "Cyan glow A", "default": "#00c9d4" },
+    { "type": "color", "id": "bg_cyan_b", "label": "Cyan glow B", "default": "#2ee8f0" },
+    { "type": "range", "id": "glow_intensity", "label": "Glow intensity", "min": 0.2, "max": 1.2, "step": 0.1, "default": 0.8 }
+  ],
+  "presets": [
+    { "name": "Custom cinematic hero (NovaMeds)" }
+  ]
+}
+{% endschema %}
+
