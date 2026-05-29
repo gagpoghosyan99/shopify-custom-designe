@@ -1,0 +1,78 @@
+{{ 'novameds-account.css' | asset_url | stylesheet_tag }}
+
+<section class="nm-account" aria-label="Order details">
+  <div class="nm-container">
+    <div class="nm-account__card">
+      <div class="nm-account-dash__welcome">
+        <div>
+          <h2 class="nm-account__card-title">Order {{ order.name }}</h2>
+          <p class="nm-account__card-sub" style="margin:0;">
+            Placed on {{ order.created_at | date: '%B %d, %Y' }} · {{ order.financial_status_label }}
+          </p>
+        </div>
+        <div class="nm-account-dash__actions">
+          <a class="nm-account-dash__btn" href="{{ routes.account_url }}">← Back to account</a>
+        </div>
+      </div>
+
+      <div class="nm-account-dash__stats" style="margin-top:1rem;">
+        <div class="nm-account-dash__stat">
+          <strong>{{ order.line_items.size }}</strong>
+          <span>Items</span>
+        </div>
+        <div class="nm-account-dash__stat">
+          <strong>{{ order.total_price | money }}</strong>
+          <span>Order total</span>
+        </div>
+        <div class="nm-account-dash__stat">
+          <strong>{{ order.fulfillment_status_label | default: 'Processing' }}</strong>
+          <span>Fulfillment</span>
+        </div>
+      </div>
+
+      <h3 class="nm-account__card-title" style="font-size:1.05rem;margin-top:0.5rem;">Items</h3>
+      <table class="nm-account-orders">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Qty</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%- for line_item in order.line_items -%}
+            <tr>
+              <td>
+                <a href="{{ line_item.product.url }}">{{ line_item.title }}</a>
+                {%- unless line_item.variant.title == 'Default Title' -%}
+                  <br><small style="color:#64748b;">{{ line_item.variant.title }}</small>
+                {%- endunless -%}
+              </td>
+              <td>{{ line_item.quantity }}</td>
+              <td>{{ line_item.final_line_price | money }}</td>
+            </tr>
+          {%- endfor -%}
+        </tbody>
+      </table>
+
+      <div class="nm-account__grid" style="margin-top:1.5rem;grid-template-columns:repeat(2,minmax(0,1fr));">
+        <div class="nm-account__panel">
+          <h3 class="nm-account__panel-title">Shipping address</h3>
+          <p style="margin:0;line-height:1.6;color:#334155;">{{ order.shipping_address | format_address }}</p>
+        </div>
+        <div class="nm-account__panel">
+          <h3 class="nm-account__panel-title">Billing address</h3>
+          <p style="margin:0;line-height:1.6;color:#334155;">{{ order.billing_address | format_address }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Customer order",
+  "tag": "section",
+  "settings": []
+}
+{% endschema %}

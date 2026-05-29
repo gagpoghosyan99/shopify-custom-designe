@@ -1,0 +1,90 @@
+{{ 'novameds-blog.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'novameds-blog.js' | asset_url }}" defer></script>
+
+<section class="nm-blog-feed" data-nm-blog-feed aria-label="Blog articles">
+  <div class="nm-container">
+    {%- paginate blog.articles by section.settings.articles_per_page | default: 10 -%}
+
+      {%- if paginate.current_page == 1 and blog.articles.size > 0 -%}
+        {%- assign featured = blog.articles.first -%}
+        <article class="nm-blog-feed__featured">
+          <a href="{{ featured.url }}" class="nm-blog-feed__featured-media" aria-label="{{ featured.title }}">
+            {%- if featured.image -%}
+              {{ featured.image | image_url: width: 1200 | image_tag: loading: 'eager', alt: featured.image.alt }}
+            {%- else -%}
+              {% render 'nm-placeholder-img', asset: 'placeholder-cat-wellness.svg', alt: featured.title, class: 'nm-blog-feed__card-media', width: 900, height: 560 %}
+            {%- endif -%}
+          </a>
+          <div class="nm-blog-feed__featured-body">
+            <span class="nm-blog-feed__pill">Featured today</span>
+            <h2 class="nm-blog-feed__featured-title"><a href="{{ featured.url }}">{{ featured.title }}</a></h2>
+            <p class="nm-blog-feed__meta">
+              <time datetime="{{ featured.published_at | date: '%Y-%m-%d' }}">{{ featured.published_at | date: '%b %d, %Y' }}</time>
+              {%- if featured.tags.size > 0 -%}
+                <span aria-hidden="true">·</span>
+                <span>{{ featured.tags.first }}</span>
+              {%- endif -%}
+            </p>
+            <p class="nm-blog-feed__featured-excerpt">{{ featured.excerpt_or_content | strip_html | truncate: 180 }}</p>
+            <a class="nm-btn nm-btn--primary" href="{{ featured.url }}">Read full story</a>
+          </div>
+        </article>
+      {%- endif -%}
+
+      <div class="nm-blog-feed__grid">
+        {%- for article in blog.articles -%}
+          {%- if paginate.current_page == 1 and forloop.first -%}{%- continue -%}{%- endif -%}
+          <article class="nm-blog-feed__card" data-nm-blog-card>
+            <a href="{{ article.url }}" class="nm-blog-feed__card-media" aria-label="{{ article.title }}">
+              {%- if article.image -%}
+                {{ article.image | image_url: width: 800 | image_tag: loading: 'lazy', alt: article.image.alt }}
+              {%- else -%}
+                {% render 'nm-placeholder-img', asset: 'placeholder-cat-wellness.svg', alt: article.title, width: 600, height: 375 %}
+              {%- endif -%}
+            </a>
+            <div class="nm-blog-feed__card-body">
+              <p class="nm-blog-feed__meta">
+                <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">{{ article.published_at | date: '%b %d, %Y' }}</time>
+                {%- if article.tags.size > 0 -%}
+                  <span aria-hidden="true">·</span>
+                  <span>{{ article.tags.first }}</span>
+                {%- endif -%}
+              </p>
+              <h3 class="nm-blog-feed__card-title"><a href="{{ article.url }}">{{ article.title }}</a></h3>
+              <p class="nm-blog-feed__card-excerpt">{{ article.excerpt_or_content | strip_html | truncate: 120 }}</p>
+            </div>
+          </article>
+        {%- endfor -%}
+      </div>
+
+      {%- if paginate.pages > 1 -%}
+        <nav class="nm-account__links" style="justify-content:center;margin-top:2rem;" aria-label="Blog pagination">
+          {%- if paginate.previous -%}<a href="{{ paginate.previous.url }}">← Previous</a>{%- endif -%}
+          <span style="color:#64748b;">Page {{ paginate.current_page }} of {{ paginate.pages }}</span>
+          {%- if paginate.next -%}<a href="{{ paginate.next.url }}">Next →</a>{%- endif -%}
+        </nav>
+      {%- endif -%}
+
+      <div class="nm-blog-feed__cta">
+        <h3>{{ section.settings.cta_title | default: 'Shop the products mentioned in our journal' }}</h3>
+        <p>{{ section.settings.cta_text | default: 'Browse pharmacy-grade vitamins, supplements, and daily wellness essentials.' }}</p>
+        <a href="{{ routes.all_products_collection_url }}" class="nm-btn nm-btn--primary">{{ section.settings.cta_button | default: 'Browse catalog' }}</a>
+      </div>
+
+    {%- endpaginate -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Blog feed",
+  "tag": "section",
+  "settings": [
+    { "type": "range", "id": "articles_per_page", "label": "Articles per page", "min": 6, "max": 24, "step": 2, "default": 10 },
+    { "type": "text", "id": "cta_title", "label": "CTA title", "default": "Shop the products mentioned in our journal" },
+    { "type": "textarea", "id": "cta_text", "label": "CTA text", "default": "Browse pharmacy-grade vitamins, supplements, and daily wellness essentials." },
+    { "type": "text", "id": "cta_button", "label": "CTA button", "default": "Browse catalog" }
+  ],
+  "presets": [{ "name": "Blog feed" }]
+}
+{% endschema %}

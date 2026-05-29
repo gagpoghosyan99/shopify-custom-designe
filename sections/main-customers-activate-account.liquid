@@ -1,0 +1,38 @@
+{{ 'novameds-account.css' | asset_url | stylesheet_tag }}
+
+<section class="nm-account" aria-label="Activate account">
+  <div class="nm-container">
+    <div class="nm-account__grid nm-account__grid--single">
+      <div class="nm-account__card">
+        <h2 class="nm-account__card-title">Activate your account</h2>
+        <p class="nm-account__card-sub">Create a password to activate your NovaMeds account.</p>
+
+        {% form 'activate_customer_password' %}
+          {%- if form.errors -%}
+            <div class="nm-account__errors">{{ form.errors | default_errors }}</div>
+          {%- endif -%}
+
+          <label class="nm-account__field">
+            <span class="nm-account__label">Password</span>
+            <input type="password" name="customer[password]" autocomplete="new-password" required>
+          </label>
+
+          <label class="nm-account__field">
+            <span class="nm-account__label">Confirm password</span>
+            <input type="password" name="customer[password_confirmation]" autocomplete="new-password" required>
+          </label>
+
+          <button type="submit" class="nm-account__submit">Activate account</button>
+        {% endform %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Activate account",
+  "tag": "section",
+  "settings": []
+}
+{% endschema %}

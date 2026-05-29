@@ -1,0 +1,80 @@
+{{ 'novameds-account.css' | asset_url | stylesheet_tag }}
+
+<section class="nm-account" aria-label="Account dashboard">
+  <div class="nm-container">
+    <div class="nm-account__card">
+      <div class="nm-account-dash__welcome">
+        <div>
+          <h2 class="nm-account-dash__name">Hello, {{ customer.first_name | default: customer.email }}</h2>
+          <p class="nm-account__card-sub" style="margin:0;">Welcome back to your NovaMeds wellness account.</p>
+        </div>
+        <div class="nm-account-dash__actions">
+          <a class="nm-account-dash__btn" href="{{ routes.account_addresses_url }}">Addresses</a>
+          <a class="nm-account-dash__btn nm-account-dash__btn--primary" href="{{ routes.all_products_collection_url }}">Shop catalog</a>
+          <a class="nm-account-dash__btn" href="{{ routes.account_logout_url }}">Sign out</a>
+        </div>
+      </div>
+
+      <div class="nm-account-dash__stats">
+        <div class="nm-account-dash__stat">
+          <strong>{{ customer.orders_count }}</strong>
+          <span>Total orders</span>
+        </div>
+        <div class="nm-account-dash__stat">
+          <strong>{{ customer.addresses_count }}</strong>
+          <span>Saved addresses</span>
+        </div>
+        <div class="nm-account-dash__stat">
+          <strong>{{ customer.email }}</strong>
+          <span>Account email</span>
+        </div>
+      </div>
+
+      <h3 class="nm-account__card-title" style="font-size:1.15rem;">Order history</h3>
+
+      {% paginate customer.orders by 12 %}
+        {%- if customer.orders.size > 0 -%}
+          <div style="overflow-x:auto;">
+            <table class="nm-account-orders">
+              <thead>
+                <tr>
+                  <th>Order</th>
+                  <th>Date</th>
+                  <th>Status</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                {%- for order in customer.orders -%}
+                  <tr>
+                    <td><a href="{{ order.customer_url }}">{{ order.name }}</a></td>
+                    <td>{{ order.created_at | date: '%b %d, %Y' }}</td>
+                    <td>{{ order.fulfillment_status_label | default: order.financial_status_label }}</td>
+                    <td>{{ order.total_price | money }}</td>
+                  </tr>
+                {%- endfor -%}
+              </tbody>
+            </table>
+          </div>
+        {%- else -%}
+          <p class="nm-account__card-sub">You have not placed any orders yet. <a href="{{ routes.all_products_collection_url }}">Start shopping</a>.</p>
+        {%- endif -%}
+
+        {%- if paginate.pages > 1 -%}
+          <div class="nm-account__links" style="margin-top:1.25rem;">
+            {%- if paginate.previous -%}<a href="{{ paginate.previous.url }}">← Previous</a>{%- endif -%}
+            {%- if paginate.next -%}<a href="{{ paginate.next.url }}">Next →</a>{%- endif -%}
+          </div>
+        {%- endif -%}
+      {% endpaginate %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Customer account",
+  "tag": "section",
+  "settings": []
+}
+{% endschema %}

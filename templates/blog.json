@@ -10,16 +10,25 @@
 {
   "sections": {
     "hero": {
-      "type": "page-hero",
+      "type": "custom-blog-hero",
       "settings": {
-        "subtitle": "Science-backed wellness tips, vitamin guides, and product education — written for everyday routines."
-      }
+        "eyebrow": "Daily Wellness News",
+        "subtitle": "Daily product news, vitamin guides, and pharmacist-trusted wellness tips — written for real routines."
+      },
+      "blocks": {
+        "ticker-1": { "type": "ticker", "settings": { "text": "New collagen research summary — read now" } },
+        "ticker-2": { "type": "ticker", "settings": { "text": "Daily vitamin stack tips from NovaMeds pharmacists" } },
+        "ticker-3": { "type": "ticker", "settings": { "text": "Product spotlight: best-selling immunity essentials" } },
+        "ticker-4": { "type": "ticker", "settings": { "text": "Wellness news updated every day" } }
+      },
+      "block_order": ["ticker-1", "ticker-2", "ticker-3", "ticker-4"]
     },
     "main": {
-      "type": "main-blog",
-      "settings": {}
+      "type": "custom-blog-feed",
+      "settings": {
+        "articles_per_page": 10
+      }
     }
   },
   "order": ["hero", "main"]
 }
-

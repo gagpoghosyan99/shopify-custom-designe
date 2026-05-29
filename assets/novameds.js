@@ -49,12 +49,32 @@
     document.body.classList.toggle('nm-modal-open', lock);
   }
 
-  function closeAll() {
+  var menuDrawer = qs('[data-nm-hdr-drawer]');
+
+  function closeMenuDrawer() {
+    if (window.NovaMedsHeader && window.NovaMedsHeader.closeDrawer) {
+      window.NovaMedsHeader.closeDrawer();
+      return;
+    }
+    if (menuDrawer) {
+      menuDrawer.classList.remove('is-open');
+      menuDrawer.setAttribute('aria-hidden', 'true');
+    }
+    var menuToggle = qs('[data-nm-menu-toggle]');
+    if (menuToggle) menuToggle.setAttribute('aria-expanded', 'false');
+  }
+
+  function closePanels() {
     hideEl(searchModal);
     hideEl(cartDrawer);
     hideEl(overlay);
-    lockBody(false);
     activeModal = null;
+  }
+
+  function closeAll() {
+    closePanels();
+    closeMenuDrawer();
+    lockBody(false);
   }
 
   function openPanel(name) {
@@ -114,16 +134,7 @@
     });
   }
 
-  /* ── Mobile menu ── */
-  var menuToggle = qs('[data-nm-menu-toggle]');
-  var mobileNav = qs('[data-nm-mobile-nav]');
-  if (menuToggle && mobileNav) {
-    menuToggle.addEventListener('click', function () {
-      closeAll();
-      var open = mobileNav.classList.toggle('is-open');
-      menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-    });
-  }
+  /* Mobile menu drawer is handled in novameds-header.js */
 
   /* ── Cart API ── */
   function updateCartBadges(count) {
@@ -343,20 +354,21 @@
     if (e.key === 'Escape') closeAll();
   });
 
-  /* Prevent clicks inside drawer/modal from closing via bubbling to overlay logic */
-  if (cartDrawer) {
-    cartDrawer.addEventListener('click', function (e) {
+  qsa('[data-nm-cart-close]').forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
       e.stopPropagation();
+      closeAll();
     });
-  }
-  if (searchModal) {
-    var searchInner = qs('.nm-search-modal__inner', searchModal);
-    if (searchInner) {
-      searchInner.addEventListener('click', function (e) {
-        e.stopPropagation();
-      });
-    }
-  }
+  });
+
+  qsa('[data-nm-search-close]').forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      closeAll();
+    });
+  });
 
   /* ── FAQ ── */
   qsa('[data-nm-faq-question]').forEach(function (btn) {
@@ -375,6 +387,9 @@
       }
     });
   });
+
+  cfg.closePanels = closePanels;
+  cfg.closeAll = closeAll;
 
   /* Initial cart badge from page */
   fetchCart()

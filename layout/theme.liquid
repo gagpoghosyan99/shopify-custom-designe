@@ -49,6 +49,12 @@
     {%- if template.name == 'index' -%}
       {{ 'novameds-home.css' | asset_url | stylesheet_tag }}
     {%- endif -%}
+    {%- if template.directory == 'customers' -%}
+      {{ 'novameds-account.css' | asset_url | stylesheet_tag }}
+    {%- endif -%}
+    {%- if template.name == 'blog' or template.name == 'article' -%}
+      {{ 'novameds-blog.css' | asset_url | stylesheet_tag }}
+    {%- endif -%}
     {{ 'novameds.css' | asset_url | stylesheet_tag }}
     {{ 'novameds-mobile.css' | asset_url | stylesheet_tag }}
 

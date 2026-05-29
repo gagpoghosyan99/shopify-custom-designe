@@ -1,0 +1,110 @@
+{{ 'novameds-account.css' | asset_url | stylesheet_tag }}
+
+<section class="nm-account" aria-label="Addresses">
+  <div class="nm-container">
+    <div class="nm-account__grid nm-account__grid--single">
+      <div class="nm-account__card">
+        <div class="nm-account-dash__welcome">
+          <div>
+            <h2 class="nm-account__card-title">Your addresses</h2>
+            <p class="nm-account__card-sub" style="margin:0;">Manage delivery addresses for faster checkout.</p>
+          </div>
+          <div class="nm-account-dash__actions">
+            <a class="nm-account-dash__btn" href="{{ routes.account_url }}">← Back to account</a>
+          </div>
+        </div>
+
+        {%- if customer.addresses.size > 0 -%}
+          {%- for address in customer.addresses -%}
+            <div class="nm-account-address">
+              {%- if address == customer.default_address -%}
+                <span class="nm-account-address__default">Default</span>
+              {%- endif -%}
+              <p style="margin:0;line-height:1.6;color:#334155;">
+                {{ address.first_name }} {{ address.last_name }}<br>
+                {{ address.address1 }}{% if address.address2 != blank %}, {{ address.address2 }}{% endif %}<br>
+                {{ address.city }}, {{ address.province }} {{ address.zip }}<br>
+                {{ address.country }}
+              </p>
+              <div class="nm-account__links" style="margin-top:0.65rem;">
+                <a href="{{ address.url_to_edit }}">Edit</a>
+                <form method="post" action="{{ address.url }}" style="display:inline;">
+                  <input type="hidden" name="_method" value="delete">
+                  <button type="submit" style="background:none;border:none;padding:0;color:#dc2626;font-weight:800;cursor:pointer;">Delete</button>
+                </form>
+              </div>
+            </div>
+          {%- endfor -%}
+        {%- else -%}
+          <p class="nm-account__card-sub">No addresses saved yet.</p>
+        {%- endif -%}
+
+        <div style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid rgba(10,22,40,0.08);">
+          <h3 class="nm-account__card-title" style="font-size:1.1rem;">Add new address</h3>
+          {% form 'customer_address', customer.new_address %}
+            {%- if form.errors -%}
+              <div class="nm-account__errors">{{ form.errors | default_errors }}</div>
+            {%- endif -%}
+
+            <div class="nm-account__row">
+              <label class="nm-account__field">
+                <span class="nm-account__label">First name</span>
+                <input type="text" name="address[first_name]" value="{{ form.first_name }}" autocomplete="given-name" required>
+              </label>
+              <label class="nm-account__field">
+                <span class="nm-account__label">Last name</span>
+                <input type="text" name="address[last_name]" value="{{ form.last_name }}" autocomplete="family-name" required>
+              </label>
+            </div>
+
+            <label class="nm-account__field">
+              <span class="nm-account__label">Address</span>
+              <input type="text" name="address[address1]" value="{{ form.address1 }}" autocomplete="address-line1" required>
+            </label>
+
+            <label class="nm-account__field">
+              <span class="nm-account__label">Apartment, suite, etc.</span>
+              <input type="text" name="address[address2]" value="{{ form.address2 }}" autocomplete="address-line2">
+            </label>
+
+            <div class="nm-account__row">
+              <label class="nm-account__field">
+                <span class="nm-account__label">City</span>
+                <input type="text" name="address[city]" value="{{ form.city }}" autocomplete="address-level2" required>
+              </label>
+              <label class="nm-account__field">
+                <span class="nm-account__label">Postal code</span>
+                <input type="text" name="address[zip]" value="{{ form.zip }}" autocomplete="postal-code" required>
+              </label>
+            </div>
+
+            <label class="nm-account__field">
+              <span class="nm-account__label">Country</span>
+              {{ form.country }}
+            </label>
+
+            <label class="nm-account__field">
+              <span class="nm-account__label">Province / State</span>
+              {{ form.province }}
+            </label>
+
+            <label class="nm-account__field" style="flex-direction:row;align-items:center;gap:0.5rem;">
+              <input type="checkbox" name="address[default]" value="1" style="width:auto;min-height:auto;">
+              <span class="nm-account__label" style="margin:0;">Set as default address</span>
+            </label>
+
+            <button type="submit" class="nm-account__submit">Save address</button>
+          {% endform %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Customer addresses",
+  "tag": "section",
+  "settings": []
+}
+{% endschema %}

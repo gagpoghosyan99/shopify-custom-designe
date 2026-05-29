@@ -1,0 +1,79 @@
+{{ 'novameds-account.css' | asset_url | stylesheet_tag }}
+
+<section class="nm-account" aria-label="Sign in">
+  <div class="nm-container">
+    <div class="nm-account__grid">
+      <div class="nm-account__card">
+        <h2 class="nm-account__card-title">Sign in</h2>
+        <p class="nm-account__card-sub">Access your orders, saved details, and wellness account.</p>
+
+        {% form 'customer_login', class: 'nm-account__form' %}
+          {%- if form.errors -%}
+            <div class="nm-account__errors">{{ form.errors | default_errors }}</div>
+          {%- endif -%}
+
+          <label class="nm-account__field">
+            <span class="nm-account__label">Email</span>
+            <input type="email" name="customer[email]" autocomplete="email" placeholder="you@email.com" required>
+          </label>
+
+          <label class="nm-account__field">
+            <span class="nm-account__label">Password</span>
+            <input type="password" name="customer[password]" autocomplete="current-password" placeholder="Your password" required>
+          </label>
+
+          <button type="submit" class="nm-account__submit">Sign in</button>
+
+          <div class="nm-account__links">
+            <a href="{{ routes.account_register_url }}">Create account</a>
+            <a href="#recover">Forgot password?</a>
+          </div>
+        {% endform %}
+
+        <div id="recover" style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(10,22,40,0.08);">
+          <h3 class="nm-account__card-title" style="font-size: 1.1rem;">Reset password</h3>
+          <p class="nm-account__card-sub">We will email you a link to reset your password.</p>
+          {% form 'recover_customer_password' %}
+            {%- if form.posted_successfully? -%}
+              <p class="nm-account__success" role="status">Check your email for a reset link.</p>
+            {%- endif -%}
+            {%- if form.errors -%}
+              <div class="nm-account__errors">{{ form.errors | default_errors }}</div>
+            {%- endif -%}
+            <label class="nm-account__field">
+              <span class="nm-account__label">Email</span>
+              <input type="email" name="email" autocomplete="email" placeholder="you@email.com" required>
+            </label>
+            <button type="submit" class="nm-account__submit">Send reset link</button>
+          {% endform %}
+        </div>
+      </div>
+
+      <aside class="nm-account__aside" aria-label="Account benefits">
+        <div class="nm-account__panel">
+          <h3 class="nm-account__panel-title">Why create an account?</h3>
+          <div class="nm-account__perk">
+            <span class="nm-account__perk-icon" aria-hidden="true">📦</span>
+            <div><strong>Track every order</strong><span>Real-time status on vitamins, supplements & pharmacy items.</span></div>
+          </div>
+          <div class="nm-account__perk">
+            <span class="nm-account__perk-icon" aria-hidden="true">⚡</span>
+            <div><strong>Faster checkout</strong><span>Saved details for repeat wellness purchases.</span></div>
+          </div>
+          <div class="nm-account__perk">
+            <span class="nm-account__perk-icon" aria-hidden="true">🛡️</span>
+            <div><strong>Secure & private</strong><span>Pharmacist-trusted platform with encrypted checkout.</span></div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Customer login",
+  "tag": "section",
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,72 @@
+{{ 'novameds-account.css' | asset_url | stylesheet_tag }}
+
+<section class="nm-account" aria-label="Create account">
+  <div class="nm-container">
+    <div class="nm-account__grid">
+      <div class="nm-account__card">
+        <h2 class="nm-account__card-title">Create account</h2>
+        <p class="nm-account__card-sub">Join NovaMeds for order tracking, faster checkout, and wellness updates.</p>
+
+        {% form 'create_customer', class: 'nm-account__form' %}
+          {%- if form.errors -%}
+            <div class="nm-account__errors">{{ form.errors | default_errors }}</div>
+          {%- endif -%}
+
+          <div class="nm-account__row">
+            <label class="nm-account__field">
+              <span class="nm-account__label">First name</span>
+              <input type="text" name="customer[first_name]" autocomplete="given-name" placeholder="First name" required>
+            </label>
+            <label class="nm-account__field">
+              <span class="nm-account__label">Last name</span>
+              <input type="text" name="customer[last_name]" autocomplete="family-name" placeholder="Last name" required>
+            </label>
+          </div>
+
+          <label class="nm-account__field">
+            <span class="nm-account__label">Email</span>
+            <input type="email" name="customer[email]" autocomplete="email" placeholder="you@email.com" required>
+          </label>
+
+          <label class="nm-account__field">
+            <span class="nm-account__label">Password</span>
+            <input type="password" name="customer[password]" autocomplete="new-password" placeholder="Create a password" required>
+          </label>
+
+          <button type="submit" class="nm-account__submit">Create account</button>
+
+          <div class="nm-account__links">
+            <span style="color:#64748b;">Already have an account?</span>
+            <a href="{{ routes.account_login_url }}">Sign in</a>
+          </div>
+        {% endform %}
+      </div>
+
+      <aside class="nm-account__aside" aria-label="Member perks">
+        <div class="nm-account__panel">
+          <h3 class="nm-account__panel-title">Member perks</h3>
+          <div class="nm-account__perk">
+            <span class="nm-account__perk-icon" aria-hidden="true">✨</span>
+            <div><strong>Daily wellness news</strong><span>Product guides and pharmacy tips in your inbox.</span></div>
+          </div>
+          <div class="nm-account__perk">
+            <span class="nm-account__perk-icon" aria-hidden="true">💊</span>
+            <div><strong>Reorder favorites</strong><span>Quick access to vitamins & supplements you trust.</span></div>
+          </div>
+          <div class="nm-account__perk">
+            <span class="nm-account__perk-icon" aria-hidden="true">🎁</span>
+            <div><strong>Exclusive offers</strong><span>Early access to bundles and seasonal promotions.</span></div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Customer register",
+  "tag": "section",
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,85 @@
+{%- liquid
+  assign brand = settings.brand_name | default: 'NovaMeds'
+  assign mode = section.settings.mode | default: 'login'
+  assign heading = section.settings.heading
+  assign accent = section.settings.heading_accent | default: brand
+  assign sub = section.settings.subheading
+
+  if heading == blank
+    case mode
+      when 'register'
+        assign heading = 'Create your'
+      when 'account'
+        assign heading = 'Your'
+      when 'addresses'
+        assign heading = 'Shipping'
+      when 'order'
+        assign heading = 'Order'
+      else
+        assign heading = 'Welcome back to'
+    endcase
+  endif
+
+  if sub == blank
+    case mode
+      when 'register'
+        assign sub = 'Join NovaMeds for faster checkout, order tracking, and personalized wellness updates.'
+      when 'account'
+        assign sub = 'Manage orders, saved details, and your wellness journey in one secure place.'
+      when 'addresses'
+        assign sub = 'Save delivery addresses for faster checkout on vitamins and pharmacy essentials.'
+      when 'order'
+        assign sub = 'Review your order details, items, and shipping information.'
+      else
+        assign sub = 'Sign in to track orders, manage your account, and shop pharmacy-grade wellness products.'
+    endcase
+  endif
+-%}
+
+{{ 'novameds-account.css' | asset_url | stylesheet_tag }}
+
+<section class="nm-account-hero" aria-labelledby="account-hero-title">
+  <div class="nm-account-hero__bg" aria-hidden="true">
+    <span class="nm-account-hero__orb nm-account-hero__orb--a"></span>
+    <span class="nm-account-hero__orb nm-account-hero__orb--b"></span>
+    <span class="nm-account-hero__mesh"></span>
+  </div>
+
+  <div class="nm-container nm-account-hero__inner">
+    <p class="nm-account-hero__eyebrow">{{ section.settings.eyebrow | default: 'NovaMeds Account' }}</p>
+    <h1 class="nm-account-hero__title" id="account-hero-title">
+      {{ heading }}
+      <span class="nm-account-hero__accent">{{ accent }}</span>
+    </h1>
+    {%- if sub != blank -%}
+      <p class="nm-account-hero__sub">{{ sub }}</p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Account hero",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "mode",
+      "label": "Page mode",
+      "default": "login",
+      "options": [
+        { "value": "login", "label": "Sign in" },
+        { "value": "register", "label": "Sign up" },
+        { "value": "account", "label": "Account dashboard" },
+        { "value": "addresses", "label": "Addresses" },
+        { "value": "order", "label": "Order detail" }
+      ]
+    },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "NovaMeds Account" },
+    { "type": "text", "id": "heading", "label": "Heading (first line)" },
+    { "type": "text", "id": "heading_accent", "label": "Heading accent (second line)", "default": "NovaMeds" },
+    { "type": "textarea", "id": "subheading", "label": "Subheading" }
+  ],
+  "presets": [{ "name": "Account hero" }]
+}
+{% endschema %}

@@ -10,15 +10,15 @@
 {
   "sections": {
     "hero": {
-      "type": "custom-blog-hero",
+      "type": "custom-account-hero",
       "settings": {
-        "eyebrow": "NovaMeds Journal",
-        "title": "",
-        "subtitle": "In-depth product guides and daily wellness insights from our pharmacy team."
+        "mode": "order",
+        "heading": "Order",
+        "heading_accent": "details"
       }
     },
     "main": {
-      "type": "custom-article-page",
+      "type": "main-customers-order",
       "settings": {}
     }
   },

@@ -219,7 +219,14 @@
               <button type="submit" name="add" class="nm-vnext-btn nm-vnext-btn--primary nm-pdp__atc" {% unless variant.available %}disabled{% endunless %}>
                 {%- if variant.available -%}Add to cart{%- else -%}Sold out{%- endif -%}
               </button>
-              <button type="button" class="nm-pdp__wish" aria-label="Save {{ product.title }}">
+              <button
+                type="button"
+                class="nm-pdp__wish"
+                data-nm-pdp-wish
+                data-variant-id="{{ variant.id }}"
+                aria-pressed="false"
+                aria-label="Save {{ product.title }}"
+              >
                 ♡
               </button>
             </div>
@@ -336,37 +343,38 @@
       {%- endif -%}
 
       {%- if section.settings.show_reviews -%}
-        <section class="nm-pdp-row nm-pdp-reviews" id="pdp-reviews" aria-label="Product reviews">
+        <section class="nm-pdp-row nm-pdp-reviews" id="pdp-reviews" data-nm-pdp-reviews aria-label="Product reviews">
           <div class="nm-pdp-row__head">
             <h2 class="nm-pdp-row__title">{{ section.settings.reviews_title | default: 'Customer reviews' }}</h2>
           </div>
-          <div class="nm-pdp-reviews__track" role="list">
-            {%- assign review_blocks = section.blocks | where: 'type', 'review' -%}
-            {%- if review_blocks.size > 0 -%}
-              {%- for block in review_blocks -%}
-                <article class="nm-pdp-review-card" role="listitem" {{ block.shopify_attributes }}>
-                  <div class="nm-pdp-review-card__stars" aria-hidden="true">★★★★★</div>
-                  <blockquote class="nm-pdp-review-card__quote">“{{ block.settings.quote | replace: '[product]', product.title }}”</blockquote>
-                  <p class="nm-pdp-review-card__author">{{ block.settings.author | default: 'Verified buyer' }}</p>
-                </article>
-              {%- endfor -%}
-            {%- else -%}
-              <article class="nm-pdp-review-card" role="listitem">
-                <div class="nm-pdp-review-card__stars" aria-hidden="true">★★★★★</div>
-                <blockquote class="nm-pdp-review-card__quote">“{{ section.settings.review_default_1 | replace: '[product]', product.title }}”</blockquote>
-                <p class="nm-pdp-review-card__author">Sarah M. · Verified buyer</p>
-              </article>
-              <article class="nm-pdp-review-card" role="listitem">
-                <div class="nm-pdp-review-card__stars" aria-hidden="true">★★★★★</div>
-                <blockquote class="nm-pdp-review-card__quote">“{{ section.settings.review_default_2 | replace: '[product]', product.title }}”</blockquote>
-                <p class="nm-pdp-review-card__author">James L. · Verified buyer</p>
-              </article>
-              <article class="nm-pdp-review-card" role="listitem">
-                <div class="nm-pdp-review-card__stars" aria-hidden="true">★★★★★</div>
-                <blockquote class="nm-pdp-review-card__quote">“{{ section.settings.review_default_3 | replace: '[product]', product.title }}”</blockquote>
-                <p class="nm-pdp-review-card__author">Priya K. · Verified buyer</p>
-              </article>
-            {%- endif -%}
+          <div class="nm-pdp-reviews__wrap">
+            <button type="button" class="nm-pdp-reviews__arrow nm-pdp-reviews__arrow--prev" data-nm-pdp-reviews-prev aria-label="Previous review">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+            </button>
+            <div class="nm-pdp-reviews__track" data-nm-pdp-reviews-track role="list">
+              {%- assign review_blocks = section.blocks | where: 'type', 'review' -%}
+              {%- if review_blocks.size > 0 -%}
+                {%- for block in review_blocks -%}
+                  {%- render 'pdp-review-card',
+                    product: product,
+                    review_index: forloop.index,
+                    author: block.settings.author,
+                    quote: block.settings.quote,
+                    block_attrs: block.shopify_attributes
+                  -%}
+                {%- endfor -%}
+              {%- else -%}
+                {%- render 'pdp-review-card', product: product, review_index: 1, author: 'Sarah M.', quote: section.settings.review_default_1 -%}
+                {%- render 'pdp-review-card', product: product, review_index: 2, author: 'James L.', quote: section.settings.review_default_2 -%}
+                {%- render 'pdp-review-card', product: product, review_index: 3, author: 'Priya K.', quote: section.settings.review_default_3 -%}
+                {%- render 'pdp-review-card', product: product, review_index: 4, author: 'Marcus T.', quote: section.settings.review_default_4 -%}
+                {%- render 'pdp-review-card', product: product, review_index: 5, author: 'Elena R.', quote: section.settings.review_default_5 -%}
+                {%- render 'pdp-review-card', product: product, review_index: 6, author: 'David W.', quote: section.settings.review_default_6 -%}
+              {%- endif -%}
+            </div>
+            <button type="button" class="nm-pdp-reviews__arrow nm-pdp-reviews__arrow--next" data-nm-pdp-reviews-next aria-label="Next review">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+            </button>
           </div>
         </section>
       {%- endif -%}
@@ -545,6 +553,9 @@
     { "type": "textarea", "id": "review_default_1", "label": "Default review 1 ([product] = product title)", "default": "I noticed a real difference within two weeks of using [product]. Quality feels premium and my routine finally sticks." },
     { "type": "textarea", "id": "review_default_2", "label": "Default review 2", "default": "[product] fits perfectly into my daily wellness stack — exactly what my pharmacist suggested." },
     { "type": "textarea", "id": "review_default_3", "label": "Default review 3", "default": "Fast shipping, sealed packaging, and [product] delivers consistent results I can trust." },
+    { "type": "textarea", "id": "review_default_4", "label": "Default review 4", "default": "My pharmacist recommended [product] and I am glad I listened — easy to take and genuinely effective." },
+    { "type": "textarea", "id": "review_default_5", "label": "Default review 5", "default": "After one month with [product], my energy and focus feel noticeably better throughout the day." },
+    { "type": "textarea", "id": "review_default_6", "label": "Default review 6", "default": "[product] is high quality, fairly priced, and NovaMeds shipped it faster than I expected." },
     { "type": "checkbox", "id": "show_bestsellers", "label": "Show best sellers row", "default": true },
     { "type": "text", "id": "bestsellers_title", "label": "Best sellers title", "default": "Best sellers" },
     { "type": "range", "id": "row_products_limit", "label": "Products per row", "min": 4, "max": 12, "step": 2, "default": 8 },

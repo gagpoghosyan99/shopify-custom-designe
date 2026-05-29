@@ -1,0 +1,47 @@
+{{ 'novameds-blog.css' | asset_url | stylesheet_tag }}
+
+<article class="nm-blog-feed" style="padding-top:0;">
+  <div class="nm-container" style="max-width:56rem;">
+    <div class="nm-blog-feed__featured" style="grid-template-columns:1fr;margin-bottom:1.5rem;">
+      <div class="nm-blog-feed__featured-body" style="padding:0.25rem;">
+        <p class="nm-blog-feed__meta">
+          <a href="{{ blog.url }}">{{ blog.title }}</a>
+          <span aria-hidden="true">·</span>
+          <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">{{ article.published_at | date: '%b %d, %Y' }}</time>
+          {%- if article.tags.size > 0 -%}
+            <span aria-hidden="true">·</span>
+            <span>{{ article.tags | join: ', ' }}</span>
+          {%- endif -%}
+        </p>
+        <h1 class="nm-blog-feed__featured-title" style="font-size:clamp(1.75rem,4vw,2.35rem);">{{ article.title }}</h1>
+        {%- if article.excerpt != blank -%}
+          <p class="nm-blog-feed__featured-excerpt">{{ article.excerpt | strip_html }}</p>
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- if article.image -%}
+      <div class="nm-blog-feed__featured-media" style="margin-bottom:1.75rem;border-radius:18px;">
+        {{ article.image | image_url: width: 1600 | image_tag: loading: 'eager', alt: article.image.alt }}
+      </div>
+    {%- endif -%}
+
+    <div class="rte nm-article-body" style="color:#334155;line-height:1.8;font-size:1.02rem;">
+      {{ article.content }}
+    </div>
+
+    <div class="nm-blog-feed__cta" style="margin-top:2rem;text-align:left;">
+      <h3>Explore NovaMeds wellness products</h3>
+      <p>Shop the vitamins, supplements, and pharmacy essentials featured in our daily journal.</p>
+      <a href="{{ routes.all_products_collection_url }}" class="nm-btn nm-btn--primary">Browse catalog</a>
+    </div>
+  </div>
+</article>
+
+{% schema %}
+{
+  "name": "Article page",
+  "tag": "section",
+  "settings": []
+}
+{% endschema %}

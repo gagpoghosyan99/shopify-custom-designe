@@ -1,0 +1,84 @@
+{{ 'novameds-blog.css' | asset_url | stylesheet_tag }}
+
+<section class="nm-blog-hero" aria-labelledby="blog-hero-title">
+  <div class="nm-blog-hero__bg" aria-hidden="true">
+    <span class="nm-blog-hero__orb nm-blog-hero__orb--1"></span>
+    <span class="nm-blog-hero__orb nm-blog-hero__orb--2"></span>
+  </div>
+
+  <div class="nm-blog-hero__ticker" aria-hidden="true">
+    <div class="nm-blog-hero__ticker-track">
+      {%- for i in (1..2) -%}
+        <div style="display:flex;gap:2.5rem;">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'ticker' and block.settings.text != blank -%}
+              <span class="nm-blog-hero__ticker-item"><span class="nm-blog-hero__ticker-dot"></span>{{ block.settings.text }}</span>
+            {%- endif -%}
+          {%- endfor -%}
+          {%- for article in blog.articles limit: 4 -%}
+            <span class="nm-blog-hero__ticker-item"><span class="nm-blog-hero__ticker-dot"></span>{{ article.title | truncate: 56 }}</span>
+          {%- endfor -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+
+  <div class="nm-container nm-blog-hero__inner">
+    <div>
+      <p class="nm-blog-hero__eyebrow">{{ section.settings.eyebrow | default: 'Daily Wellness News' }}</p>
+      <h1 class="nm-blog-hero__title" id="blog-hero-title">{{ section.settings.title | default: blog.title | default: 'NovaMeds Journal' }}</h1>
+      <p class="nm-blog-hero__sub">{{ section.settings.subtitle | default: 'Daily product news, vitamin guides, and pharmacist-trusted wellness tips — written for real routines.' }}</p>
+    </div>
+
+    <div class="nm-blog-hero__stats" aria-label="Blog highlights">
+      <div class="nm-blog-hero__stat">
+        <strong>{{ blog.articles_count | default: blog.articles.size }}</strong>
+        <span>Articles published</span>
+      </div>
+      <div class="nm-blog-hero__stat">
+        <strong>{{ section.settings.stat_2_value | default: 'Daily' }}</strong>
+        <span>{{ section.settings.stat_2_label | default: 'Product updates' }}</span>
+      </div>
+      <div class="nm-blog-hero__stat">
+        <strong>{{ section.settings.stat_3_value | default: '100%' }}</strong>
+        <span>{{ section.settings.stat_3_label | default: 'Science-backed tips' }}</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Blog hero",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Daily Wellness News" },
+    { "type": "text", "id": "title", "label": "Title override" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtitle", "default": "Daily product news, vitamin guides, and pharmacist-trusted wellness tips — written for real routines." },
+    { "type": "text", "id": "stat_2_value", "label": "Stat 2 value", "default": "Daily" },
+    { "type": "text", "id": "stat_2_label", "label": "Stat 2 label", "default": "Product updates" },
+    { "type": "text", "id": "stat_3_value", "label": "Stat 3 value", "default": "100%" },
+    { "type": "text", "id": "stat_3_label", "label": "Stat 3 label", "default": "Science-backed tips" }
+  ],
+  "blocks": [
+    {
+      "type": "ticker",
+      "name": "News ticker item",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Ticker text", "default": "New probiotic guide published today" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Blog hero",
+      "blocks": [
+        { "type": "ticker", "settings": { "text": "New collagen research summary — read now" } },
+        { "type": "ticker", "settings": { "text": "Daily vitamin stack tips from NovaMeds pharmacists" } },
+        { "type": "ticker", "settings": { "text": "Product spotlight: best-selling immunity essentials" } },
+        { "type": "ticker", "settings": { "text": "Wellness news updated every day" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
