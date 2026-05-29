@@ -31,12 +31,6 @@ html {
   scroll-behavior: smooth;
 }
 
-@media (max-width: 767px) {
-  html {
-    scroll-behavior: auto;
-  }
-}
-
 body.nm-body {
   margin: 0;
   font-family: var(--nm-font);
@@ -617,12 +611,6 @@ a:hover {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1.25rem;
-  align-items: stretch;
-}
-
-.nm-products__grid > .nm-product-card-v2,
-.nm-products__grid > article {
-  height: 100%;
 }
 
 @media (min-width: 768px) {

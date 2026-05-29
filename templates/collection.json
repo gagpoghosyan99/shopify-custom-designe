@@ -10,55 +10,14 @@
 {
   "sections": {
     "hero": {
-      "type": "custom-collection-banner",
-      "settings": {
-        "headline": "Premium Health & Wellness Products",
-        "subheadline": "Trusted supplements, vitamins, and wellness essentials — selected for quality and daily performance.",
-        "cta_label": "Shop Best Sellers",
-        "cta_link": "/collections/best-sellers",
-        "use_default_visual": true
-      }
+      "type": "page-hero",
+      "settings": {}
     },
     "main": {
       "type": "main-collection",
       "settings": {
-        "enable_category_rows": true,
-        "only_on_all_collection": true,
-        "max_products_per_row": 16,
-        "show_view_all_links": true,
-        "auto_split_products": true,
         "products_per_page": 16
-      },
-      "blocks": {
-        "row_vitamins": {
-          "type": "category_row",
-          "settings": {
-            "title": "Vitamins",
-            "collection_handle": "vitamins",
-            "fallback_tag": "vitamins",
-            "match_keywords": "vitamin,collagen,probiotic,omega,zinc,d3,multivitamin,fish oil,softgel"
-          }
-        },
-        "row_sports": {
-          "type": "category_row",
-          "settings": {
-            "title": "Sports Nutrition",
-            "collection_handle": "sports-nutrition",
-            "fallback_tag": "sports-nutrition",
-            "match_keywords": "creatine,bcaa,protein,energy,sport,pre-workout,whey,performance"
-          }
-        },
-        "row_recovery": {
-          "type": "category_row",
-          "settings": {
-            "title": "Recovery & Sleep",
-            "collection_handle": "recovery-sleep",
-            "fallback_tag": "recovery-sleep",
-            "match_keywords": "sleep,recovery,melatonin,ashwagandha,rest,night"
-          }
-        }
-      },
-      "block_order": ["row_vitamins", "row_sports", "row_recovery"]
+      }
     }
   },
   "order": ["hero", "main"]

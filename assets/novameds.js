@@ -49,32 +49,12 @@
     document.body.classList.toggle('nm-modal-open', lock);
   }
 
-  var menuDrawer = qs('[data-nm-hdr-drawer]');
-
-  function closeMenuDrawer() {
-    if (window.NovaMedsHeader && window.NovaMedsHeader.closeDrawer) {
-      window.NovaMedsHeader.closeDrawer();
-      return;
-    }
-    if (menuDrawer) {
-      menuDrawer.classList.remove('is-open');
-      menuDrawer.setAttribute('aria-hidden', 'true');
-    }
-    var menuToggle = qs('[data-nm-menu-toggle]');
-    if (menuToggle) menuToggle.setAttribute('aria-expanded', 'false');
-  }
-
-  function closePanels() {
+  function closeAll() {
     hideEl(searchModal);
     hideEl(cartDrawer);
     hideEl(overlay);
-    activeModal = null;
-  }
-
-  function closeAll() {
-    closePanels();
-    closeMenuDrawer();
     lockBody(false);
+    activeModal = null;
   }
 
   function openPanel(name) {
@@ -134,7 +114,16 @@
     });
   }
 
-  /* Mobile menu drawer is handled in novameds-header.js */
+  /* ── Mobile menu ── */
+  var menuToggle = qs('[data-nm-menu-toggle]');
+  var mobileNav = qs('[data-nm-mobile-nav]');
+  if (menuToggle && mobileNav) {
+    menuToggle.addEventListener('click', function () {
+      closeAll();
+      var open = mobileNav.classList.toggle('is-open');
+      menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  }
 
   /* ── Cart API ── */
   function updateCartBadges(count) {
@@ -386,9 +375,6 @@
       }
     });
   });
-
-  cfg.closePanels = closePanels;
-  cfg.closeAll = closeAll;
 
   /* Initial cart badge from page */
   fetchCart()

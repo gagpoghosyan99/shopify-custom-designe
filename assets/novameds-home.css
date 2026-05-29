@@ -414,74 +414,12 @@
    Mobile & tablet polish (app-like)
    ───────────────────────────────────────────────────────── */
 @media (max-width: 900px) {
-  .nm-hero-premium {
-    /* Make the hero feel like a single “app screen” on mobile */
-    padding-top: 0.25rem;
-  }
-
   .nm-hero-premium__grid {
-    grid-template-columns: 1fr;
-    padding: 2.75rem 0 3.25rem;
+    padding: 2.75rem 0 3.5rem;
     min-height: unset;
   }
-
-  /* Turn the hero image into a background layer on mobile */
-  .nm-hero-premium__visual {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    min-height: unset;
-    pointer-events: none;
-  }
-
-  .nm-hero-premium__products {
-    position: absolute;
-    inset: 0;
-    padding: 0;
-    align-items: stretch;
-    justify-content: stretch;
-  }
-
-  .nm-hero-premium__product-img,
-  .nm-hero-premium__ph .nm-ph__img {
-    width: 100%;
-    height: 100%;
-    max-height: none;
-    object-fit: cover;
-    /* Focus left side (collagen jar) instead of the face */
-    object-position: 18% 34%;
-    filter: none;
-  }
-
-  /* Dark overlay so text stays readable on top */
-  .nm-hero-premium__visual::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background:
-      linear-gradient(180deg, rgba(10, 22, 40, 0.68) 0%, rgba(10, 22, 40, 0.88) 52%, rgba(10, 22, 40, 0.96) 100%),
-      radial-gradient(circle at 80% 20%, rgba(46, 232, 240, 0.22), transparent 52%);
-  }
-
   .nm-hero-premium__content {
     text-align: left;
-    position: relative;
-    z-index: 2;
-  }
-
-  /* Give text a glassy backing for contrast on bright photos */
-  .nm-hero-premium__content {
-    padding: 1.1rem 1.1rem 1.25rem;
-    border-radius: 22px;
-    background: rgba(10, 22, 40, 0.34);
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 18px 60px rgba(0, 0, 0, 0.25);
-  }
-
-  .nm-hero-premium__title,
-  .nm-hero-premium__text {
-    text-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
   }
   .nm-hero-premium__text {
     max-width: 40rem;
@@ -518,16 +456,7 @@
   }
   .nm-hero-premium__grid {
     gap: 1.25rem;
-    padding: 2.25rem 0 2.75rem;
-  }
-
-  .nm-hero-premium {
-    min-height: 0;
-    display: block;
-  }
-  .nm-hero-premium__grid {
-    width: 100%;
-    align-content: start;
+    padding: 2.25rem 0 3rem;
   }
   .nm-hero-premium__title {
     font-size: clamp(2.35rem, 12vw, 3.6rem);
@@ -538,18 +467,6 @@
   }
   .nm-hero-premium__text {
     font-size: 1rem;
-  }
-
-  .nm-hero-premium__text {
-    margin-bottom: 1rem;
-  }
-
-  .nm-hero-premium__mini {
-    margin-top: 0.6rem;
-  }
-
-  .nm-hero-premium__mesh {
-    opacity: 0.08;
   }
   .nm-hero-price {
     gap: 0.45rem 0.55rem;
@@ -579,27 +496,8 @@
     gap: 0.5rem 0.75rem;
   }
   .nm-trust-float-v2__card {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0.75rem;
-    padding: 0.85rem 0.85rem;
-  }
-
-  .nm-trust-float-v2__item {
-    flex: 0 0 auto;
-    min-width: 132px;
-    padding: 0.35rem 0.5rem 0.55rem;
-    border-radius: 14px;
-  }
-
-  .nm-trust-float-v2__icon {
-    width: 40px;
-    height: 40px;
-    font-size: 1.15rem;
-    margin-bottom: 0.35rem;
-    animation: none;
   }
   .nm-section-white {
     padding: 3.25rem 0;
@@ -609,213 +507,6 @@
   }
   .nm-section-sub {
     margin-bottom: 1.75rem;
-  }
-}
-
-/* ─────────────────────────────────────────────────────────
-   Home hero: full-bleed photo (matches reference)
-   ───────────────────────────────────────────────────────── */
-.nm-vnext-hero--photo {
-  padding: 0;
-  min-height: clamp(560px, 78vh, 760px);
-  display: flex;
-  align-items: stretch;
-}
-
-.nm-vnext-hero--photo .nm-container.nm-vnext-hero__grid {
-  width: 100%;
-  align-content: center;
-  padding: 4.25rem 0 4.25rem;
-}
-
-.nm-vnext-hero--photo .nm-vnext-hero__grid {
-  grid-template-columns: 1fr;
-  justify-items: start;
-}
-
-.nm-vnext-hero--photo .nm-vnext-hero__copy {
-  max-width: 720px;
-  padding: 2rem 2rem 2.1rem;
-  background: transparent;
-  border: none;
-  backdrop-filter: none;
-}
-
-.nm-vnext-hero__photo {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-}
-
-.nm-vnext-hero__photo-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: 55% 45%;
-  display: block;
-}
-
-.nm-vnext-hero--photo.nm-dark-stage {
-  background: transparent;
-}
-
-@media (max-width: 900px) {
-  .nm-vnext-hero--photo .nm-container.nm-vnext-hero__grid {
-    padding: 0 0 1.25rem;
-    align-content: start;
-  }
-}
-
-/* Mobile homepage hero: normal-sized image + readable stacked content */
-@media (max-width: 767px) {
-  .nm-vnext-hero--photo {
-    min-height: 0;
-    max-height: none;
-    display: flex;
-    flex-direction: column;
-    overflow: visible;
-    padding: 0;
-  }
-
-  .nm-vnext-hero--photo .nm-vnext-hero__photo {
-    position: relative;
-    inset: auto;
-    width: 100%;
-    height: clamp(220px, 52vw, 300px);
-    flex-shrink: 0;
-  }
-
-  .nm-vnext-hero--photo .nm-vnext-hero__photo::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, rgba(10, 22, 40, 0.05) 0%, rgba(10, 22, 40, 0.45) 100%);
-    pointer-events: none;
-  }
-
-  .nm-vnext-hero--photo .nm-vnext-hero__photo-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center 40%;
-  }
-
-  .nm-vnext-hero--photo .nm-container.nm-vnext-hero__grid {
-    position: relative;
-    z-index: 2;
-    width: min(100% - 1.25rem, var(--nm-max, 1200px));
-    margin-inline: auto;
-    padding: 0 0 1rem;
-  }
-
-  .nm-vnext-hero--photo .nm-vnext-hero__grid {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-
-  .nm-vnext-hero--photo .nm-vnext-hero__copy {
-    max-width: 100%;
-    width: 100%;
-    margin: 0;
-    padding: 1rem 1rem 1.1rem;
-    border-radius: 16px;
-    background: rgba(10, 22, 40, 0.94);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.12);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-  }
-
-  .nm-vnext-hero--photo .nm-vnext-hero__title {
-    font-size: clamp(1.4rem, 5.8vw, 1.85rem);
-    line-height: 1.12;
-    text-shadow: none;
-  }
-
-  .nm-vnext-hero--photo .nm-vnext-hero__sub {
-    font-size: 0.9rem;
-    line-height: 1.55;
-    margin-bottom: 0.85rem;
-  }
-
-  .nm-vnext-hero--photo .nm-vnext-hero__actions {
-    flex-direction: column;
-    align-items: stretch;
-    margin-bottom: 0.75rem;
-  }
-
-  .nm-vnext-hero--photo .nm-vnext-btn {
-    width: 100%;
-  }
-
-  .nm-vnext-hero--photo .nm-vnext-hero__micro {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.35rem;
-    font-size: 0.8rem;
-  }
-
-  /* Homepage sections */
-  .nm-goals {
-    padding: 2rem 0 2.25rem;
-  }
-
-  .nm-goals__title {
-    font-size: clamp(1.15rem, 4.5vw, 1.45rem);
-    line-height: 1.2;
-    padding: 0 0.25rem;
-  }
-
-  .nm-goals__head {
-    margin-bottom: 1rem;
-  }
-
-  .nm-vnext-section-head {
-    padding: 1.75rem 0 1rem;
-  }
-
-  .nm-container {
-    width: min(100% - 1.25rem, var(--nm-max, 1200px));
-  }
-
-  body.template-index .nm-main {
-    overflow-x: clip;
-    overflow-y: visible;
-  }
-
-  .nm-vnext-discount,
-  .nm-vnext-pro,
-  .nm-vnext-faq {
-    padding-left: 0;
-    padding-right: 0;
-  }
-
-  .nm-vnext-discount__card,
-  .nm-vnext-pro__wrap {
-    padding: 1rem;
-    border-radius: 14px;
-  }
-
-  .nm-vnext-pro__doctors {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .nm-vnext-pro__certs {
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-
-  .nm-vnext-discount__actions,
-  .nm-vnext-discount .nm-vnext-hero__actions {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .nm-vnext-discount .nm-vnext-btn {
-    width: 100%;
   }
 }
 
@@ -1082,114 +773,6 @@
 .nm-pro-section {
   padding: 4rem 0;
   background: #f4f8fa;
-}
-
-/* ─────────────────────────────────────────────────────────
-   Catalog (home) — app-like mobile section
-   ───────────────────────────────────────────────────────── */
-.nm-catalog-home {
-  padding: 0 0 2.5rem;
-  background: linear-gradient(180deg, #0a1628 0%, #0d3d4a 45%, #0a1628 100%);
-  color: #fff;
-}
-.nm-catalog-home__head {
-  padding: 2.75rem 0 1rem;
-  text-align: center;
-}
-.nm-catalog-home__title {
-  margin: 0;
-  font-size: 1.75rem;
-  font-weight: 900;
-  letter-spacing: -0.03em;
-}
-.nm-catalog-home__sub {
-  margin: 0.5rem auto 0;
-  max-width: 42ch;
-  color: rgba(255, 255, 255, 0.78);
-  font-size: 0.95rem;
-  line-height: 1.6;
-}
-
-.nm-catalog-home__pills {
-  display: flex;
-  gap: 0.55rem;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  padding: 0.75rem 0 0.25rem;
-  justify-content: flex-start;
-}
-.nm-catalog-home__pill {
-  flex: 0 0 auto;
-  padding: 0.45rem 0.85rem;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  background: rgba(255, 255, 255, 0.08);
-  color: rgba(255, 255, 255, 0.9);
-  font-weight: 700;
-  font-size: 0.8125rem;
-  text-decoration: none;
-  backdrop-filter: blur(10px);
-}
-.nm-catalog-home__pill:hover {
-  background: rgba(255, 255, 255, 0.12);
-  color: #fff;
-}
-
-.nm-catalog-home__toolbar {
-  margin-top: 0.75rem;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  background: rgba(10, 22, 40, 0.35);
-  backdrop-filter: blur(10px);
-  padding: 0.6rem 0.9rem;
-}
-.nm-catalog-home__sort {
-  font-size: 0.8125rem;
-  color: rgba(255, 255, 255, 0.78);
-}
-.nm-catalog-home__sort strong {
-  color: #fff;
-}
-
-.nm-catalog-home__grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.9rem;
-  padding: 1rem 0 0;
-}
-
-/* Make product cards match the dark “app” look inside catalog section */
-.nm-catalog-home .nm-product-card-v2 {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(255, 255, 255, 0.12);
-  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.25);
-}
-.nm-catalog-home .nm-product-card-v2__price {
-  color: #fff;
-}
-.nm-catalog-home .nm-product-card-v2__title,
-.nm-catalog-home .nm-product-card-v2__rating {
-  color: rgba(255, 255, 255, 0.86);
-}
-.nm-catalog-home .nm-btn--primary {
-  background: linear-gradient(135deg, var(--nm-cyan), var(--nm-cyan-bright));
-  color: var(--nm-navy);
-  border: none;
-}
-
-@media (min-width: 900px) {
-  .nm-catalog-home {
-    padding: 1.5rem 0 4rem;
-    border-radius: 28px;
-    margin: 2rem 0;
-  }
-  .nm-catalog-home__head {
-    padding-top: 3.25rem;
-  }
-  .nm-catalog-home__grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 1.25rem;
-  }
 }
 .nm-pro-section__wrap {
   border-radius: 24px;
@@ -1518,43 +1101,5 @@
   to {
     opacity: 1;
     transform: none;
-  }
-}
-
-/* Homepage: hero → best sellers closer together */
-.template-index #home-hero.nm-vnext-hero {
-  padding-bottom: 1.25rem;
-}
-
-.template-index .nm-vnext-hero--photo .nm-container.nm-vnext-hero__grid {
-  padding-bottom: 2rem;
-}
-
-.template-index #best-sellers.nm-goals {
-  padding-top: 2.5rem;
-}
-
-@media (max-width: 767px) {
-  .template-index #home-hero.nm-vnext-hero {
-    padding-bottom: 0.5rem;
-  }
-
-  .template-index .nm-vnext-hero--photo .nm-container.nm-vnext-hero__grid {
-    padding-bottom: 0.35rem;
-  }
-
-  .template-index #best-sellers.nm-goals {
-    padding-top: 0.85rem;
-    padding-bottom: 1.75rem;
-  }
-
-  .template-index #best-sellers .nm-goals__head {
-    margin-bottom: 0.75rem;
-  }
-}
-
-@media (min-width: 768px) {
-  .template-index #best-sellers.nm-goals {
-    padding-top: 3rem;
   }
 }

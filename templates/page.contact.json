@@ -10,60 +10,17 @@
 {
   "sections": {
     "hero": {
-      "type": "custom-contact-hero",
-      "blocks": {
-        "f1": {
-          "type": "feature",
-          "settings": {
-            "icon": "support",
-            "title": "Expert Support",
-            "subtitle": "Nutrition specialists"
-          }
-        },
-        "f2": {
-          "type": "feature",
-          "settings": {
-            "icon": "speed",
-            "title": "Fast Response",
-            "subtitle": "We reply quickly"
-          }
-        },
-        "f3": {
-          "type": "feature",
-          "settings": {
-            "icon": "quality",
-            "title": "Trusted Quality",
-            "subtitle": "Premium products"
-          }
-        },
-        "f4": {
-          "type": "feature",
-          "settings": {
-            "icon": "heart",
-            "title": "Customer Focused",
-            "subtitle": "Your health matters"
-          }
-        }
-      },
-      "block_order": ["f1", "f2", "f3", "f4"],
+      "type": "page-hero",
       "settings": {
-        "heading": "Contact",
-        "heading_accent": "NovaMeds",
-        "subheading": "Have questions about our vitamins, supplements or your order? Our team is here to help you achieve your best health.",
-        "use_default_visual": true
+        "title": "Contact NovaMeds",
+        "subtitle": "Need help with vitamins, supplements or an order? Send us a message — we’re here to help."
       }
     },
     "main": {
       "type": "contact-page",
-      "settings": {
-        "title": "Contact Us",
-        "subtitle": "Send us a message and our team will get back to you as soon as possible.",
-        "email_note": "We aim to respond within a few hours",
-        "phone_note": "Mon–Fri: 9:00 AM – 6:00 PM (EST)",
-        "chat_label": "Live Chat",
-        "chat_note": "Available on our website"
-      }
+      "settings": {}
     }
   },
   "order": ["hero", "main"]
 }
+

@@ -1,127 +1,59 @@
-{%- liquid
-  assign support_email = settings.support_email | default: 'care@novameds.shop'
-  assign support_phone = settings.support_phone | default: '1-800-NOVAMEDS'
-  assign email_note = section.settings.email_note | default: 'We aim to respond within a few hours'
-  assign phone_note = section.settings.phone_note | default: 'Mon–Fri: 9:00 AM – 6:00 PM (EST)'
-  assign chat_label = section.settings.chat_label | default: 'Live Chat'
-  assign chat_note = section.settings.chat_note | default: 'Available on our website'
--%}
-
-{{ 'novameds-contact.css' | asset_url | stylesheet_tag }}
-
-<section class="nm-contact-main">
+<section class="nm-section nm-animate">
   <div class="nm-container">
-    <div class="nm-contact-main__grid">
-      <div class="nm-contact-main__form-wrap">
-        <h2 class="nm-contact-main__title">{{ section.settings.title | default: 'Contact Us' }}</h2>
-        <p class="nm-contact-main__sub">
-          {{ section.settings.subtitle | default: 'Send us a message and our team will get back to you as soon as possible.' }}
+    <div class="nm-contact-grid">
+      <div class="nm-contact-card">
+        <h2 class="nm-contact-title">{{ section.settings.title | default: 'Contact Us' }}</h2>
+        <p class="nm-contact-sub">
+          {{ section.settings.subtitle | default: 'Questions about vitamins, supplements or orders? Send a message and our team will reply as soon as possible.' }}
         </p>
 
-        {% form 'contact', class: 'nm-contact-main__form' %}
+        {% form 'contact', class: 'nm-contact-form' %}
           {%- if form.posted_successfully? -%}
-            <p class="nm-contact-main__success" role="status">Thanks — we received your message and will reply soon.</p>
+            <p class="nm-contact-success">Thanks — we received your message.</p>
           {%- endif -%}
           {%- if form.errors -%}
-            <div class="nm-contact-main__errors">{{ form.errors | default_errors }}</div>
+            <div class="nm-contact-errors">{{ form.errors | default_errors }}</div>
           {%- endif -%}
 
-          <div class="nm-contact-main__row">
-            <label class="nm-contact-main__field">
-              <span class="nm-contact-main__label">Name</span>
-              <input type="text" name="contact[name]" autocomplete="name" placeholder="Your name" required>
+          <div class="nm-field-row">
+            <label>
+              <span>Name</span>
+              <input type="text" name="contact[name]" autocomplete="name" required>
             </label>
-            <label class="nm-contact-main__field">
-              <span class="nm-contact-main__label">Email</span>
-              <input type="email" name="contact[email]" autocomplete="email" placeholder="Your email" required>
+            <label>
+              <span>Email</span>
+              <input type="email" name="contact[email]" autocomplete="email" required>
             </label>
           </div>
 
-          <label class="nm-contact-main__field">
-            <span class="nm-contact-main__label">Subject</span>
-            <div class="nm-contact-main__select-wrap">
-              <select name="contact[subject]" aria-label="Subject" required>
-                <option value="" disabled selected>Select a topic</option>
-                <option value="Order question">Order question</option>
-                <option value="Product recommendation">Product recommendation</option>
-                <option value="Shipping & delivery">Shipping & delivery</option>
-                <option value="Returns & refunds">Returns & refunds</option>
-                <option value="General inquiry">General inquiry</option>
-              </select>
-            </div>
+          <label>
+            <span>Subject</span>
+            <input type="text" name="contact[subject]" placeholder="Order, product, or general question">
           </label>
 
-          <label class="nm-contact-main__field">
-            <span class="nm-contact-main__label">Message</span>
-            <textarea name="contact[body]" rows="6" required placeholder="How can we help you?"></textarea>
+          <label>
+            <span>Message</span>
+            <textarea name="contact[body]" rows="6" required placeholder="Write your message…"></textarea>
           </label>
 
-          <button type="submit" class="nm-contact-main__submit">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M22 2L11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M22 2l-7 20-4-9-9-4 20-7z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
-            Send Message
-          </button>
+          <button type="submit" class="nm-btn nm-btn--cyan nm-contact-submit">Send message</button>
         {% endform %}
       </div>
 
-      <aside class="nm-contact-main__aside">
-        <div class="nm-contact-main__panel">
-          <h3 class="nm-contact-main__panel-title">Support Information</h3>
-
-          <div class="nm-contact-main__info-item">
-            <span class="nm-contact-main__info-icon" aria-hidden="true">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M3 7l9 6 9-6" stroke="currentColor" stroke-width="1.6"/></svg>
-            </span>
-            <div>
-              <a href="mailto:{{ support_email }}">{{ support_email }}</a>
-              <p>{{ email_note }}</p>
-            </div>
-          </div>
-
-          <div class="nm-contact-main__info-item">
-            <span class="nm-contact-main__info-icon" aria-hidden="true">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2z" stroke="currentColor" stroke-width="1.6"/></svg>
-            </span>
-            <div>
-              <a href="tel:{{ support_phone | replace: '-', '' | replace: ' ', '' }}">{{ support_phone }}</a>
-              <p>{{ phone_note }}</p>
-            </div>
-          </div>
-
-          <div class="nm-contact-main__info-item">
-            <span class="nm-contact-main__info-icon" aria-hidden="true">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M21 12a8 8 0 01-8 8H8l-4 3 1.5-4.5A8 8 0 1112 4a8 8 0 019 8z" stroke="currentColor" stroke-width="1.6"/></svg>
-            </span>
-            <div>
-              <strong>{{ chat_label }}</strong>
-              <p>{{ chat_note }}</p>
-            </div>
-          </div>
+      <aside class="nm-contact-aside">
+        <div class="nm-contact-info">
+          <h3>Support</h3>
+          <p><strong>Email</strong><br>{{ settings.support_email | default: 'care@novameds.shop' }}</p>
+          <p><strong>Phone</strong><br>{{ settings.support_phone | default: '1-800-NOVAMEDS' }}</p>
+          <p><strong>Hours</strong><br>Mon–Fri · 9:00–18:00</p>
         </div>
-
-        <div class="nm-contact-main__panel nm-contact-main__panel--social">
-          <h3 class="nm-contact-main__panel-title">Follow Us</h3>
-          <div class="nm-contact-main__socials">
-            {%- if section.settings.instagram_url != blank -%}
-              <a href="{{ section.settings.instagram_url }}" class="nm-contact-main__social" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.6"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
-              </a>
-            {%- endif -%}
-            {%- if section.settings.facebook_url != blank -%}
-              <a href="{{ section.settings.facebook_url }}" class="nm-contact-main__social" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14 8h3V4h-3c-2.8 0-5 2.2-5 5v3H6v4h3v6h4v-6h3l1-4h-4V9c0-.6.4-1 1-1z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
-              </a>
-            {%- endif -%}
-            {%- if section.settings.youtube_url != blank -%}
-              <a href="{{ section.settings.youtube_url }}" class="nm-contact-main__social" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="3" stroke="currentColor" stroke-width="1.6"/><path d="M11 10l5 2-5 2v-4z" fill="currentColor"/></svg>
-              </a>
-            {%- endif -%}
-            {%- if section.settings.tiktok_url != blank -%}
-              <a href="{{ section.settings.tiktok_url }}" class="nm-contact-main__social" aria-label="TikTok" target="_blank" rel="noopener noreferrer">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 5c1 2 2.5 3 5 3v4c-2 0-3.5-.5-5-1.5v6.5a5.5 5.5 0 11-5.5-5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-              </a>
-            {%- endif -%}
-          </div>
+        <div class="nm-contact-info">
+          <h3>Order help</h3>
+          <ul class="nm-contact-list">
+            <li>Shipping & delivery questions</li>
+            <li>Returns and refunds</li>
+            <li>Product recommendations</li>
+          </ul>
         </div>
       </aside>
     </div>
@@ -132,24 +64,11 @@
 {
   "name": "Contact page",
   "tag": "section",
-  "class": "shopify-section--contact-main",
   "settings": [
-    { "type": "text", "id": "title", "label": "Form title", "default": "Contact Us" },
-    {
-      "type": "textarea",
-      "id": "subtitle",
-      "label": "Form subtitle",
-      "default": "Send us a message and our team will get back to you as soon as possible."
-    },
-    { "type": "text", "id": "email_note", "label": "Email note", "default": "We aim to respond within a few hours" },
-    { "type": "text", "id": "phone_note", "label": "Phone note", "default": "Mon–Fri: 9:00 AM – 6:00 PM (EST)" },
-    { "type": "text", "id": "chat_label", "label": "Live chat label", "default": "Live Chat" },
-    { "type": "text", "id": "chat_note", "label": "Live chat note", "default": "Available on our website" },
-    { "type": "url", "id": "instagram_url", "label": "Instagram URL" },
-    { "type": "url", "id": "facebook_url", "label": "Facebook URL" },
-    { "type": "url", "id": "youtube_url", "label": "YouTube URL" },
-    { "type": "url", "id": "tiktok_url", "label": "TikTok URL" }
+    { "type": "text", "id": "title", "label": "Title", "default": "Contact Us" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtitle" }
   ],
   "presets": [{ "name": "Contact page" }]
 }
 {% endschema %}
+
