@@ -1,0 +1,149 @@
+{%- liquid
+  assign heading = section.settings.title | default: 'The Best Reasons to Choose NovaMeds'
+  assign sub = section.settings.subtitle | default: 'We make wellness simple — premium quality, transparent labels, and pharmacist-first care you can trust every day.'
+  assign cta_label = section.settings.button_label | default: 'Shop with confidence'
+  assign cta_link = section.settings.button_link | default: routes.all_products_collection_url
+-%}
+
+{{ 'novameds-choose-reasons.css' | asset_url | stylesheet_tag }}
+
+<section class="nm-reasons nm-animate" id="choose-reasons" aria-label="{{ heading | escape }}">
+  <div class="nm-container">
+    <div class="nm-reasons__grid">
+      <div class="nm-reasons__visual">
+        {%- if section.settings.image != blank -%}
+          {{ section.settings.image
+            | image_url: width: 1200
+            | image_tag:
+              widths: '480, 640, 900, 1200',
+              sizes: '(min-width: 900px) 46vw, 92vw',
+              loading: 'lazy',
+              decoding: 'async',
+              class: 'nm-reasons__img',
+              alt: heading
+          }}
+        {%- else -%}
+          <div class="nm-reasons__visual-ph" role="img" aria-label="NovaMeds wellness quality"></div>
+        {%- endif -%}
+        <div class="nm-reasons__visual-overlay" aria-hidden="true"></div>
+        <div class="nm-reasons__visual-badge">
+          <span class="nm-reasons__visual-badge-dot" aria-hidden="true"></span>
+          {{ section.settings.badge | default: 'Science-backed · Pharmacist trusted' }}
+        </div>
+        {%- if section.settings.stat_value != blank -%}
+          <div class="nm-reasons__stat">
+            <span class="nm-reasons__stat-val">{{ section.settings.stat_value }}</span>
+            <span class="nm-reasons__stat-label">{{ section.settings.stat_label | default: 'Happy customers worldwide' }}</span>
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div class="nm-reasons__content">
+        <p class="nm-reasons__eyebrow">{{ section.settings.eyebrow | default: 'Why NovaMeds' }}</p>
+        <h2 class="nm-reasons__title">{{ heading }}</h2>
+        {%- if sub != blank -%}
+          <p class="nm-reasons__sub">{{ sub }}</p>
+        {%- endif -%}
+
+        <ol class="nm-reasons__list">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'reason' -%}
+              <li class="nm-reasons__item" {{ block.shopify_attributes }}>
+                <span class="nm-reasons__num" aria-hidden="true">{{ forloop.index }}</span>
+                <div class="nm-reasons__item-body">
+                  <div class="nm-reasons__item-head">
+                    {%- if block.settings.icon != blank -%}
+                      <span class="nm-reasons__icon" aria-hidden="true">{{ block.settings.icon }}</span>
+                    {%- endif -%}
+                    <h3 class="nm-reasons__item-title">{{ block.settings.title }}</h3>
+                  </div>
+                  {%- if block.settings.text != blank -%}
+                    <p class="nm-reasons__item-text">{{ block.settings.text }}</p>
+                  {%- endif -%}
+                </div>
+                {%- if block.settings.image != blank -%}
+                  <div class="nm-reasons__item-media" aria-hidden="true">
+                    {{ block.settings.image | image_url: width: 200 | image_tag: loading: 'lazy', alt: '', class: 'nm-reasons__item-img' }}
+                  </div>
+                {%- endif -%}
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ol>
+
+        {%- if cta_label != blank -%}
+          <a class="nm-reasons__cta" href="{{ cta_link }}">{{ cta_label }}</a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Choose us reasons",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Why NovaMeds" },
+    { "type": "text", "id": "title", "label": "Title", "default": "The Best Reasons to Choose NovaMeds" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtitle", "default": "We make wellness simple — premium quality, transparent labels, and pharmacist-first care you can trust every day." },
+    { "type": "image_picker", "id": "image", "label": "Main visual image" },
+    { "type": "text", "id": "badge", "label": "Visual badge", "default": "Science-backed · Pharmacist trusted" },
+    { "type": "text", "id": "stat_value", "label": "Stat value", "default": "50,000+" },
+    { "type": "text", "id": "stat_label", "label": "Stat label", "default": "Happy customers worldwide" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop with confidence" },
+    { "type": "url", "id": "button_link", "label": "Button link" }
+  ],
+  "blocks": [
+    {
+      "type": "reason",
+      "name": "Reason",
+      "settings": [
+        { "type": "text", "id": "icon", "label": "Icon", "default": "🧪" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Lab-tested quality" },
+        { "type": "textarea", "id": "text", "label": "Text", "default": "Every formula is checked for purity, potency, and label accuracy — so you know exactly what you take." },
+        { "type": "image_picker", "id": "image", "label": "Small image (optional)" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Choose us reasons",
+      "blocks": [
+        {
+          "type": "reason",
+          "settings": {
+            "icon": "🧪",
+            "title": "Lab-tested quality you can trust",
+            "text": "Every formula is checked for purity, potency, and label accuracy — no mystery blends, no shortcuts."
+          }
+        },
+        {
+          "type": "reason",
+          "settings": {
+            "icon": "💊",
+            "title": "Pharmacist-first guidance",
+            "text": "Our team prioritizes safe, science-backed recommendations — the same standard you'd expect from a pharmacy."
+          }
+        },
+        {
+          "type": "reason",
+          "settings": {
+            "icon": "🌍",
+            "title": "Fast, secure worldwide delivery",
+            "text": "Sealed packaging, tracked shipping, and responsive support — wellness delivered to your door with care."
+          }
+        },
+        {
+          "type": "reason",
+          "settings": {
+            "icon": "✨",
+            "title": "Real results, real people",
+            "text": "Thousands of verified customers choose NovaMeds for energy, sleep, skin, and daily health goals that actually stick."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
