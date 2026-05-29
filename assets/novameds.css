@@ -593,74 +593,7 @@
   color: rgba(255, 255, 255, 0.72);
 }
 
-/* vNext why */
-.nm-vnext-why {
-  background: #fff;
-  padding: clamp(1.25rem, 2.5vw, 1.75rem) 0;
-}
-.nm-vnext-why__eyebrow {
-  margin: 0 0 0.45rem;
-  font-size: 0.72rem;
-  font-weight: 900;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: #00a8b5;
-}
-.nm-vnext-why__grid {
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-@media (min-width: 900px) {
-  .nm-vnext-why__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.25rem; }
-}
-.nm-vnext-why__card {
-  border-radius: 18px;
-  background: #fff;
-  border: 1px solid rgba(10, 22, 40, 0.08);
-  box-shadow: 0 14px 45px rgba(10, 22, 40, 0.08);
-  padding: 1.25rem 1rem;
-  text-align: center;
-}
-.nm-vnext-why__media {
-  width: 72px;
-  height: 72px;
-  border-radius: 18px;
-  margin: 0 auto 0.75rem;
-  overflow: hidden;
-  border: 2px solid rgba(0, 201, 212, 0.25);
-  box-shadow: 0 10px 28px rgba(0, 201, 212, 0.15);
-}
-.nm-vnext-why__photo {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-.nm-vnext-why__icon {
-  width: 56px;
-  height: 56px;
-  border-radius: 18px;
-  margin: 0 auto 0.75rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0, 201, 212, 0.08);
-  font-size: 1.5rem;
-}
-.nm-vnext-why__title {
-  margin: 0 0 0.35rem;
-  font-weight: 900;
-  letter-spacing: -0.02em;
-  font-size: 0.95rem;
-  color: #0f172a;
-}
-.nm-vnext-why__text {
-  margin: 0;
-  color: #64748b;
-  line-height: 1.6;
-  font-size: 0.875rem;
-}
+/* vNext why — moved to novameds-why-choose.css (full-screen section) */
 
 /* vNext testimonials */
 .nm-vnext-testimonials {
@@ -796,6 +729,20 @@
   .nm-vnext-footer__grid { grid-template-columns: 1.6fr 1fr 1fr 1fr; }
 }
 .nm-vnext-footer__logo img { height: 56px; width: auto; display: block; }
+
+.nm-vnext-footer__logo-text {
+  display: inline-block;
+  font-size: clamp(1.75rem, 5vw, 2.25rem);
+  font-weight: 1000;
+  letter-spacing: -0.03em;
+  color: #fff;
+  text-decoration: none;
+  line-height: 1;
+}
+
+.nm-vnext-footer__logo-accent {
+  color: #2ee8f0;
+}
 .nm-vnext-footer__tagline { margin: 0.85rem 0 0; line-height: 1.7; max-width: 42ch; }
 .nm-vnext-footer__social { display: flex; gap: 0.5rem; margin-top: 1rem; }
 .nm-vnext-footer__social a {
@@ -826,6 +773,102 @@
   font-size: 0.85rem;
 }
 .nm-vnext-footer__payments { opacity: 0.65; font-size: 0.75rem; }
+
+@media (max-width: 767px) {
+  .nm-vnext-footer {
+    padding: 2rem 0 calc(1.25rem + env(safe-area-inset-bottom));
+    background: #0a1628;
+  }
+
+  .nm-vnext-footer .nm-container {
+    width: min(100% - 32px, var(--nm-max, 1200px));
+    padding-inline: 16px;
+  }
+
+  .nm-vnext-footer__grid {
+    gap: 1.75rem;
+  }
+
+  .nm-vnext-footer__brand {
+    text-align: center;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .nm-vnext-footer__logo {
+    display: inline-flex;
+    justify-content: center;
+  }
+
+  .nm-vnext-footer__logo-text {
+    font-size: 1.75rem;
+  }
+
+  .nm-vnext-footer__logo img {
+    height: 44px;
+    margin: 0 auto;
+  }
+
+  .nm-vnext-footer__tagline {
+    margin: 0.75rem auto 0;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    max-width: 28ch;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.65);
+  }
+
+  .nm-vnext-footer__social {
+    justify-content: center;
+    margin-top: 0.85rem;
+  }
+
+  .nm-vnext-footer__social a {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+  }
+
+  .nm-vnext-footer__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem 1rem;
+  }
+
+  .nm-vnext-footer__brand {
+    grid-column: 1 / -1;
+  }
+
+  .nm-vnext-footer__col h3 {
+    font-size: 0.75rem;
+    margin-bottom: 0.65rem;
+  }
+
+  .nm-vnext-footer__col ul {
+    gap: 0.45rem;
+  }
+
+  .nm-vnext-footer__col a {
+    font-size: 0.875rem;
+    min-height: 36px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .nm-vnext-footer__bottom {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.5rem;
+    font-size: 0.8125rem;
+  }
+
+  .nm-vnext-footer__payments {
+    font-size: 0.6875rem;
+  }
+}
 
 /* ─────────────────────────────────────────────────────────
    PDP (InfinityHoop-style) — sticky gallery + long scroll column

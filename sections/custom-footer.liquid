@@ -2,12 +2,8 @@
   <div class="nm-container">
     <div class="nm-vnext-footer__grid">
       <div class="nm-vnext-footer__brand">
-        <a href="{{ routes.root_url }}" class="nm-vnext-footer__logo" aria-label="{{ settings.brand_name | default: 'NovaMeds' }} home">
-          {%- if settings.logo != blank -%}
-            {{ settings.logo | image_url: width: 240 | image_tag: loading: 'lazy', alt: settings.brand_name | default: 'NovaMeds' }}
-          {%- else -%}
-            <img src="{{ 'novameds-logo.png' | asset_url }}" alt="{{ settings.brand_name | default: 'NovaMeds' }}" loading="lazy" width="240" height="80">
-          {%- endif -%}
+        <a href="{{ routes.root_url }}" class="nm-vnext-footer__logo nm-vnext-footer__logo-text" aria-label="{{ settings.brand_name | default: 'NovaMeds' }} home">
+          Nova<span class="nm-vnext-footer__logo-accent">Meds</span>
         </a>
         <p class="nm-vnext-footer__tagline">{{ section.settings.tagline }}</p>
         <div class="nm-vnext-footer__social">
