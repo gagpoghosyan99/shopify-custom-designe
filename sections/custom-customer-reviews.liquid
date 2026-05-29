@@ -1,11 +1,21 @@
 {%- liquid
   assign heading = section.settings.title | default: 'What Our Customers Say'
   assign sub = section.settings.subtitle | default: 'Real results from real people — verified buyers sharing their wellness journey.'
+  assign speed = section.settings.scroll_speed | default: 45
+  assign pause_hover = section.settings.pause_on_hover
 -%}
 
 {{ 'novameds-customer-reviews.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'novameds-customer-reviews.js' | asset_url }}" defer></script>
 
-<section class="nm-creviews nm-animate" id="customer-reviews" aria-label="{{ heading | escape }}">
+<section
+  class="nm-creviews nm-animate{% if pause_hover %} nm-creviews--pause-hover{% endif %}"
+  id="customer-reviews"
+  data-nm-creviews
+  data-speed="{{ speed }}"
+  aria-label="{{ heading | escape }}"
+  style="--nm-creviews-speed: {{ speed }}s;"
+>
   <div class="nm-container">
     <header class="nm-creviews__head">
       <p class="nm-creviews__eyebrow">{{ section.settings.eyebrow | default: 'Verified customer stories' }}</p>
@@ -14,119 +24,24 @@
         <p class="nm-creviews__sub">{{ sub }}</p>
       {%- endif -%}
     </header>
+  </div>
 
-    <div class="nm-creviews__row" role="list">
-      {%- for block in section.blocks -%}
-        {%- if block.type == 'story' -%}
-          {%- liquid
-            assign stars = block.settings.rating | default: 5
-            if stars > 5
-              assign stars = 5
-            endif
-            if stars < 1
-              assign stars = 1
-            endif
-            assign pct = stars | times: 20
-          -%}
-          <article class="nm-creviews__card" role="listitem" {{ block.shopify_attributes }}>
-            <div class="nm-creviews__ba" aria-label="Before and after results">
-              <div class="nm-creviews__ba-item nm-creviews__ba-item--before">
-                {%- if block.settings.before_image != blank -%}
-                  {{ block.settings.before_image
-                    | image_url: width: 640
-                    | image_tag:
-                      widths: '320, 420, 560, 640',
-                      sizes: '(min-width: 900px) 280px, 45vw',
-                      loading: 'lazy',
-                      decoding: 'async',
-                      class: 'nm-creviews__ba-img',
-                      alt: block.settings.before_label | default: 'Before'
-                  }}
-                {%- else -%}
-                  <div class="nm-creviews__ba-ph nm-creviews__ba-ph--before" role="img" aria-label="{{ block.settings.before_label | default: 'Before' }}"></div>
-                {%- endif -%}
-                <span class="nm-creviews__ba-tag">{{ block.settings.before_label | default: 'Before' }}</span>
-              </div>
-              <div class="nm-creviews__ba-divider" aria-hidden="true">
-                <span>→</span>
-              </div>
-              <div class="nm-creviews__ba-item nm-creviews__ba-item--after">
-                {%- if block.settings.after_image != blank -%}
-                  {{ block.settings.after_image
-                    | image_url: width: 640
-                    | image_tag:
-                      widths: '320, 420, 560, 640',
-                      sizes: '(min-width: 900px) 280px, 45vw',
-                      loading: 'lazy',
-                      decoding: 'async',
-                      class: 'nm-creviews__ba-img',
-                      alt: block.settings.after_label | default: 'After'
-                  }}
-                {%- else -%}
-                  <div class="nm-creviews__ba-ph nm-creviews__ba-ph--after" role="img" aria-label="{{ block.settings.after_label | default: 'After' }}"></div>
-                {%- endif -%}
-                <span class="nm-creviews__ba-tag nm-creviews__ba-tag--after">{{ block.settings.after_label | default: 'After' }}</span>
-              </div>
-            </div>
-
-            <div class="nm-creviews__body">
-              <div class="nm-creviews__person">
-                <div class="nm-creviews__avatar">
-                  {%- if block.settings.avatar != blank -%}
-                    {{ block.settings.avatar
-                      | image_url: width: 120
-                      | image_tag:
-                        loading: 'lazy',
-                        decoding: 'async',
-                        class: 'nm-creviews__avatar-img',
-                        alt: block.settings.author
-                    }}
-                  {%- else -%}
-                    {%- assign av_i = forloop.index | modulo: 3 | plus: 1 -%}
-                    <img
-                      class="nm-creviews__avatar-img"
-                      src="{{ 'placeholder-avatar-' | append: av_i | append: '.svg' | asset_url }}"
-                      alt=""
-                      width="56"
-                      height="56"
-                      loading="lazy"
-                    >
-                  {%- endif -%}
-                </div>
-                <div class="nm-creviews__person-meta">
-                  <div class="nm-creviews__name-row">
-                    <span class="nm-creviews__name">{{ block.settings.author | default: 'Verified Buyer' }}</span>
-                    {%- if block.settings.verified -%}
-                      <span class="nm-creviews__verified" title="Verified purchase">
-                        {%- render 'icon-check-circle' -%}
-                        <span>Verified</span>
-                      </span>
-                    {%- endif -%}
-                  </div>
-                  <div class="nm-creviews__rating" aria-label="Rated {{ stars }} out of 5">
-                    <span class="nm-creviews__stars" aria-hidden="true">
-                      <span class="nm-creviews__stars-fill" style="width: {{ pct }}%"></span>
-                    </span>
-                    <span class="nm-creviews__score">{{ stars }}.0</span>
-                  </div>
-                </div>
-              </div>
-
-              {%- if block.settings.goal != blank -%}
-                <p class="nm-creviews__goal">{{ block.settings.goal }}</p>
-              {%- endif -%}
-
-              {%- if block.settings.quote != blank -%}
-                <blockquote class="nm-creviews__quote">“{{ block.settings.quote }}”</blockquote>
-              {%- endif -%}
-
-              {%- if block.settings.role != blank -%}
-                <p class="nm-creviews__role">{{ block.settings.role }}</p>
-              {%- endif -%}
-            </div>
-          </article>
-        {%- endif -%}
-      {%- endfor -%}
+  <div class="nm-creviews__marquee" data-nm-creviews-marquee>
+    <div class="nm-creviews__track" data-nm-creviews-track role="list">
+      <div class="nm-creviews__group">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'story' -%}
+            {%- render 'customer-review-card', block: block, card_index: forloop.index, editor_attrs: true -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+      <div class="nm-creviews__group" aria-hidden="true">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'story' -%}
+            {%- render 'customer-review-card', block: block, card_index: forloop.index, editor_attrs: false -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
     </div>
   </div>
 </section>
@@ -138,7 +53,9 @@
   "settings": [
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Verified customer stories" },
     { "type": "text", "id": "title", "label": "Title", "default": "What Our Customers Say" },
-    { "type": "textarea", "id": "subtitle", "label": "Subtitle", "default": "Real results from real people — verified buyers sharing their wellness journey." }
+    { "type": "textarea", "id": "subtitle", "label": "Subtitle", "default": "Real results from real people — verified buyers sharing their wellness journey." },
+    { "type": "range", "id": "scroll_speed", "label": "Scroll speed (seconds per loop)", "min": 20, "max": 80, "step": 5, "default": 45 },
+    { "type": "checkbox", "id": "pause_on_hover", "label": "Pause on hover", "default": true }
   ],
   "blocks": [
     {
@@ -163,36 +80,10 @@
     {
       "name": "Customer reviews",
       "blocks": [
-        {
-          "type": "story",
-          "settings": {
-            "author": "Sarah M.",
-            "goal": "Energy & daily wellness · 6 weeks",
-            "quote": "I noticed more energy within two weeks. The quality feels premium and my routine finally sticks.",
-            "role": "Verified buyer · Austin, TX",
-            "rating": 5
-          }
-        },
-        {
-          "type": "story",
-          "settings": {
-            "author": "James L.",
-            "goal": "Sleep & recovery · 8 weeks",
-            "quote": "My sleep improved and I wake up less sore after training. Exactly what my pharmacist suggested.",
-            "role": "Verified buyer · Denver, CO",
-            "rating": 5
-          }
-        },
-        {
-          "type": "story",
-          "settings": {
-            "author": "Priya K.",
-            "goal": "Skin & vitality · 10 weeks",
-            "quote": "Visible glow and stronger nails after consistent use. Fast shipping and sealed packaging every time.",
-            "role": "Verified buyer · Seattle, WA",
-            "rating": 5
-          }
-        }
+        { "type": "story", "settings": { "author": "Sarah M.", "goal": "Energy & daily wellness · 6 weeks", "quote": "I noticed more energy within two weeks. The quality feels premium and my routine finally sticks.", "role": "Verified buyer · Austin, TX", "rating": 5 } },
+        { "type": "story", "settings": { "author": "James L.", "goal": "Sleep & recovery · 8 weeks", "quote": "My sleep improved and I wake up less sore after training. Exactly what my pharmacist suggested.", "role": "Verified buyer · Denver, CO", "rating": 5 } },
+        { "type": "story", "settings": { "author": "Priya K.", "goal": "Skin & vitality · 10 weeks", "quote": "Visible glow and stronger nails after consistent use. Fast shipping and sealed packaging every time.", "role": "Verified buyer · Seattle, WA", "rating": 5 } },
+        { "type": "story", "settings": { "author": "Marcus T.", "goal": "Joint & mobility · 12 weeks", "quote": "Less stiffness in the mornings and I move more comfortably through the day. Genuine pharmacy-grade quality.", "role": "Verified buyer · Miami, FL", "rating": 5 } }
       ]
     }
   ]

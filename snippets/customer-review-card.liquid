@@ -1,0 +1,107 @@
+{%- liquid
+  assign stars = block.settings.rating | default: 5
+  if stars > 5
+    assign stars = 5
+  endif
+  if stars < 1
+    assign stars = 1
+  endif
+  assign pct = stars | times: 20
+  assign card_index = card_index | default: forloop.index
+-%}
+
+<article class="nm-creviews__card" role="listitem"{% unless editor_attrs %} aria-hidden="true"{% endunless %}{% if editor_attrs %} {{ block.shopify_attributes }}{% endif %}>
+  <div class="nm-creviews__ba" aria-label="Before and after results">
+    <div class="nm-creviews__ba-item nm-creviews__ba-item--before">
+      {%- if block.settings.before_image != blank -%}
+        {{ block.settings.before_image
+          | image_url: width: 640
+          | image_tag:
+            widths: '320, 420, 560, 640',
+            sizes: '340px',
+            loading: 'lazy',
+            decoding: 'async',
+            class: 'nm-creviews__ba-img',
+            alt: block.settings.before_label | default: 'Before'
+        }}
+      {%- else -%}
+        <div class="nm-creviews__ba-ph nm-creviews__ba-ph--before" role="img" aria-label="{{ block.settings.before_label | default: 'Before' }}"></div>
+      {%- endif -%}
+      <span class="nm-creviews__ba-tag">{{ block.settings.before_label | default: 'Before' }}</span>
+    </div>
+    <div class="nm-creviews__ba-divider" aria-hidden="true"><span>→</span></div>
+    <div class="nm-creviews__ba-item nm-creviews__ba-item--after">
+      {%- if block.settings.after_image != blank -%}
+        {{ block.settings.after_image
+          | image_url: width: 640
+          | image_tag:
+            widths: '320, 420, 560, 640',
+            sizes: '340px',
+            loading: 'lazy',
+            decoding: 'async',
+            class: 'nm-creviews__ba-img',
+            alt: block.settings.after_label | default: 'After'
+        }}
+      {%- else -%}
+        <div class="nm-creviews__ba-ph nm-creviews__ba-ph--after" role="img" aria-label="{{ block.settings.after_label | default: 'After' }}"></div>
+      {%- endif -%}
+      <span class="nm-creviews__ba-tag nm-creviews__ba-tag--after">{{ block.settings.after_label | default: 'After' }}</span>
+    </div>
+  </div>
+
+  <div class="nm-creviews__body">
+    <div class="nm-creviews__person">
+      <div class="nm-creviews__avatar">
+        {%- if block.settings.avatar != blank -%}
+          {{ block.settings.avatar
+            | image_url: width: 120
+            | image_tag:
+              loading: 'lazy',
+              decoding: 'async',
+              class: 'nm-creviews__avatar-img',
+              alt: block.settings.author
+          }}
+        {%- else -%}
+          {%- assign av_i = card_index | modulo: 3 | plus: 1 -%}
+          <img
+            class="nm-creviews__avatar-img"
+            src="{{ 'placeholder-avatar-' | append: av_i | append: '.svg' | asset_url }}"
+            alt=""
+            width="56"
+            height="56"
+            loading="lazy"
+          >
+        {%- endif -%}
+      </div>
+      <div class="nm-creviews__person-meta">
+        <div class="nm-creviews__name-row">
+          <span class="nm-creviews__name">{{ block.settings.author | default: 'Verified Buyer' }}</span>
+          {%- if block.settings.verified -%}
+            <span class="nm-creviews__verified" title="Verified purchase">
+              {%- render 'icon-check-circle' -%}
+              <span>Verified</span>
+            </span>
+          {%- endif -%}
+        </div>
+        <div class="nm-creviews__rating" aria-label="Rated {{ stars }} out of 5">
+          <span class="nm-creviews__stars" aria-hidden="true">
+            <span class="nm-creviews__stars-fill" style="width: {{ pct }}%"></span>
+          </span>
+          <span class="nm-creviews__score">{{ stars }}.0</span>
+        </div>
+      </div>
+    </div>
+
+    {%- if block.settings.goal != blank -%}
+      <p class="nm-creviews__goal">{{ block.settings.goal }}</p>
+    {%- endif -%}
+
+    {%- if block.settings.quote != blank -%}
+      <blockquote class="nm-creviews__quote">“{{ block.settings.quote }}”</blockquote>
+    {%- endif -%}
+
+    {%- if block.settings.role != blank -%}
+      <p class="nm-creviews__role">{{ block.settings.role }}</p>
+    {%- endif -%}
+  </div>
+</article>

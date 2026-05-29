@@ -1,0 +1,341 @@
+/* NovaMeds — customer reviews marquee (full-width infinite loop) */
+
+.nm-creviews {
+  background: #f8fbfc;
+  padding: clamp(3rem, 6vw, 4.5rem) 0 clamp(2.5rem, 4vw, 3.5rem);
+  position: relative;
+  overflow: hidden;
+}
+
+.nm-creviews::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 12% 20%, rgba(0, 201, 212, 0.08) 0%, transparent 42%),
+    radial-gradient(circle at 88% 78%, rgba(46, 232, 240, 0.06) 0%, transparent 40%);
+  pointer-events: none;
+}
+
+.nm-creviews .nm-container {
+  position: relative;
+  z-index: 1;
+}
+
+.nm-creviews__head {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 2rem;
+}
+
+.nm-creviews__eyebrow {
+  margin: 0 0 0.55rem;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #00a8b5;
+}
+
+.nm-creviews__title {
+  margin: 0 0 0.65rem;
+  font-size: clamp(1.75rem, 3.5vw, 2.35rem);
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+  font-weight: 900;
+  color: #0a1628;
+}
+
+.nm-creviews__sub {
+  margin: 0;
+  color: #64748b;
+  line-height: 1.65;
+  font-size: 1rem;
+}
+
+/* Full-width marquee */
+.nm-creviews__marquee {
+  position: relative;
+  z-index: 1;
+  width: 100vw;
+  max-width: 100vw;
+  margin-left: calc(50% - 50vw);
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent 0%, #000 4%, #000 96%, transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 4%, #000 96%, transparent 100%);
+}
+
+.nm-creviews__track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+
+.nm-creviews__group {
+  display: flex;
+  gap: 1.25rem;
+  padding: 0.25rem 0.65rem;
+  flex-shrink: 0;
+}
+
+.nm-creviews--running .nm-creviews__track {
+  animation: nm-creviews-marquee var(--nm-creviews-speed, 45s) linear infinite;
+}
+
+.nm-creviews--pause-hover .nm-creviews__marquee:hover .nm-creviews__track {
+  animation-play-state: paused;
+}
+
+@keyframes nm-creviews-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.nm-creviews__card {
+  width: min(88vw, 360px);
+  flex: 0 0 min(88vw, 360px);
+  scroll-snap-align: start;
+  background: #fff;
+  border-radius: 20px;
+  border: 1px solid rgba(10, 22, 40, 0.08);
+  box-shadow: 0 18px 55px rgba(10, 22, 40, 0.08);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.nm-creviews__ba {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 0;
+  background: #0a1628;
+  min-height: 168px;
+}
+
+.nm-creviews__ba-item {
+  position: relative;
+  overflow: hidden;
+  min-height: 168px;
+}
+
+.nm-creviews__ba-img,
+.nm-creviews__ba-ph {
+  width: 100%;
+  height: 100%;
+  min-height: 168px;
+  object-fit: cover;
+  display: block;
+}
+
+.nm-creviews__ba-ph--before {
+  background:
+    linear-gradient(180deg, rgba(10, 22, 40, 0.15) 0%, rgba(10, 22, 40, 0.55) 100%),
+    linear-gradient(135deg, #8b9aab 0%, #6b7d8f 45%, #556677 100%);
+}
+
+.nm-creviews__ba-ph--after {
+  background:
+    linear-gradient(180deg, rgba(10, 22, 40, 0.05) 0%, rgba(10, 22, 40, 0.35) 100%),
+    linear-gradient(135deg, #00c9d4 0%, #2ee8f0 42%, #7ae7ef 100%);
+}
+
+.nm-creviews__ba-tag {
+  position: absolute;
+  left: 0.65rem;
+  bottom: 0.65rem;
+  padding: 0.28rem 0.55rem;
+  border-radius: 999px;
+  background: rgba(10, 22, 40, 0.72);
+  color: #fff;
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.nm-creviews__ba-tag--after {
+  background: rgba(0, 201, 212, 0.88);
+  color: #031225;
+}
+
+.nm-creviews__ba-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font-weight: 900;
+  font-size: 0.85rem;
+  z-index: 2;
+}
+
+.nm-creviews__body {
+  padding: 1.1rem 1.15rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  flex: 1;
+}
+
+.nm-creviews__person {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.nm-creviews__avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  border: 2px solid rgba(0, 201, 212, 0.35);
+  box-shadow: 0 8px 22px rgba(0, 201, 212, 0.18);
+  background: #eef8fa;
+}
+
+.nm-creviews__avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.nm-creviews__person-meta {
+  min-width: 0;
+  flex: 1;
+}
+
+.nm-creviews__name-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.5rem;
+  margin-bottom: 0.2rem;
+}
+
+.nm-creviews__name {
+  font-weight: 900;
+  color: #0f172a;
+  font-size: 0.95rem;
+}
+
+.nm-creviews__verified {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: #00a8b5;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.nm-creviews__verified svg {
+  width: 14px;
+  height: 14px;
+}
+
+.nm-creviews__rating {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.nm-creviews__stars {
+  position: relative;
+  width: 78px;
+  height: 14px;
+  display: inline-block;
+  background: linear-gradient(90deg, rgba(0, 23, 47, 0.14), rgba(0, 23, 47, 0.14));
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 110 20'%3E%3Cpath d='M10 0l2.9 6.3 6.9.6-5.2 4.5 1.6 6.7L10 14.9 3.8 18.1l1.6-6.7L.2 6.9l6.9-.6L10 0zm22 0l2.9 6.3 6.9.6-5.2 4.5 1.6 6.7L32 14.9l-6.2 3.2 1.6-6.7-5.2-4.5 6.9-.6L32 0zm22 0l2.9 6.3 6.9.6-5.2 4.5 1.6 6.7L54 14.9l-6.2 3.2 1.6-6.7-5.2-4.5 6.9-.6L54 0zm22 0l2.9 6.3 6.9.6-5.2 4.5 1.6 6.7L76 14.9l-6.2 3.2 1.6-6.7-5.2-4.5 6.9-.6L76 0zm22 0l2.9 6.3 6.9.6-5.2 4.5 1.6 6.7L98 14.9l-6.2 3.2 1.6-6.7-5.2-4.5 6.9-.6L98 0z'/%3E%3C/svg%3E") center/contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 110 20'%3E%3Cpath d='M10 0l2.9 6.3 6.9.6-5.2 4.5 1.6 6.7L10 14.9 3.8 18.1l1.6-6.7L.2 6.9l6.9-.6L10 0zm22 0l2.9 6.3 6.9.6-5.2 4.5 1.6 6.7L32 14.9l-6.2 3.2 1.6-6.7-5.2-4.5 6.9-.6L32 0zm22 0l2.9 6.3 6.9.6-5.2 4.5 1.6 6.7L54 14.9l-6.2 3.2 1.6-6.7-5.2-4.5 6.9-.6L54 0zm22 0l2.9 6.3 6.9.6-5.2 4.5 1.6 6.7L76 14.9l-6.2 3.2 1.6-6.7-5.2-4.5 6.9-.6L76 0zm22 0l2.9 6.3 6.9.6-5.2 4.5 1.6 6.7L98 14.9l-6.2 3.2 1.6-6.7-5.2-4.5 6.9-.6L98 0z'/%3E%3C/svg%3E") center/contain no-repeat;
+}
+
+.nm-creviews__stars-fill {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #f59e0b, #fbbf24);
+  width: 0%;
+}
+
+.nm-creviews__score {
+  font-size: 0.8125rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.nm-creviews__goal {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #00a8b5;
+}
+
+.nm-creviews__quote {
+  margin: 0;
+  padding: 0;
+  border: none;
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: #0f172a;
+  font-style: normal;
+}
+
+.nm-creviews__role {
+  margin: auto 0 0;
+  padding-top: 0.35rem;
+  font-size: 0.8125rem;
+  color: #64748b;
+}
+
+.nm-creviews--static .nm-creviews__marquee {
+  overflow-x: auto;
+  mask-image: none;
+  -webkit-mask-image: none;
+  scrollbar-width: none;
+}
+
+.nm-creviews--static .nm-creviews__marquee::-webkit-scrollbar {
+  display: none;
+}
+
+.nm-creviews--static .nm-creviews__track {
+  animation: none;
+}
+
+@media (max-width: 767px) {
+  .nm-creviews {
+    padding: 2.25rem 0 2rem;
+  }
+
+  .nm-creviews__head {
+    text-align: left;
+    margin-bottom: 1.35rem;
+    padding-inline: max(1rem, env(safe-area-inset-left));
+  }
+
+  .nm-creviews__card {
+    width: min(85vw, 320px);
+    flex-basis: min(85vw, 320px);
+  }
+
+  .nm-creviews__ba,
+  .nm-creviews__ba-img,
+  .nm-creviews__ba-ph {
+    min-height: 148px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nm-creviews--running .nm-creviews__track {
+    animation: none !important;
+  }
+}

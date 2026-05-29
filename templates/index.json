@@ -71,12 +71,24 @@
             "quote": "Visible glow and stronger nails after consistent use. Fast shipping and sealed packaging every time.",
             "role": "Verified buyer · Seattle, WA"
           }
+        },
+        "s4": {
+          "type": "story",
+          "settings": {
+            "author": "Marcus T.",
+            "verified": true,
+            "rating": 5,
+            "goal": "Joint & mobility · 12 weeks",
+            "quote": "Less stiffness in the mornings and I move more comfortably through the day. Genuine pharmacy-grade quality.",
+            "role": "Verified buyer · Miami, FL"
+          }
         }
       },
       "block_order": [
         "s1",
         "s2",
-        "s3"
+        "s3",
+        "s4"
       ],
       "settings": {
         "title": "What Our Customers Say",
