@@ -36,6 +36,53 @@
         "code": "WELLNESS15"
       }
     },
+    "customer_reviews": {
+      "type": "custom-customer-reviews",
+      "blocks": {
+        "s1": {
+          "type": "story",
+          "settings": {
+            "author": "Sarah M.",
+            "verified": true,
+            "rating": 5,
+            "goal": "Energy & daily wellness · 6 weeks",
+            "quote": "I noticed more energy within two weeks. The quality feels premium and my routine finally sticks.",
+            "role": "Verified buyer · Austin, TX"
+          }
+        },
+        "s2": {
+          "type": "story",
+          "settings": {
+            "author": "James L.",
+            "verified": true,
+            "rating": 5,
+            "goal": "Sleep & recovery · 8 weeks",
+            "quote": "My sleep improved and I wake up less sore after training. Exactly what my pharmacist suggested.",
+            "role": "Verified buyer · Denver, CO"
+          }
+        },
+        "s3": {
+          "type": "story",
+          "settings": {
+            "author": "Priya K.",
+            "verified": true,
+            "rating": 5,
+            "goal": "Skin & vitality · 10 weeks",
+            "quote": "Visible glow and stronger nails after consistent use. Fast shipping and sealed packaging every time.",
+            "role": "Verified buyer · Seattle, WA"
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3"
+      ],
+      "settings": {
+        "title": "What Our Customers Say",
+        "subtitle": "Real results from real people — verified buyers sharing their wellness journey."
+      }
+    },
     "pro": {
       "type": "custom-professionals-trust",
       "blocks": {
@@ -115,10 +162,6 @@
       "type": "custom-why-choose-us",
       "settings": {}
     },
-    "reviews": {
-      "type": "custom-testimonials",
-      "settings": {}
-    },
     "newsletter": {
       "type": "custom-newsletter",
       "settings": {}
@@ -132,9 +175,9 @@
     "hero",
     "bestsellers",
     "discount",
+    "customer_reviews",
     "pro",
     "why",
-    "reviews",
     "newsletter",
     "faq"
   ]
