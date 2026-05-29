@@ -424,12 +424,17 @@
   .nm-product-page,
   .nm-product-shell,
   .nm-product-layout,
-  .nm-product-info-track,
-  .nm-product-info-scroll {
+  .nm-product-info-track {
     overflow: visible !important;
     max-height: none !important;
     position: static !important;
     height: auto !important;
+    touch-action: pan-y;
+  }
+
+  .nm-product-info-scroll {
+    overflow: visible !important;
+    max-height: none !important;
     touch-action: pan-y;
   }
 

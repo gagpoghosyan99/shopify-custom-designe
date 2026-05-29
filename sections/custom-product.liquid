@@ -22,6 +22,7 @@
 {{ 'novameds-carousel.css' | asset_url | stylesheet_tag }}
 {{ 'novameds-pdp.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'novameds-carousel.js' | asset_url }}" defer></script>
+<script src="{{ 'novameds-pdp.js' | asset_url }}" defer></script>
 
 
 <section class="nm-product-page nm-pdp" data-nm-product-page aria-label="Product">
@@ -29,52 +30,76 @@
     <div class="nm-product-layout" data-nm-product-layout>
       <aside class="nm-product-media" aria-label="Product media">
         <div class="nm-product-media__inner">
-        <div class="nm-pdp__gallery">
-          {%- if product.images.size > 0 -%}
-            <div class="nm-pdp__carousel" data-nm-pdp-carousel aria-label="Swipe product images">
-              {%- for image in product.images -%}
-                <div class="nm-pdp__slide" data-nm-pdp-slide="{{ forloop.index0 }}">
-                  {{ image | image_url: width: 1400 | image_tag: loading: 'lazy', alt: image.alt, class: 'nm-pdp__img' }}
-                </div>
-              {%- endfor -%}
-            </div>
-
-            {%- if product.images.size > 1 -%}
-              <div class="nm-pdp__dots" data-nm-pdp-dots aria-hidden="true">
-                {%- for image in product.images -%}
+          <div class="nm-pdp__gallery" data-nm-pdp-gallery>
+            {%- if product.images.size > 0 -%}
+              <div class="nm-pdp__viewport" tabindex="0" aria-roledescription="carousel">
+                {%- if product.images.size > 1 -%}
                   <button
                     type="button"
-                    class="nm-pdp__dot{% if forloop.first %} is-active{% endif %}"
-                    data-nm-pdp-dot
-                    data-index="{{ forloop.index0 }}"
-                    aria-label="Go to image {{ forloop.index }}"
-                  ></button>
-                {%- endfor -%}
-              </div>
-            {%- endif -%}
+                    class="nm-pdp__arrow nm-pdp__arrow--prev"
+                    data-nm-pdp-prev
+                    aria-label="Previous image"
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+                      <path d="M15 6l-6 6 6 6" />
+                    </svg>
+                  </button>
+                  <button
+                    type="button"
+                    class="nm-pdp__arrow nm-pdp__arrow--next"
+                    data-nm-pdp-next
+                    aria-label="Next image"
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+                      <path d="M9 6l6 6-6 6" />
+                    </svg>
+                  </button>
+                {%- endif -%}
 
-            <div class="nm-pdp__main" aria-label="Selected product image">
-              {%- assign first_img = product.images.first -%}
-              {{ first_img | image_url: width: 1400 | image_tag: loading: 'eager', alt: first_img.alt, class: 'nm-pdp__img', id: 'nm-pdp-main-img' }}
+                <div class="nm-pdp__carousel" data-nm-pdp-carousel aria-label="Product images">
+                  {%- for image in product.images -%}
+                    <div class="nm-pdp__slide" data-nm-pdp-slide="{{ forloop.index0 }}">
+                      {%- if forloop.first -%}
+                        {{ image | image_url: width: 1200 | image_tag: loading: 'eager', alt: image.alt, class: 'nm-pdp__img' }}
+                      {%- else -%}
+                        {{ image | image_url: width: 1200 | image_tag: loading: 'lazy', alt: image.alt, class: 'nm-pdp__img' }}
+                      {%- endif -%}
+                    </div>
+                  {%- endfor -%}
+                </div>
+              </div>
+
+              {%- if product.images.size > 1 -%}
+                <div class="nm-pdp__dots" data-nm-pdp-dots aria-hidden="true">
+                  {%- for image in product.images -%}
+                    <button
+                      type="button"
+                      class="nm-pdp__dot{% if forloop.first %} is-active{% endif %}"
+                      data-nm-pdp-dot
+                      data-index="{{ forloop.index0 }}"
+                      aria-label="Go to image {{ forloop.index }}"
+                    ></button>
+                  {%- endfor -%}
+                </div>
+              {%- endif -%}
+            {%- endif -%}
+          </div>
+
+          {%- if product.images.size > 1 -%}
+            <div class="nm-pdp__thumbs" aria-label="More product images">
+              {%- for image in product.images -%}
+                <button
+                  type="button"
+                  class="nm-pdp__thumb{% if forloop.first %} is-active{% endif %}"
+                  data-nm-pdp-thumb
+                  data-index="{{ forloop.index0 }}"
+                  aria-label="View image {{ forloop.index }}"
+                >
+                  {{ image | image_url: width: 140 | image_tag: loading: 'lazy', alt: image.alt }}
+                </button>
+              {%- endfor -%}
             </div>
           {%- endif -%}
-        </div>
-        {%- if product.images.size > 1 -%}
-          <div class="nm-pdp__thumbs" aria-label="More product images">
-            {%- for image in product.images -%}
-              <button
-                type="button"
-                class="nm-pdp__thumb{% if forloop.first %} is-active{% endif %}"
-                data-nm-pdp-thumb
-                data-src="{{ image | image_url: width: 1400 }}"
-                data-index="{{ forloop.index0 }}"
-                aria-label="View image {{ forloop.index }}"
-              >
-                {{ image | image_url: width: 140 | image_tag: loading: 'lazy', alt: image.alt }}
-              </button>
-            {%- endfor -%}
-          </div>
-        {%- endif -%}
         </div>
       </aside>
 
@@ -387,78 +412,6 @@
 
 <script>
   (function () {
-    var thumbs = document.querySelectorAll('[data-nm-pdp-thumb]');
-    var main = document.getElementById('nm-pdp-main-img');
-    var carousel = document.querySelector('[data-nm-pdp-carousel]');
-    var slides = document.querySelectorAll('[data-nm-pdp-slide]');
-
-    var dots = document.querySelectorAll('[data-nm-pdp-dot]');
-
-    function setActiveIndex(idx) {
-      thumbs.forEach(function (t) { t.classList.remove('is-active'); });
-      thumbs.forEach(function (t) {
-        if (String(t.getAttribute('data-index')) === String(idx)) t.classList.add('is-active');
-      });
-      dots.forEach(function (d) { d.classList.remove('is-active'); });
-      dots.forEach(function (d) {
-        if (String(d.getAttribute('data-index')) === String(idx)) d.classList.add('is-active');
-      });
-    }
-
-    function scrollCarouselTo(idx) {
-      if (!carousel) return;
-      var slide = null;
-      slides.forEach(function (s) {
-        if (String(s.getAttribute('data-nm-pdp-slide')) === String(idx)) slide = s;
-      });
-      if (slide) {
-        carousel.scrollTo({ left: slide.offsetLeft, behavior: 'smooth' });
-      }
-    }
-
-    thumbs.forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var idx = btn.getAttribute('data-index') || '0';
-        if (main) main.src = btn.getAttribute('data-src');
-        setActiveIndex(idx);
-        scrollCarouselTo(idx);
-      });
-    });
-
-    dots.forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var idx = btn.getAttribute('data-index') || '0';
-        setActiveIndex(idx);
-        scrollCarouselTo(idx);
-      });
-    });
-
-    if (carousel) {
-      var ticking = false;
-      carousel.addEventListener(
-        'scroll',
-        function () {
-          if (ticking) return;
-          ticking = true;
-          window.requestAnimationFrame(function () {
-            ticking = false;
-            var best = 0;
-            var bestDist = Infinity;
-            slides.forEach(function (s) {
-              var left = s.offsetLeft - carousel.scrollLeft;
-              var dist = Math.abs(left);
-              if (dist < bestDist) {
-                bestDist = dist;
-                best = parseInt(s.getAttribute('data-nm-pdp-slide') || '0', 10) || 0;
-              }
-            });
-            setActiveIndex(best);
-          });
-        },
-        { passive: true }
-      );
-    }
-
     var scrollBtn = document.querySelector('[data-nm-scroll-to-atc]');
     var form = document.getElementById('nm-product-form');
     if (scrollBtn && form) {
