@@ -79,32 +79,37 @@
   padding: 4px 2px 18px;
 }
 
-@media (max-width: 520px) {
+@media (max-width: 767px) {
   .template-index .nm-vitamins__inner {
     padding-inline: 16px;
   }
 
   .template-index .nm-vitamins__carousel .nm-goals__track {
-    gap: 16px;
+    gap: 14px;
+    scroll-padding-inline: 16px;
     padding: 4px 2px 12px;
   }
 }
 
 @media (max-width: 767px) {
   .nm-vitamins {
-    padding: 1rem 0 1.15rem;
+    padding: 1.25rem 0;
   }
 
   .nm-vitamins__inner {
-    width: min(100% - 1.25rem, var(--nm-max, 1200px));
+    width: min(100% - 32px, var(--nm-max, 1200px));
+    padding-inline: 16px;
   }
 
   .nm-vitamins__head {
     align-items: flex-start;
+    text-align: left;
+    margin-bottom: 0.75rem;
   }
 
   .nm-vitamins__view-all {
     width: 100%;
     justify-content: center;
+    min-height: 44px;
   }
 }

@@ -1,8 +1,15 @@
 /**
- * Mobile scroll performance — native smooth scrolling, no scroll traps.
+ * NovaMeds — mobile-first polish (≤767px)
+ * Touch targets, safe areas, scroll UX, section rhythm.
  */
 
 @media (max-width: 767px) {
+  :root {
+    --nm-mobile-gutter: 16px;
+    --nm-mobile-bar-h: 56px;
+    --nm-mobile-section-y: 1.25rem;
+  }
+
   html {
     scroll-behavior: auto !important;
   }
@@ -14,6 +21,7 @@
     overscroll-behavior-y: auto;
     height: auto;
     position: relative;
+    padding-bottom: calc(var(--nm-mobile-bar-h) + env(safe-area-inset-bottom));
   }
 
   body.nm-body:not(.nm-modal-open) {
@@ -23,11 +31,6 @@
   body.template-collection:not(.nm-modal-open) {
     touch-action: auto;
     overflow-x: hidden;
-  }
-
-  .nm-collection-row__track,
-  .nm-collection-row__carousel {
-    touch-action: pan-x pan-y !important;
   }
 
   #MainContent,
@@ -43,42 +46,373 @@
     transform: none !important;
   }
 
-  /* Disable scroll-jank animations */
-  .nm-animate,
-  .nm-animate.is-visible {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
-    animation: none !important;
+  .nm-container {
+    width: min(100% - (var(--nm-mobile-gutter) * 2), var(--nm-max, 1200px));
   }
 
+  /* ── Header: full-bleed, safe area ── */
+  .nm-hdr__header {
+    margin: 0;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+  }
+
+  .nm-hdr__inner {
+    padding: 0 var(--nm-mobile-gutter);
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .nm-hdr__logo-text {
+    font-size: clamp(1.35rem, 5.5vw, 1.75rem);
+  }
+
+  .nm-hdr-drawer__link {
+    min-height: 52px;
+    padding: 14px 0;
+    font-size: 1rem;
+  }
+
+  .nm-hdr-drawer__footer a {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    font-size: 0.6875rem;
+  }
+
+  .nm-hdr-drawer__cta {
+    min-height: 52px;
+  }
+
+  /* ── Bottom tab bar ── */
+  .nm-mobile-bar {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+    padding-bottom: env(safe-area-inset-bottom);
+    background: #fff;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.08), 0 -8px 24px rgba(0, 0, 0, 0.06);
+  }
+
+  .nm-mobile-bar__item {
+    min-height: var(--nm-mobile-bar-h);
+    padding: 0.35rem 0.25rem 0.25rem;
+    font-size: 0.6875rem;
+    gap: 0.25rem;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .nm-mobile-bar__item svg,
+  .nm-mobile-bar__item .nm-mobile-bar__icon {
+    width: 22px;
+    height: 22px;
+  }
+
+  .nm-mobile-bar__badge {
+    top: 4px;
+    min-width: 18px;
+    height: 18px;
+    line-height: 18px;
+    font-size: 0.625rem;
+  }
+
+  /* ── Hero: full banner, no crop, natural height ── */
   .nm-vnext-hero,
-  .nm-vnext-hero--photo {
+  .nm-vnext-hero--photo,
+  .nm-vnext-hero--banner-only {
     overflow: visible !important;
     transform: none !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+  }
+
+  .nm-vnext-hero--banner-only.nm-vnext-hero--banner-full .nm-vnext-hero__photo {
+    width: 100%;
+    height: auto;
+    max-height: none;
+    aspect-ratio: unset;
+  }
+
+  .nm-vnext-hero--banner-only.nm-vnext-hero--banner-full .nm-vnext-hero__photo-img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    object-position: center top;
+  }
+
+  .nm-vnext-hero--photo:not(.nm-vnext-hero--banner-only) {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .nm-vnext-hero--photo:not(.nm-vnext-hero--banner-only) .nm-vnext-hero__photo {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    aspect-ratio: var(--nm-hero-banner-ratio-mobile, 16 / 10);
+    max-height: min(68vw, var(--nm-hero-banner-max-h, 520px));
+    height: auto;
+    flex-shrink: 0;
   }
 
   .nm-hero-premium {
     min-height: 0 !important;
   }
 
-  /* Lighter chrome (backdrop-filter hurts scroll on iOS) */
-  .nm-mobile-bar,
-  .nm-pdp-sticky,
-  .nm-hdr-drawer__backdrop {
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
+  /* ── Product carousels: swipe UX ── */
+  .nm-goals__inner,
+  .nm-vitamins__inner {
+    padding-inline: var(--nm-mobile-gutter);
   }
 
-  .nm-mobile-bar {
-    background: #fff;
+  .nm-goals__track,
+  .nm-goals__track--swipe,
+  .nm-vitamins__carousel .nm-goals__track {
+    scroll-padding-inline: var(--nm-mobile-gutter);
+    padding-inline: 2px;
+    gap: 14px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
   }
 
-  .nm-trust-float-v2__card::before {
+  .nm-goals__title {
+    font-size: clamp(1.05rem, 4.8vw, 1.35rem) !important;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    hyphens: auto;
+    padding-inline: 0.15rem;
+  }
+
+  .nm-goals {
+    padding: var(--nm-mobile-section-y) 0;
+  }
+
+  .nm-goals__head {
+    margin-bottom: 0.75rem;
+    text-align: left;
+  }
+
+  .nm-vitamins {
+    padding: var(--nm-mobile-section-y) 0;
+  }
+
+  .nm-vitamins__head {
+    text-align: left;
+    margin-bottom: 0.75rem;
+  }
+
+  .nm-vitamins__inner {
+    padding-inline: var(--nm-mobile-gutter);
+  }
+
+  .nm-vitamins__view-all {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+    min-height: 44px;
+  }
+
+  /* Offer cards — shorter on mobile */
+  .nm-offer {
+    --nm-offer-min-h: auto;
+    width: min(78vw, 272px);
+    flex: 0 0 min(78vw, 272px);
+  }
+
+  .nm-offer__media {
+    height: clamp(180px, 48vw, 220px);
+  }
+
+  /* ── Customer reviews: manual scroll (no auto-marquee) ── */
+  .nm-creviews {
+    padding: var(--nm-mobile-section-y) 0;
+  }
+
+  .nm-creviews__head {
+    text-align: left;
+    padding-inline: var(--nm-mobile-gutter);
+    margin-bottom: 0.75rem;
+  }
+
+  .nm-creviews__title {
+    font-size: clamp(1.5rem, 6vw, 1.85rem);
+  }
+
+  .nm-creviews--mobile-scroll .nm-creviews__track {
     animation: none !important;
   }
 
-  /* Product page: one scroll container only (the page) */
+  .nm-creviews--mobile-scroll .nm-creviews__marquee {
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--nm-mobile-gutter);
+    mask-image: linear-gradient(90deg, transparent 0%, #000 3%, #000 97%, transparent 100%);
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 3%, #000 97%, transparent 100%);
+  }
+
+  .nm-creviews--mobile-scroll .nm-creviews__track {
+    width: max-content;
+  }
+
+  .nm-creviews--mobile-scroll .nm-creviews__group[aria-hidden="true"] {
+    display: none;
+  }
+
+  .nm-creviews--mobile-scroll .nm-creviews__card {
+    scroll-snap-align: start;
+    width: min(84vw, 300px);
+    flex: 0 0 min(84vw, 300px);
+  }
+
+  .nm-creviews__ba,
+  .nm-creviews__ba-img,
+  .nm-creviews__ba-ph {
+    min-height: 132px;
+  }
+
+  /* ── Why choose us ── */
+  .nm-why-fs {
+    min-height: auto !important;
+    padding: var(--nm-mobile-section-y) 0;
+  }
+
+  .nm-why-fs__wrap {
+    width: min(100% - (var(--nm-mobile-gutter) * 2), 1400px);
+  }
+
+  .nm-why-fs__head {
+    text-align: left;
+  }
+
+  /* ── Trust + newsletter ── */
+  .nm-trust-nl {
+    min-height: auto !important;
+    padding: clamp(1.5rem, 6vw, 2.25rem) 0;
+  }
+
+  .nm-trust-nl__wrap {
+    width: min(100% - (var(--nm-mobile-gutter) * 2), 1320px);
+  }
+
+  .nm-trust-nl__head {
+    text-align: left;
+  }
+
+  .nm-trust-nl__form input {
+    min-height: 48px;
+    font-size: 16px;
+  }
+
+  .nm-trust-nl__btn {
+    min-height: 48px;
+  }
+
+  /* ── FAQ ── */
+  .nm-vnext-faq {
+    padding: var(--nm-mobile-section-y) 0 calc(var(--nm-mobile-section-y) + 0.5rem);
+  }
+
+  .nm-vnext-faq__list {
+    padding-inline: var(--nm-mobile-gutter);
+  }
+
+  .nm-vnext-faq__q {
+    min-height: 52px;
+    padding: 0.85rem 0;
+    font-size: 0.9375rem;
+    line-height: 1.35;
+    align-items: center;
+  }
+
+  .nm-vnext-faq__a {
+    font-size: 0.9375rem;
+    padding-bottom: 1rem;
+  }
+
+  /* ── Discount banner ── */
+  .nm-vnext-discount {
+    padding-inline: var(--nm-mobile-gutter);
+  }
+
+  .nm-vnext-discount__card {
+    padding: 1rem;
+    border-radius: 16px;
+  }
+
+  /* ── Fullscreen video ── */
+  .nm-fsvideo {
+    min-height: auto !important;
+    max-height: none;
+    height: auto;
+  }
+
+  .nm-fsvideo__media {
+    position: relative;
+    inset: auto;
+    aspect-ratio: 16 / 9;
+    max-height: 72svh;
+    width: 100%;
+  }
+
+  .nm-fsvideo__video,
+  .nm-fsvideo__poster {
+    object-fit: cover;
+  }
+
+  /* ── Product page ── */
+  .nm-product-page {
+    padding: 0.5rem 0 calc(5.5rem + var(--nm-mobile-bar-h) + env(safe-area-inset-bottom)) !important;
+  }
+
+  .nm-pdp-sticky {
+    bottom: calc(var(--nm-mobile-bar-h) + env(safe-area-inset-bottom));
+    padding: 0.65rem var(--nm-mobile-gutter) 0.65rem;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(10, 22, 40, 0.94);
+    z-index: 95;
+  }
+
+  .nm-pdp-sticky__btn {
+    min-height: 44px;
+    min-width: 140px;
+    font-size: 0.875rem;
+  }
+
+  .nm-pdp__dot {
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    position: relative;
+    background: rgba(0, 0, 0, 0.2);
+  }
+
+  .nm-pdp__dot::before {
+    content: "";
+    position: absolute;
+    inset: -14px;
+  }
+
+  .nm-pdp__dot.is-active {
+    width: 22px;
+    background: var(--nm-blue, #00c9d4);
+  }
+
+  .nm-pdp__acc-q {
+    font-size: 0.875rem !important;
+    min-height: 48px;
+    padding: 0.85rem 0 !important;
+  }
+
+  .nm-pdp__opt-pill {
+    min-height: 48px;
+    font-size: 0.8125rem;
+  }
+
   .nm-product-page,
   .nm-product-shell,
   .nm-product-layout,
@@ -89,5 +423,63 @@
     position: static !important;
     height: auto !important;
     touch-action: pan-y;
+  }
+
+  .nm-collection-row__track,
+  .nm-collection-row__carousel {
+    touch-action: pan-x pan-y !important;
+    scroll-padding-inline: var(--nm-mobile-gutter);
+  }
+
+  /* ── Footer ── */
+  .nm-vnext-footer {
+    padding: 2.5rem 0 calc(1.5rem + env(safe-area-inset-bottom));
+  }
+
+  .nm-vnext-footer .nm-container {
+    padding-inline: var(--nm-mobile-gutter);
+  }
+
+  /* ── Modals / drawer ── */
+  .nm-hdr-drawer__backdrop {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  /* Disable scroll-jank entrance animations */
+  .nm-animate,
+  .nm-animate.is-visible {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .nm-trust-float-v2__card::before {
+    animation: none !important;
+  }
+
+  /* Homepage section rhythm */
+  body.template-index .nm-main {
+    overflow-x: clip;
+    overflow-y: visible;
+  }
+
+  body.template-index #home-hero.nm-vnext-hero {
+    padding-bottom: 0;
+  }
+
+  body.template-index #best-sellers.nm-goals,
+  body.template-index .nm-vitamins,
+  body.template-index .nm-creviews,
+  body.template-index .nm-trust-nl,
+  body.template-index .nm-vnext-faq {
+    margin-block: 0;
+  }
+}
+
+@media (max-width: 767px) and (prefers-reduced-motion: reduce) {
+  .nm-hdr__marquee-track {
+    animation: none !important;
   }
 }

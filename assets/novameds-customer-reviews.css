@@ -313,24 +313,43 @@
 
 @media (max-width: 767px) {
   .nm-creviews {
-    padding: 1rem 0 1.1rem;
+    padding: 1.25rem 0;
   }
 
   .nm-creviews__head {
     text-align: left;
     margin-bottom: 0.75rem;
-    padding-inline: max(1rem, env(safe-area-inset-left));
+    padding-inline: 16px;
   }
 
   .nm-creviews__card {
-    width: min(85vw, 320px);
-    flex-basis: min(85vw, 320px);
+    width: min(84vw, 300px);
+    flex-basis: min(84vw, 300px);
   }
 
   .nm-creviews__ba,
   .nm-creviews__ba-img,
   .nm-creviews__ba-ph {
-    min-height: 148px;
+    min-height: 132px;
+  }
+
+  .nm-creviews--mobile-scroll .nm-creviews__track {
+    animation: none !important;
+  }
+
+  .nm-creviews--mobile-scroll .nm-creviews__marquee {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 16px;
+  }
+
+  .nm-creviews--mobile-scroll .nm-creviews__group[aria-hidden="true"] {
+    display: none;
+  }
+
+  .nm-creviews--mobile-scroll .nm-creviews__card {
+    scroll-snap-align: start;
   }
 }
 

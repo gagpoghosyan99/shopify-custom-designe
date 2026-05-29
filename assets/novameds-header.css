@@ -547,9 +547,10 @@
 
 @media (max-width: 520px) {
   .nm-hdr__header {
-    margin: 12px;
-    border-radius: 20px;
-    border: 1px solid rgba(0,0,0,0.10);
+    margin: 0;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
   }
   .nm-hdr__inner { padding: 0 16px; }
 }
