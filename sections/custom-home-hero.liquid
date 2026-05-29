@@ -27,16 +27,19 @@
   endif
 -%}
 
-<section
-  class="nm-vnext-hero nm-dark-stage nm-animate{% if has_photo %} nm-vnext-hero--photo{% endif %}{% if has_photo and has_overlay == false %} nm-vnext-hero--banner-only{% endif %}"
-  id="home-hero"
-  aria-label="NovaMeds hero"
-  style="
+{% style %}
+  #home-hero {
     --nm-hero-banner-max-h: {{ section.settings.banner_max_height | default: 520 }}px;
     --nm-hero-banner-ratio: {{ section.settings.banner_aspect_ratio | default: '16 / 9' }};
     --nm-hero-banner-ratio-mobile: {{ section.settings.banner_aspect_ratio_mobile | default: '16 / 10' }};
     --nm-hero-banner-focus: {{ section.settings.banner_image_focus | default: 'center center' }};
-  "
+  }
+{% endstyle %}
+
+<section
+  class="nm-vnext-hero nm-dark-stage nm-animate{% if has_photo %} nm-vnext-hero--photo{% endif %}{% if has_photo and has_overlay == false %} nm-vnext-hero--banner-only{% endif %}"
+  id="home-hero"
+  aria-label="NovaMeds hero"
 >
   {%- unless has_photo -%}
     <div class="nm-vnext-hero__bg" aria-hidden="true"></div>

@@ -59,8 +59,31 @@
         {%- assign shown = 0 -%}
         {%- assign shown_ids = ',' -%}
 
-        {%- if section.settings.featured_products != blank and section.settings.featured_products.size > 0 -%}
-          {%- for product in section.settings.featured_products limit: limit -%}
+        {%- assign featured_handles = section.settings.featured_handles | split: ',' -%}
+        {%- if featured_handles.size > 0 and section.settings.featured_handles != blank -%}
+          {%- for handle_item in featured_handles -%}
+            {%- if shown >= limit -%}{%- break -%}{%- endif -%}
+            {%- assign handle_clean = handle_item | strip -%}
+            {%- if handle_clean == blank -%}{%- continue -%}{%- endif -%}
+            {%- assign product = all_products[handle_clean] -%}
+            {%- if product == blank -%}{%- continue -%}{%- endif -%}
+            {%- assign id_token = ',' | append: product.id | append: ',' -%}
+            {%- if shown_ids contains id_token -%}{%- continue -%}{%- endif -%}
+            {%- render 'novameds-product-offer-card',
+              product: product,
+              show_compare: show_compare,
+              show_ratings: show_ratings,
+              button_text: button_text
+            -%}
+            {%- assign shown = shown | plus: 1 -%}
+            {%- assign shown_ids = shown_ids | append: product.id | append: ',' -%}
+          {%- endfor -%}
+        {%- elsif section.settings.featured_products != blank and section.settings.featured_products.size > 0 -%}
+          {%- for product in section.settings.featured_products -%}
+            {%- if shown >= limit -%}{%- break -%}{%- endif -%}
+            {%- if product == blank or product.id == blank -%}{%- continue -%}{%- endif -%}
+            {%- assign id_token = ',' | append: product.id | append: ',' -%}
+            {%- if shown_ids contains id_token -%}{%- continue -%}{%- endif -%}
             {%- render 'novameds-product-offer-card',
               product: product,
               show_compare: show_compare,
@@ -96,19 +119,7 @@
             {%- assign include = false -%}
             {%- assign pt = product.title | downcase -%}
             {%- if filter_kw != blank -%}
-              {%- if product.tags contains filter_kw
-                or pt contains filter_kw
-                or pt contains 'vitamin'
-                or pt contains 'b-complex'
-                or pt contains 'b complex'
-                or pt contains 'multivitamin'
-                or pt contains 'omega'
-                or pt contains 'probiotic'
-                or pt contains 'collagen'
-                or pt contains 'mineral'
-                or pt contains ' d3'
-                or pt contains 'daily essential'
-              -%}
+              {%- if product.tags contains filter_kw or pt contains filter_kw or pt contains 'vitamin' or pt contains 'b-complex' or pt contains 'b complex' or pt contains 'multivitamin' or pt contains 'omega' or pt contains 'probiotic' or pt contains 'collagen' or pt contains 'mineral' or pt contains ' d3' or pt contains 'daily essential' -%}
                 {%- assign include = true -%}
               {%- endif -%}
             {%- else -%}
@@ -166,7 +177,8 @@
     { "type": "text", "id": "title", "label": "Title", "default": "Vitamins & Daily Essentials" },
     { "type": "textarea", "id": "subtitle", "label": "Subtitle", "default": "Pharmacist-trusted formulas for energy, immunity, and everyday wellness." },
     { "type": "collection", "id": "collection", "label": "Vitamins collection" },
-    { "type": "product_list", "id": "featured_products", "label": "Featured products (optional)", "limit": 16, "info": "Hand-pick products for this row. Collection products fill remaining slots." },
+    { "type": "product_list", "id": "featured_products", "label": "Featured products (Theme Editor)", "limit": 16, "info": "Pick products in the Theme Editor. Or use comma-separated handles below." },
+    { "type": "textarea", "id": "featured_handles", "label": "Featured product handles", "info": "Comma-separated handles (e.g. vitamin-d3, omega-3-fish-oil). Works in theme code and fills this row reliably." },
     { "type": "text", "id": "collection_handle", "label": "Collection handle fallback", "default": "vitamins" },
     { "type": "text", "id": "filter_tag", "label": "Filter tag/keyword", "default": "vitamins", "info": "Prefer vitamin-related products first; fills with more items if needed." },
     { "type": "range", "id": "products_to_show", "min": 4, "max": 16, "step": 2, "default": 8, "label": "Products to show" },
