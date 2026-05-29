@@ -1,0 +1,119 @@
+{%- liquid
+  assign heading = section.settings.title | default: 'Vitamins & Daily Essentials'
+  assign sub = section.settings.subtitle | default: 'Pharmacist-trusted formulas for energy, immunity, and everyday wellness.'
+  assign limit = section.settings.products_to_show | default: 8
+  assign show_arrows = section.settings.show_arrows
+  assign show_compare = section.settings.show_compare_price
+  assign show_ratings = section.settings.show_ratings
+  assign button_text = section.settings.button_text | default: 'Shop now'
+
+  assign col = section.settings.collection
+  assign handle_fallback = section.settings.collection_handle | default: 'vitamins'
+  if col == blank or col.products_count == 0
+    assign col = collections[handle_fallback]
+  endif
+  if col == blank or col.products_count == 0
+    assign col = collections.all
+  endif
+
+  assign view_url = section.settings.view_all_link | default: col.url
+-%}
+
+{{ 'novameds-carousel.css' | asset_url | stylesheet_tag }}
+{{ 'novameds-home-vitamins.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'novameds-carousel.js' | asset_url }}" defer></script>
+
+<section class="nm-vitamins nm-animate" id="vitamins-collection" data-nm-goals data-section-id="{{ section.id }}">
+  <div class="nm-vitamins__inner">
+    <header class="nm-vitamins__head">
+      <div class="nm-vitamins__head-copy">
+        <p class="nm-vitamins__eyebrow">{{ section.settings.eyebrow | default: 'Shop vitamins' }}</p>
+        <h2 class="nm-vitamins__title">{{ heading }}</h2>
+        {%- if sub != blank -%}
+          <p class="nm-vitamins__sub">{{ sub }}</p>
+        {%- endif -%}
+      </div>
+      {%- if section.settings.show_view_all and view_url != blank -%}
+        <a class="nm-vitamins__view-all" href="{{ view_url }}">View all vitamins</a>
+      {%- endif -%}
+    </header>
+
+    <div class="nm-goals__carousel nm-vitamins__carousel" data-nm-goals-carousel>
+      {%- if show_arrows -%}
+        <button class="nm-goals__arrow nm-goals__arrow--prev" type="button" data-nm-goals-prev aria-label="Scroll vitamins left">
+          <span aria-hidden="true">‹</span>
+        </button>
+      {%- endif -%}
+
+      <div
+        class="nm-goals__track nm-goals__track--swipe"
+        data-nm-goals-track
+        role="region"
+        aria-label="Vitamins carousel"
+        tabindex="0"
+      >
+        {%- assign shown = 0 -%}
+        {%- if col != blank -%}
+          {%- for product in col.products -%}
+            {%- if shown >= limit -%}{%- break -%}{%- endif -%}
+            {%- assign include = true -%}
+            {%- if section.settings.filter_tag != blank -%}
+              {%- assign include = false -%}
+              {%- if product.tags contains section.settings.filter_tag -%}
+                {%- assign include = true -%}
+              {%- else -%}
+                {%- assign kw = section.settings.filter_tag | downcase -%}
+                {%- assign pt = product.title | downcase -%}
+                {%- if pt contains kw or pt contains 'vitamin' -%}
+                  {%- assign include = true -%}
+                {%- endif -%}
+              {%- endif -%}
+            {%- endif -%}
+            {%- if include -%}
+              {%- render 'novameds-product-offer-card',
+                product: product,
+                show_compare: show_compare,
+                show_ratings: show_ratings,
+                button_text: button_text
+              -%}
+              {%- assign shown = shown | plus: 1 -%}
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endif -%}
+
+        {%- if shown == 0 and request.design_mode -%}
+          <p class="nm-demo-note">Assign a vitamins collection or add products tagged “vitamins”.</p>
+        {%- endif -%}
+      </div>
+
+      {%- if show_arrows -%}
+        <button class="nm-goals__arrow nm-goals__arrow--next" type="button" data-nm-goals-next aria-label="Scroll vitamins right">
+          <span aria-hidden="true">›</span>
+        </button>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Home vitamins row",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Shop vitamins" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Vitamins & Daily Essentials" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtitle", "default": "Pharmacist-trusted formulas for energy, immunity, and everyday wellness." },
+    { "type": "collection", "id": "collection", "label": "Vitamins collection" },
+    { "type": "text", "id": "collection_handle", "label": "Collection handle fallback", "default": "vitamins" },
+    { "type": "text", "id": "filter_tag", "label": "Filter tag/keyword", "default": "vitamins", "info": "When using All Products, only show matching items." },
+    { "type": "range", "id": "products_to_show", "min": 4, "max": 16, "step": 2, "default": 8, "label": "Products to show" },
+    { "type": "checkbox", "id": "show_view_all", "label": "Show view all link", "default": true },
+    { "type": "url", "id": "view_all_link", "label": "View all link override" },
+    { "type": "checkbox", "id": "show_compare_price", "label": "Show compare-at price", "default": true },
+    { "type": "checkbox", "id": "show_ratings", "label": "Show ratings", "default": true },
+    { "type": "checkbox", "id": "show_arrows", "label": "Show arrows", "default": true },
+    { "type": "text", "id": "button_text", "label": "Button text", "default": "Shop now" }
+  ],
+  "presets": [{ "name": "Home vitamins row" }]
+}
+{% endschema %}

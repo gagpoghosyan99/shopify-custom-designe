@@ -83,6 +83,115 @@
         "subtitle": "Real results from real people — verified buyers sharing their wellness journey."
       }
     },
+    "vitamins": {
+      "type": "custom-home-vitamins",
+      "settings": {
+        "title": "Vitamins & Daily Essentials",
+        "subtitle": "Pharmacist-trusted formulas for energy, immunity, and everyday wellness.",
+        "collection_handle": "vitamins",
+        "filter_tag": "vitamins",
+        "products_to_show": 8,
+        "show_view_all": true,
+        "show_ratings": true
+      }
+    },
+    "why": {
+      "type": "custom-why-choose-us",
+      "blocks": {
+        "f1": {
+          "type": "feature",
+          "settings": {
+            "icon": "💬",
+            "title": "Pharmacist-Backed Advice",
+            "text": "Expert guidance on every order — the same standard you'd expect from a pharmacy."
+          }
+        },
+        "f2": {
+          "type": "feature",
+          "settings": {
+            "icon": "🌿",
+            "title": "Premium Quality",
+            "text": "Lab-tested, pure ingredients with transparent labels you can read and trust."
+          }
+        },
+        "f3": {
+          "type": "feature",
+          "settings": {
+            "icon": "🚚",
+            "title": "Fast & Secure Delivery",
+            "text": "Tracked shipping worldwide with sealed, pharmacy-grade packaging."
+          }
+        },
+        "f4": {
+          "type": "feature",
+          "settings": {
+            "icon": "↩️",
+            "title": "Money-Back Guarantee",
+            "text": "Shop with confidence — we stand behind every product we sell."
+          }
+        }
+      },
+      "block_order": [
+        "f1",
+        "f2",
+        "f3",
+        "f4"
+      ],
+      "settings": {
+        "title": "Why Choose Us",
+        "subtitle": "Premium care, science-backed products, and trust-first service — built for people who take their health seriously."
+      }
+    },
+    "choose_reasons": {
+      "type": "custom-choose-reasons",
+      "blocks": {
+        "r1": {
+          "type": "reason",
+          "settings": {
+            "icon": "🧪",
+            "title": "Lab-tested quality you can trust",
+            "text": "Every formula is checked for purity, potency, and label accuracy — no mystery blends, no shortcuts."
+          }
+        },
+        "r2": {
+          "type": "reason",
+          "settings": {
+            "icon": "💊",
+            "title": "Pharmacist-first guidance",
+            "text": "Our team prioritizes safe, science-backed recommendations — the same standard you'd expect from a pharmacy."
+          }
+        },
+        "r3": {
+          "type": "reason",
+          "settings": {
+            "icon": "🌍",
+            "title": "Fast, secure worldwide delivery",
+            "text": "Sealed packaging, tracked shipping, and responsive support — wellness delivered to your door with care."
+          }
+        },
+        "r4": {
+          "type": "reason",
+          "settings": {
+            "icon": "✨",
+            "title": "Real results, real people",
+            "text": "Thousands of verified customers choose NovaMeds for energy, sleep, skin, and daily health goals that actually stick."
+          }
+        }
+      },
+      "block_order": [
+        "r1",
+        "r2",
+        "r3",
+        "r4"
+      ],
+      "settings": {
+        "title": "The Best Reasons to Choose NovaMeds",
+        "subtitle": "We make wellness simple — premium quality, transparent labels, and pharmacist-first care you can trust every day.",
+        "stat_value": "50,000+",
+        "stat_label": "Happy customers worldwide",
+        "button_label": "Shop with confidence"
+      }
+    },
     "pro": {
       "type": "custom-professionals-trust",
       "blocks": {
@@ -158,10 +267,6 @@
       ],
       "settings": {}
     },
-    "why": {
-      "type": "custom-why-choose-us",
-      "settings": {}
-    },
     "newsletter": {
       "type": "custom-newsletter",
       "settings": {}
@@ -176,8 +281,10 @@
     "bestsellers",
     "discount",
     "customer_reviews",
-    "pro",
+    "vitamins",
     "why",
+    "choose_reasons",
+    "pro",
     "newsletter",
     "faq"
   ]
