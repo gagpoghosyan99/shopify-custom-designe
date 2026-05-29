@@ -7,8 +7,19 @@
     assign use_category_rows = false
   endif
 
-  assign per_row = section.settings.products_per_row | default: 4
+  assign max_products = section.settings.max_products_per_row | default: 16
+  assign category_row_count = 0
+  for block in section.blocks
+    if block.type == 'category_row'
+      assign category_row_count = category_row_count | plus: 1
+    endif
+  endfor
 -%}
+
+{%- if use_category_rows -%}
+  {{ 'novameds-collection-row.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'novameds-collection-row.js' | asset_url }}" defer></script>
+{%- endif -%}
 
 <section class="nm-section nm-section--collection">
   <div class="nm-container">
@@ -24,13 +35,14 @@
             {%- render 'collection-category-row',
               row_id: block.id,
               row_index: forloop.index0,
+              total_rows: category_row_count,
               title: block.settings.title,
               row_collection: block.settings.collection,
               collection_handle: block.settings.collection_handle,
               source_collection: collection,
               fallback_tag: block.settings.fallback_tag,
               match_keywords: block.settings.match_keywords,
-              limit: per_row,
+              limit: max_products,
               show_view_all: section.settings.show_view_all_links,
               auto_split: section.settings.auto_split_products
             -%}
@@ -85,12 +97,12 @@
     },
     {
       "type": "range",
-      "id": "products_per_row",
-      "min": 2,
-      "max": 4,
-      "step": 1,
-      "default": 4,
-      "label": "Products per row"
+      "id": "max_products_per_row",
+      "min": 4,
+      "max": 24,
+      "step": 2,
+      "default": 16,
+      "label": "Max products per category carousel"
     },
     {
       "type": "checkbox",
@@ -103,7 +115,7 @@
       "id": "auto_split_products",
       "label": "Auto-fill rows from All Products if no match",
       "default": true,
-      "info": "Splits products evenly across rows (4 per row) until collections or tags are set up."
+      "info": "Splits products evenly across category sections until collections or tags are set up."
     },
     {
       "type": "range",

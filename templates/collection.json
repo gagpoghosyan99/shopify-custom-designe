@@ -24,7 +24,7 @@
       "settings": {
         "enable_category_rows": true,
         "only_on_all_collection": true,
-        "products_per_row": 4,
+        "max_products_per_row": 16,
         "show_view_all_links": true,
         "auto_split_products": true,
         "products_per_page": 16

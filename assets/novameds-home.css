@@ -1520,3 +1520,41 @@
     transform: none;
   }
 }
+
+/* Homepage: hero → best sellers closer together */
+.template-index #home-hero.nm-vnext-hero {
+  padding-bottom: 1.25rem;
+}
+
+.template-index .nm-vnext-hero--photo .nm-container.nm-vnext-hero__grid {
+  padding-bottom: 2rem;
+}
+
+.template-index #best-sellers.nm-goals {
+  padding-top: 2.5rem;
+}
+
+@media (max-width: 767px) {
+  .template-index #home-hero.nm-vnext-hero {
+    padding-bottom: 0.5rem;
+  }
+
+  .template-index .nm-vnext-hero--photo .nm-container.nm-vnext-hero__grid {
+    padding-bottom: 0.35rem;
+  }
+
+  .template-index #best-sellers.nm-goals {
+    padding-top: 0.85rem;
+    padding-bottom: 1.75rem;
+  }
+
+  .template-index #best-sellers .nm-goals__head {
+    margin-bottom: 0.75rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .template-index #best-sellers.nm-goals {
+    padding-top: 3rem;
+  }
+}

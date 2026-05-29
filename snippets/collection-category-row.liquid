@@ -1,5 +1,5 @@
 {%- liquid
-  assign row_limit = limit | default: 4
+  assign max_products = limit | default: 16
   assign row_title = title
   assign view_url = ''
   assign coll_handle = collection_handle | default: fallback_tag | handleize
@@ -21,9 +21,17 @@
 
   assign keyword_list = match_keywords | split: ','
   assign fallback_slug = fallback_tag | handleize
+
+  assign split_size = max_products
+  if auto_split and total_rows != blank and total_rows > 0 and source_collection != blank
+    assign split_size = source_collection.products_count | plus: total_rows | minus: 1 | divided_by: total_rows
+    if split_size < 1
+      assign split_size = 1
+    endif
+  endif
 -%}
 
-<section class="nm-collection-row" aria-labelledby="nm-row-{{ row_id }}">
+<section class="nm-collection-row" aria-labelledby="nm-row-{{ row_id }}" data-nm-col-row>
   <div class="nm-collection-row__head">
     <h2 class="nm-collection-row__title" id="nm-row-{{ row_id }}">{{ row_title }}</h2>
     {%- if show_view_all and view_url != blank -%}
@@ -31,71 +39,93 @@
     {%- endif -%}
   </div>
 
-  <div class="nm-products__grid nm-products__grid--row">
-    {%- if resolved_collection != blank and resolved_collection.products_count > 0 -%}
-      {%- for product in resolved_collection.products limit: row_limit -%}
-        {% render 'product-card', product: product %}
-        {%- assign cards_rendered = cards_rendered | plus: 1 -%}
-      {%- endfor -%}
-    {%- endif -%}
+  <div class="nm-collection-row__carousel">
+    <button type="button" class="nm-collection-row__arrow nm-collection-row__arrow--prev" data-nm-col-row-prev aria-label="Scroll {{ row_title }} left">
+      <span aria-hidden="true">‹</span>
+    </button>
 
-    {%- if cards_rendered == 0 and source_collection != blank -%}
-      {%- for product in source_collection.products -%}
-        {%- if cards_rendered >= row_limit -%}{%- break -%}{%- endif -%}
-        {%- assign matched = false -%}
+    <div
+      class="nm-collection-row__track"
+      data-nm-col-row-track
+      tabindex="0"
+      role="region"
+      aria-label="{{ row_title | escape }} products"
+    >
+      {%- if resolved_collection != blank and resolved_collection.products_count > 0 -%}
+        {%- for product in resolved_collection.products limit: max_products -%}
+          <div class="nm-collection-row__item">
+            {% render 'product-card', product: product %}
+          </div>
+          {%- assign cards_rendered = cards_rendered | plus: 1 -%}
+        {%- endfor -%}
+      {%- endif -%}
 
-        {%- if coll_handle != blank -%}
-          {%- for coll in product.collections -%}
-            {%- if coll.handle == coll_handle -%}
-              {%- assign matched = true -%}
-              {%- break -%}
-            {%- endif -%}
-          {%- endfor -%}
-        {%- endif -%}
+      {%- if cards_rendered == 0 and source_collection != blank -%}
+        {%- for product in source_collection.products -%}
+          {%- if cards_rendered >= max_products -%}{%- break -%}{%- endif -%}
+          {%- assign matched = false -%}
 
-        {%- unless matched -%}
-          {%- if fallback_tag != blank and product.tags contains fallback_tag -%}
-            {%- assign matched = true -%}
-          {%- else -%}
-            {%- for tag in product.tags -%}
-              {%- assign tag_slug = tag | handleize -%}
-              {%- if tag_slug == fallback_slug -%}
+          {%- if coll_handle != blank -%}
+            {%- for coll in product.collections -%}
+              {%- if coll.handle == coll_handle -%}
                 {%- assign matched = true -%}
                 {%- break -%}
               {%- endif -%}
             {%- endfor -%}
           {%- endif -%}
-        {%- endunless -%}
 
-        {%- unless matched -%}
-          {%- assign title_down = product.title | downcase -%}
-          {%- for kw in keyword_list -%}
-            {%- assign kw_trim = kw | strip | downcase -%}
-            {%- if kw_trim != blank and title_down contains kw_trim -%}
+          {%- unless matched -%}
+            {%- if fallback_tag != blank and product.tags contains fallback_tag -%}
               {%- assign matched = true -%}
-              {%- break -%}
+            {%- else -%}
+              {%- for tag in product.tags -%}
+                {%- assign tag_slug = tag | handleize -%}
+                {%- if tag_slug == fallback_slug -%}
+                  {%- assign matched = true -%}
+                  {%- break -%}
+                {%- endif -%}
+              {%- endfor -%}
             {%- endif -%}
-          {%- endfor -%}
-        {%- endunless -%}
+          {%- endunless -%}
 
-        {%- if matched -%}
-          {% render 'product-card', product: product %}
-          {%- assign cards_rendered = cards_rendered | plus: 1 -%}
-        {%- endif -%}
-      {%- endfor -%}
-    {%- endif -%}
+          {%- unless matched -%}
+            {%- assign title_down = product.title | downcase -%}
+            {%- for kw in keyword_list -%}
+              {%- assign kw_trim = kw | strip | downcase -%}
+              {%- if kw_trim != blank and title_down contains kw_trim -%}
+                {%- assign matched = true -%}
+                {%- break -%}
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endunless -%}
 
-    {%- if cards_rendered == 0 and auto_split and source_collection != blank and row_index != nil -%}
-      {%- assign start_at = row_index | times: row_limit -%}
-      {%- assign end_at = start_at | plus: row_limit -%}
-      {%- for product in source_collection.products -%}
-        {%- assign idx = forloop.index0 -%}
-        {%- if idx >= start_at and idx < end_at -%}
-          {% render 'product-card', product: product %}
-          {%- assign cards_rendered = cards_rendered | plus: 1 -%}
-        {%- endif -%}
-      {%- endfor -%}
-    {%- endif -%}
+          {%- if matched -%}
+            <div class="nm-collection-row__item">
+              {% render 'product-card', product: product %}
+            </div>
+            {%- assign cards_rendered = cards_rendered | plus: 1 -%}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endif -%}
+
+      {%- if cards_rendered == 0 and auto_split and source_collection != blank and row_index != nil -%}
+        {%- assign start_at = row_index | times: split_size -%}
+        {%- assign end_at = start_at | plus: split_size -%}
+        {%- for product in source_collection.products -%}
+          {%- assign idx = forloop.index0 -%}
+          {%- if idx >= start_at and idx < end_at and cards_rendered < max_products -%}
+            <div class="nm-collection-row__item">
+              {% render 'product-card', product: product %}
+            </div>
+            {%- assign cards_rendered = cards_rendered | plus: 1 -%}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+
+    <button type="button" class="nm-collection-row__arrow nm-collection-row__arrow--next" data-nm-col-row-next aria-label="Scroll {{ row_title }} right">
+      <span aria-hidden="true">›</span>
+    </button>
   </div>
 
   {%- if cards_rendered == 0 and request.design_mode -%}

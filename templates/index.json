@@ -11,42 +11,57 @@
   "sections": {
     "hero": {
       "type": "custom-home-hero",
+      "blocks": {
+        "mt1": {
+          "type": "micro_trust",
+          "settings": {
+            "icon": "🛡️",
+            "label": "Licensed Products"
+          }
+        },
+        "mt2": {
+          "type": "micro_trust",
+          "settings": {
+            "icon": "✓",
+            "label": "Pharmacist Approved"
+          }
+        },
+        "mt3": {
+          "type": "micro_trust",
+          "settings": {
+            "icon": "🚚",
+            "label": "Worldwide Shipping"
+          }
+        }
+      },
+      "block_order": [
+        "mt1",
+        "mt2",
+        "mt3"
+      ],
       "settings": {
-        "kicker": "",
-        "heading": "",
-        "subheading": "",
-        "hero_image": "shopify://shop_images/without_shop_best_seller_and_202605281711.jpg",
-        "primary_label": "",
-        "primary_link": "",
-        "secondary_label": "",
-        "secondary_link": "",
-        "tertiary_label": "",
-        "tertiary_link": "",
-        "show_micro_trust": false
+        "kicker": "Premium, pharmacist-first care",
+        "heading": "Premium Wellness & Healthcare Solutions",
+        "subheading": "Trusted products for modern health, performance, and vitality — backed by science and pharmacist-first care.",
+        "primary_label": "Shop Now",
+        "secondary_label": "Best Sellers",
+        "secondary_link": "/collections/best-sellers",
+        "tertiary_label": "Doctor Recommended",
+        "tertiary_link": "/collections/all",
+        "show_micro_trust": true
       }
     },
     "bestsellers": {
       "type": "custom-product-grid",
       "settings": {
-        "title": "Best Sellers",
-        "collection": "",
-        "products_to_show": 8,
-        "show_compare_price": true,
-        "show_ratings": true,
-        "show_arrows": true,
-        "enable_mobile_swipe": true,
-        "button_text": "Shop now"
+        "title": "LET US HELP YOU REACH YOUR HEALTH GOALS !!!",
+        "products_to_show": 12
       }
     },
     "discount": {
       "type": "custom-first-order-discount",
       "settings": {
-        "badge": "Limited Time Offer",
-        "title": "15% Off Your First Order",
-        "text": "Use code WELLNESS15 at checkout. Pharmacist-reviewed essentials delivered to your door.",
-        "code": "WELLNESS15",
-        "button_label": "Claim Offer",
-        "button_link": ""
+        "code": "WELLNESS15"
       }
     },
     "pro": {
@@ -122,38 +137,23 @@
         "s2",
         "s3"
       ],
-      "settings": {
-        "title": "Trusted by Professionals & Science"
-      }
+      "settings": {}
     },
     "why": {
       "type": "custom-why-choose-us",
-      "settings": {
-        "title": "Why Choose Us",
-        "subtitle": "Premium care, science-backed products, and trust-first service."
-      }
+      "settings": {}
     },
     "reviews": {
       "type": "custom-testimonials",
-      "settings": {
-        "title": "What Our Customers Say",
-        "subtitle": "Verified reviews from real customers."
-      }
+      "settings": {}
     },
     "newsletter": {
       "type": "custom-newsletter",
-      "settings": {
-        "title": "Get wellness tips & exclusive offers",
-        "text": "Join NovaMeds for pharmacist-backed advice and member-only savings.",
-        "button_label": "Subscribe"
-      }
+      "settings": {}
     },
     "faq": {
       "type": "custom-faq",
-      "settings": {
-        "title": "Frequently Asked Questions",
-        "subtitle": "Everything you need to know about ordering from NovaMeds."
-      }
+      "settings": {}
     }
   },
   "order": [

@@ -1,0 +1,93 @@
+/**
+ * Mobile scroll performance — native smooth scrolling, no scroll traps.
+ */
+
+@media (max-width: 767px) {
+  html {
+    scroll-behavior: auto !important;
+  }
+
+  body.nm-body {
+    overflow-x: clip;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: auto;
+    height: auto;
+    position: relative;
+  }
+
+  body.nm-body:not(.nm-modal-open) {
+    touch-action: pan-y pinch-zoom;
+  }
+
+  body.template-collection:not(.nm-modal-open) {
+    touch-action: auto;
+    overflow-x: hidden;
+  }
+
+  .nm-collection-row__track,
+  .nm-collection-row__carousel {
+    touch-action: pan-x pan-y !important;
+  }
+
+  #MainContent,
+  .nm-main {
+    overflow: visible !important;
+    transform: none !important;
+    height: auto;
+    min-height: 0;
+  }
+
+  .shopify-section {
+    overflow: visible !important;
+    transform: none !important;
+  }
+
+  /* Disable scroll-jank animations */
+  .nm-animate,
+  .nm-animate.is-visible {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .nm-vnext-hero,
+  .nm-vnext-hero--photo {
+    overflow: visible !important;
+    transform: none !important;
+  }
+
+  .nm-hero-premium {
+    min-height: 0 !important;
+  }
+
+  /* Lighter chrome (backdrop-filter hurts scroll on iOS) */
+  .nm-mobile-bar,
+  .nm-pdp-sticky,
+  .nm-hdr-drawer__backdrop {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  .nm-mobile-bar {
+    background: #fff;
+  }
+
+  .nm-trust-float-v2__card::before {
+    animation: none !important;
+  }
+
+  /* Product page: one scroll container only (the page) */
+  .nm-product-page,
+  .nm-product-shell,
+  .nm-product-layout,
+  .nm-product-info-track,
+  .nm-product-info-scroll {
+    overflow: visible !important;
+    max-height: none !important;
+    position: static !important;
+    height: auto !important;
+    touch-action: pan-y;
+  }
+}

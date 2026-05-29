@@ -785,10 +785,6 @@ body.nm-modal-open {
   font-size: 0.875rem;
 }
 
-.nm-products__grid--row {
-  margin-bottom: 0;
-}
-
 @media (max-width: 767px) {
   .nm-collection-rows {
     gap: 2rem;

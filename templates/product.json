@@ -11,52 +11,8 @@
   "sections": {
     "main": {
       "type": "custom-product",
-      "blocks": {
-        "benefit_kHWnQm": {
-          "type": "benefit",
-          "settings": {
-            "text": "Fast worldwide shipping"
-          }
-        },
-        "benefit_xKpGz9": {
-          "type": "benefit",
-          "settings": {
-            "text": "Clinically formulated ingredients"
-          }
-        },
-        "benefit_qf3xYy": {
-          "type": "benefit",
-          "settings": {
-            "text": "Unlimited workouts & challenges"
-          }
-        }
-      },
-      "block_order": [
-        "benefit_kHWnQm",
-        "benefit_xKpGz9",
-        "benefit_qf3xYy"
-      ],
-      "settings": {
-        "rating_score": "4.6/5",
-        "rating_text": "(900+ Reviews)",
-        "rating_brand": "Trustpilot",
-        "sale_badge": "Save"
-      }
-    },
-    "best_sellers_DzDDRQ": {
-      "type": "best-sellers",
-      "name": "Best sellers",
-      "settings": {
-        "title": "Best Sellers",
-        "subtitle": "Top-rated formulas loved by our community.",
-        "collection": "",
-        "products_to_show": 8,
-        "show_view_all": true
-      }
+      "settings": {}
     }
   },
-  "order": [
-    "main",
-    "best_sellers_DzDDRQ"
-  ]
+  "order": ["main"]
 }
