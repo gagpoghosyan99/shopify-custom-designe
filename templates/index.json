@@ -218,12 +218,12 @@
       "settings": {
         "video": "shopify://files/videos/Luxury_ecommerce_video_NovaMeds_202605291815.mp4",
         "video_url": "",
-        "autoplay": true,
+        "autoplay": false,
         "loop": true,
-        "eyebrow": "Watch our story",
-        "title": "See NovaMeds in Action",
-        "subheading": "Discover how pharmacist-first care, premium formulas, and real customer results come together.",
-        "button_label": "Explore products",
+        "eyebrow": "",
+        "title": "",
+        "subheading": "",
+        "button_label": "",
         "button_link": ""
       }
     },
