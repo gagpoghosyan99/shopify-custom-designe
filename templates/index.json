@@ -193,8 +193,8 @@
         "show_ratings": true
       }
     },
-    "pro": {
-      "type": "custom-professionals-trust",
+    "trust_newsletter": {
+      "type": "custom-trust-newsletter",
       "blocks": {
         "c1": {
           "type": "cert",
@@ -266,11 +266,13 @@
         "s2",
         "s3"
       ],
-      "settings": {}
-    },
-    "newsletter": {
-      "type": "custom-newsletter",
-      "settings": {}
+      "settings": {
+        "animations_enabled": true,
+        "trust_title": "Trusted by Professionals & Science",
+        "newsletter_title": "Get wellness tips & exclusive offers",
+        "newsletter_text": "Join NovaMeds for pharmacist-backed advice and member-only savings.",
+        "button_label": "Subscribe"
+      }
     },
     "faq": {
       "type": "custom-faq",
@@ -287,8 +289,7 @@
     "sports_nutrition",
     "brand_video",
     "wellness_collection",
-    "pro",
-    "newsletter",
+    "trust_newsletter",
     "faq"
   ]
 }

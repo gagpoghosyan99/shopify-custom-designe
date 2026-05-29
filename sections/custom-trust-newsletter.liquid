@@ -1,0 +1,174 @@
+{%- liquid
+  assign trust_title = section.settings.trust_title | default: 'Trusted by Professionals & Science'
+  assign nl_title = section.settings.newsletter_title | default: 'Get wellness tips & exclusive offers'
+  assign nl_text = section.settings.newsletter_text | default: 'Join NovaMeds for pharmacist-backed advice and member-only savings.'
+  assign btn_label = section.settings.button_label | default: 'Subscribe'
+  assign anim = section.settings.animations_enabled
+-%}
+
+{{ 'novameds-trust-newsletter.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'novameds-trust-newsletter.js' | asset_url }}" defer></script>
+
+<section
+  class="nm-trust-nl{% if anim %} nm-trust-nl--anim{% endif %}"
+  id="trusted-newsletter"
+  data-nm-trust-nl
+  data-anim="{{ anim }}"
+  aria-label="{{ trust_title | escape }}"
+  style="
+    --nm-trust-bg: {{ section.settings.bg_base | default: '#031225' }};
+    --nm-trust-cyan: {{ section.settings.accent_cyan | default: '#00c9d4' }};
+    --nm-trust-glow: {{ section.settings.glow_cyan | default: '#2ee8f0' }};
+  "
+>
+  <div class="nm-trust-nl__bg" aria-hidden="true">
+    <div class="nm-trust-nl__grad"></div>
+    <div class="nm-trust-nl__mesh"></div>
+    <div class="nm-trust-nl__orb nm-trust-nl__orb--1"></div>
+    <div class="nm-trust-nl__orb nm-trust-nl__orb--2"></div>
+    <div class="nm-trust-nl__vignette"></div>
+  </div>
+
+  <div class="nm-trust-nl__wrap">
+    <div class="nm-trust-nl__panel" data-nm-trust-entrance>
+      <div class="nm-trust-nl__trust">
+        <h2 class="nm-trust-nl__title">{{ trust_title }}</h2>
+
+        <div class="nm-trust-nl__certs" aria-label="Certifications">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'cert' -%}
+              <div class="nm-trust-nl__cert" {{ block.shopify_attributes }}>
+                <span>{{ block.settings.label }}</span>
+                <strong>{{ block.settings.value }}</strong>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+
+        <div class="nm-trust-nl__doctors" aria-label="Doctor recommendations">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'doctor' -%}
+              <article class="nm-trust-nl__doc" {{ block.shopify_attributes }}>
+                <div class="nm-trust-nl__doc-avatar" aria-hidden="true">
+                  {%- if block.settings.photo != blank -%}
+                    {{ block.settings.photo | image_url: width: 160 | image_tag: loading: 'lazy', alt: '' }}
+                  {%- else -%}
+                    <span aria-hidden="true">👨‍⚕️</span>
+                  {%- endif -%}
+                </div>
+                <h3 class="nm-trust-nl__doc-name">{{ block.settings.name }}</h3>
+                <p class="nm-trust-nl__doc-cred">{{ block.settings.credentials }}</p>
+                <p class="nm-trust-nl__doc-quote">“{{ block.settings.quote }}”</p>
+              </article>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+
+        <div class="nm-trust-nl__stats" aria-label="NovaMeds stats">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'stat' -%}
+              <div class="nm-trust-nl__stat" {{ block.shopify_attributes }}>
+                <strong>{{ block.settings.value }}</strong>
+                <span>{{ block.settings.label }}</span>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+
+      <div class="nm-trust-nl__divider" aria-hidden="true" data-nm-trust-entrance>
+        <span class="nm-trust-nl__divider-line"></span>
+        <span class="nm-trust-nl__divider-dot"></span>
+        <span class="nm-trust-nl__divider-line"></span>
+      </div>
+
+      <div class="nm-trust-nl__newsletter" data-nm-trust-entrance>
+        <h3 class="nm-trust-nl__nl-title">{{ nl_title }}</h3>
+        {%- if nl_text != blank -%}
+          <p class="nm-trust-nl__nl-text">{{ nl_text }}</p>
+        {%- endif -%}
+
+        {% form 'customer', class: 'nm-trust-nl__form' %}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <label class="visually-hidden" for="NmTrustNlEmail-{{ section.id }}">Email</label>
+          <input
+            type="email"
+            id="NmTrustNlEmail-{{ section.id }}"
+            name="contact[email]"
+            placeholder="Enter your email"
+            required
+            autocomplete="email"
+          >
+          <button type="submit" class="nm-trust-nl__btn">
+            <span class="nm-trust-nl__btn-shine" aria-hidden="true"></span>
+            <span>{{ btn_label }}</span>
+          </button>
+        {% endform %}
+
+        {%- if form.posted_successfully? -%}
+          <p class="nm-trust-nl__success" role="status">Thanks for subscribing!</p>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Trust + newsletter",
+  "tag": "section",
+  "settings": [
+    { "type": "checkbox", "id": "animations_enabled", "label": "Enable animations", "default": true },
+    { "type": "text", "id": "trust_title", "label": "Trust title", "default": "Trusted by Professionals & Science" },
+    { "type": "text", "id": "newsletter_title", "label": "Newsletter title", "default": "Get wellness tips & exclusive offers" },
+    { "type": "textarea", "id": "newsletter_text", "label": "Newsletter text", "default": "Join NovaMeds for pharmacist-backed advice and member-only savings." },
+    { "type": "text", "id": "button_label", "label": "Subscribe button", "default": "Subscribe" },
+    { "type": "color", "id": "bg_base", "label": "Background base", "default": "#031225" },
+    { "type": "color", "id": "accent_cyan", "label": "Accent cyan", "default": "#00c9d4" },
+    { "type": "color", "id": "glow_cyan", "label": "Glow cyan", "default": "#2ee8f0" }
+  ],
+  "blocks": [
+    {
+      "type": "cert",
+      "name": "Certification",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Certifications" },
+        { "type": "text", "id": "value", "label": "Value", "default": "GMP · FDA" }
+      ]
+    },
+    {
+      "type": "doctor",
+      "name": "Doctor card",
+      "settings": [
+        { "type": "image_picker", "id": "photo", "label": "Photo (optional)" },
+        { "type": "text", "id": "name", "label": "Name", "default": "Dr. Emily Chen" },
+        { "type": "text", "id": "credentials", "label": "Credentials", "default": "PharmD, Wellness Specialist" },
+        { "type": "text", "id": "quote", "label": "Quote", "default": "Exceptional quality and full transparency on every label." }
+      ]
+    },
+    {
+      "type": "stat",
+      "name": "Stat",
+      "settings": [
+        { "type": "text", "id": "value", "label": "Value", "default": "50,000+" },
+        { "type": "text", "id": "label", "label": "Label", "default": "Happy Customers" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Trust + newsletter",
+      "blocks": [
+        { "type": "cert", "settings": { "label": "Certifications", "value": "GMP · FDA" } },
+        { "type": "cert", "settings": { "label": "Security", "value": "SSL · PCI" } },
+        { "type": "doctor", "settings": { "name": "Dr. Emily Chen", "credentials": "PharmD, Wellness Specialist", "quote": "Exceptional quality and full transparency on every label." } },
+        { "type": "doctor", "settings": { "name": "Dr. Michael Davis", "credentials": "MD, Integrative Medicine", "quote": "I confidently recommend NovaMeds to my patients." } },
+        { "type": "doctor", "settings": { "name": "Dr. Sarah Lee", "credentials": "PharmD", "quote": "Science-backed formulas you can trust daily." } },
+        { "type": "stat", "settings": { "value": "50,000+", "label": "Happy Customers" } },
+        { "type": "stat", "settings": { "value": "98%", "label": "Satisfaction Rate" } },
+        { "type": "stat", "settings": { "value": "24h", "label": "Worldwide Shipping" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
