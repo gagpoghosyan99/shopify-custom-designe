@@ -104,6 +104,7 @@
     "vitamins": {
       "type": "custom-home-vitamins",
       "settings": {
+        "eyebrow": "Daily wellness",
         "title": "Vitamins & Daily Essentials",
         "subtitle": "Pharmacist-trusted formulas for energy, immunity, and everyday wellness.",
         "collection": "vitamins",
