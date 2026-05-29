@@ -17,8 +17,11 @@
         "heading": "",
         "subheading": "",
         "primary_label": "",
+        "primary_link": "",
         "secondary_label": "",
+        "secondary_link": "",
         "tertiary_label": "",
+        "tertiary_link": "",
         "show_micro_trust": false
       }
     },
@@ -26,14 +29,34 @@
       "type": "custom-product-grid",
       "settings": {
         "title": "LET US HELP YOU REACH YOUR HEALTH GOALS !!!",
+        "collection": "",
         "products_to_show": 12,
-        "show_ratings": true
+        "show_compare_price": true,
+        "show_ratings": true,
+        "show_arrows": true,
+        "enable_mobile_swipe": true,
+        "button_text": "Shop now"
       }
     },
     "discount": {
       "type": "custom-first-order-discount",
       "settings": {
-        "code": "WELLNESS15"
+        "animations_enabled": true,
+        "discount_percent": 15,
+        "use_auto_headline": true,
+        "badge": "Limited Time Offer",
+        "headline": "15% OFF YOUR FIRST ORDER",
+        "title": "OFF YOUR FIRST ORDER",
+        "text": "Premium vitamins, supplements, and wellness essentials delivered to your door.",
+        "trust_1": "Fast Delivery",
+        "trust_2": "Trusted Quality",
+        "trust_3": "Secure Checkout",
+        "code": "WELLNESS15",
+        "button_label": "Claim Your Discount",
+        "button_link": "",
+        "bg_base": "#031225",
+        "accent_cyan": "#00c9d4",
+        "glow_cyan": "#2ee8f0"
       }
     },
     "customer_reviews": {
@@ -42,6 +65,8 @@
         "s1": {
           "type": "story",
           "settings": {
+            "before_label": "Before",
+            "after_label": "After",
             "author": "Sarah M.",
             "verified": true,
             "rating": 5,
@@ -53,6 +78,8 @@
         "s2": {
           "type": "story",
           "settings": {
+            "before_label": "Before",
+            "after_label": "After",
             "author": "James L.",
             "verified": true,
             "rating": 5,
@@ -64,6 +91,8 @@
         "s3": {
           "type": "story",
           "settings": {
+            "before_label": "Before",
+            "after_label": "After",
             "author": "Priya K.",
             "verified": true,
             "rating": 5,
@@ -75,6 +104,8 @@
         "s4": {
           "type": "story",
           "settings": {
+            "before_label": "Before",
+            "after_label": "After",
             "author": "Marcus T.",
             "verified": true,
             "rating": 5,
@@ -91,6 +122,7 @@
         "s4"
       ],
       "settings": {
+        "eyebrow": "Verified customer stories",
         "title": "What Our Customers Say",
         "subtitle": "Real results from real people — verified buyers sharing their wellness journey.",
         "scroll_speed": 45,
@@ -100,13 +132,19 @@
     "vitamins": {
       "type": "custom-home-vitamins",
       "settings": {
+        "eyebrow": "Shop vitamins",
         "title": "Vitamins & Daily Essentials",
         "subtitle": "Pharmacist-trusted formulas for energy, immunity, and everyday wellness.",
+        "collection": "",
         "collection_handle": "vitamins",
         "filter_tag": "vitamins",
         "products_to_show": 8,
         "show_view_all": true,
-        "show_ratings": true
+        "view_all_link": "",
+        "show_compare_price": true,
+        "show_ratings": true,
+        "show_arrows": true,
+        "button_text": "Shop now"
       }
     },
     "why": {
@@ -152,6 +190,7 @@
         "f4"
       ],
       "settings": {
+        "eyebrow": "The NovaMeds standard",
         "title": "Why Choose Us",
         "subtitle": "Premium care, science-backed products, and trust-first service — built for people who take their health seriously."
       }
@@ -162,22 +201,30 @@
         "eyebrow": "Shop collection",
         "title": "Sports Nutrition & Performance",
         "subtitle": "Fuel recovery, strength, and endurance with pharmacist-reviewed performance essentials.",
+        "collection": "",
         "collection_handle": "best-sellers",
         "filter_tag": "sports",
         "products_to_show": 8,
         "show_view_all": true,
-        "show_ratings": true
+        "view_all_link": "",
+        "show_compare_price": true,
+        "show_ratings": true,
+        "show_arrows": true,
+        "button_text": "Shop now"
       }
     },
     "brand_video": {
       "type": "custom-fullscreen-video",
       "settings": {
+        "video": "shopify://files/videos/Luxury_ecommerce_video_NovaMeds_202605291815.mp4",
+        "video_url": "",
         "autoplay": true,
         "loop": true,
         "eyebrow": "Watch our story",
         "title": "See NovaMeds in Action",
         "subheading": "Discover how pharmacist-first care, premium formulas, and real customer results come together.",
-        "button_label": "Explore products"
+        "button_label": "Explore products",
+        "button_link": ""
       }
     },
     "wellness_collection": {
@@ -186,11 +233,16 @@
         "eyebrow": "Shop collection",
         "title": "Recovery, Sleep & Wellness",
         "subtitle": "Rest deeper, recover faster, and support daily balance with pharmacist-trusted essentials.",
+        "collection": "",
         "collection_handle": "all",
         "filter_tag": "wellness",
         "products_to_show": 8,
         "show_view_all": true,
-        "show_ratings": true
+        "view_all_link": "",
+        "show_compare_price": true,
+        "show_ratings": true,
+        "show_arrows": true,
+        "button_text": "Shop now"
       }
     },
     "trust_newsletter": {
@@ -271,12 +323,18 @@
         "trust_title": "Trusted by Professionals & Science",
         "newsletter_title": "Get wellness tips & exclusive offers",
         "newsletter_text": "Join NovaMeds for pharmacist-backed advice and member-only savings.",
-        "button_label": "Subscribe"
+        "button_label": "Subscribe",
+        "bg_base": "#031225",
+        "accent_cyan": "#00c9d4",
+        "glow_cyan": "#2ee8f0"
       }
     },
     "faq": {
       "type": "custom-faq",
-      "settings": {}
+      "settings": {
+        "title": "Frequently Asked Questions",
+        "subtitle": "Everything you need to know about ordering from NovaMeds."
+      }
     }
   },
   "order": [
