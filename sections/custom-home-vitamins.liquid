@@ -6,20 +6,17 @@
   assign show_compare = section.settings.show_compare_price
   assign show_ratings = section.settings.show_ratings
   assign button_text = section.settings.button_text | default: 'Shop now'
-  assign filter_kw = section.settings.filter_tag | strip | downcase
 
   assign col = section.settings.collection
   assign handle_fallback = section.settings.collection_handle | default: 'vitamins'
   if col == blank or col.products_count == 0
     assign col = collections[handle_fallback]
   endif
-  if col == blank or col.products_count == 0
-    assign col = collections.all
-  endif
 
   assign view_url = section.settings.view_all_link | default: col.url
-  assign default_handles = 'advanced-multi-vitamin,life-extension-bioactive-complete-b-complex-60-vegetarian-capsules,omega-3-fish-oil,collagen-peptides,collagen,collagen-2,collagen-3,collagen-4,men-s-performance-stack'
-  assign handles_line = section.settings.featured_handles | default: default_handles
+  if view_url == blank
+    assign view_url = routes.all_products_collection_url
+  endif
 -%}
 
 {{ 'novameds-carousel.css' | asset_url | stylesheet_tag }}
@@ -58,25 +55,6 @@
         {%- assign shown = 0 -%}
         {%- assign shown_ids = ',' -%}
 
-        {%- assign featured_handles = handles_line | split: ',' -%}
-        {%- for handle_item in featured_handles -%}
-          {%- if shown >= limit -%}{%- break -%}{%- endif -%}
-          {%- assign handle_clean = handle_item | strip -%}
-          {%- if handle_clean == blank -%}{%- continue -%}{%- endif -%}
-          {%- assign product = all_products[handle_clean] -%}
-          {%- if product == blank or product.id == blank -%}{%- continue -%}{%- endif -%}
-          {%- assign id_token = ',' | append: product.id | append: ',' -%}
-          {%- if shown_ids contains id_token -%}{%- continue -%}{%- endif -%}
-          {%- render 'novameds-product-offer-card',
-            product: product,
-            show_compare: show_compare,
-            show_ratings: show_ratings,
-            button_text: button_text
-          -%}
-          {%- assign shown = shown | plus: 1 -%}
-          {%- assign shown_ids = shown_ids | append: product.id | append: ',' -%}
-        {%- endfor -%}
-
         {%- if section.settings.featured_products != blank -%}
           {%- for product in section.settings.featured_products -%}
             {%- if shown >= limit -%}{%- break -%}{%- endif -%}
@@ -94,7 +72,7 @@
           {%- endfor -%}
         {%- endif -%}
 
-        {%- if col != blank and shown < limit -%}
+        {%- if col != blank -%}
           {%- for product in col.products -%}
             {%- if shown >= limit -%}{%- break -%}{%- endif -%}
             {%- assign id_token = ',' | append: product.id | append: ',' -%}
@@ -110,7 +88,7 @@
           {%- endfor -%}
         {%- endif -%}
 
-        {%- if shown < limit -%}
+        {%- if shown < limit and collections.all != blank -%}
           {%- for product in collections.all.products -%}
             {%- if shown >= limit -%}{%- break -%}{%- endif -%}
             {%- assign id_token = ',' | append: product.id | append: ',' -%}
@@ -127,7 +105,7 @@
         {%- endif -%}
 
         {%- if shown == 0 and request.design_mode -%}
-          <p class="nm-demo-note">Assign a vitamins collection, pick featured products, or add products tagged “vitamins”.</p>
+          <p class="nm-demo-note">Assign a vitamins collection or pick featured products in the Theme Editor.</p>
         {%- endif -%}
       </div>
 
@@ -148,11 +126,9 @@
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Shop vitamins" },
     { "type": "text", "id": "title", "label": "Title", "default": "Vitamins & Daily Essentials" },
     { "type": "textarea", "id": "subtitle", "label": "Subtitle", "default": "Pharmacist-trusted formulas for energy, immunity, and everyday wellness." },
-    { "type": "collection", "id": "collection", "label": "Vitamins collection" },
-    { "type": "product_list", "id": "featured_products", "label": "Featured products (Theme Editor)", "limit": 16, "info": "Pick products in the Theme Editor. Handles below override when set." },
-    { "type": "textarea", "id": "featured_handles", "label": "Featured product handles", "info": "Comma-separated handles. Leave blank to use the default vitamin picks." },
+    { "type": "collection", "id": "collection", "label": "Primary collection", "info": "Vitamins collection first. Remaining slots fill from All Products." },
+    { "type": "product_list", "id": "featured_products", "label": "Featured products (optional)", "limit": 16 },
     { "type": "text", "id": "collection_handle", "label": "Collection handle fallback", "default": "vitamins" },
-    { "type": "text", "id": "filter_tag", "label": "Filter tag/keyword (optional)", "default": "vitamins", "info": "Legacy setting — products are filled from featured handles, collection, then catalog." },
     { "type": "range", "id": "products_to_show", "min": 4, "max": 16, "step": 2, "default": 8, "label": "Products to show" },
     { "type": "checkbox", "id": "show_view_all", "label": "Show view all link", "default": true },
     { "type": "url", "id": "view_all_link", "label": "View all link override" },
