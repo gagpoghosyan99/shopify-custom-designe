@@ -6,7 +6,22 @@
   if compare_at > variant.price
     assign on_sale = true
   endif
+
+  assign row_limit = section.settings.row_products_limit | default: 8
+  assign similar_col = product.collections.first
+  if similar_col == blank or similar_col.products_count == 0
+    assign similar_col = collections.all
+  endif
+
+  assign bestsellers_col = collections['best-sellers']
+  if bestsellers_col == blank or bestsellers_col.products_count == 0
+    assign bestsellers_col = collections.all
+  endif
 -%}
+
+{{ 'novameds-carousel.css' | asset_url | stylesheet_tag }}
+{{ 'novameds-pdp.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'novameds-carousel.js' | asset_url }}" defer></script>
 
 
 <section class="nm-product-page nm-pdp" data-nm-product-page aria-label="Product">
@@ -283,6 +298,78 @@
         </div>
       </div>
     </div>
+
+    <div class="nm-pdp-below" data-nm-pdp-below>
+      {%- if section.settings.show_similar -%}
+        {%- render 'pdp-carousel-row',
+          title: section.settings.similar_title | default: 'Similar products',
+          id: 'pdp-similar',
+          products: similar_col.products,
+          current_product: product,
+          limit: row_limit
+        -%}
+      {%- endif -%}
+
+      {%- if section.settings.show_reviews -%}
+        <section class="nm-pdp-row nm-pdp-reviews" id="pdp-reviews" aria-label="Product reviews">
+          <div class="nm-pdp-row__head">
+            <h2 class="nm-pdp-row__title">{{ section.settings.reviews_title | default: 'Customer reviews' }}</h2>
+          </div>
+          <div class="nm-pdp-reviews__track" role="list">
+            {%- assign review_blocks = section.blocks | where: 'type', 'review' -%}
+            {%- if review_blocks.size > 0 -%}
+              {%- for block in review_blocks -%}
+                <article class="nm-pdp-review-card" role="listitem" {{ block.shopify_attributes }}>
+                  <div class="nm-pdp-review-card__stars" aria-hidden="true">★★★★★</div>
+                  <blockquote class="nm-pdp-review-card__quote">“{{ block.settings.quote | replace: '[product]', product.title }}”</blockquote>
+                  <p class="nm-pdp-review-card__author">{{ block.settings.author | default: 'Verified buyer' }}</p>
+                </article>
+              {%- endfor -%}
+            {%- else -%}
+              <article class="nm-pdp-review-card" role="listitem">
+                <div class="nm-pdp-review-card__stars" aria-hidden="true">★★★★★</div>
+                <blockquote class="nm-pdp-review-card__quote">“{{ section.settings.review_default_1 | replace: '[product]', product.title }}”</blockquote>
+                <p class="nm-pdp-review-card__author">Sarah M. · Verified buyer</p>
+              </article>
+              <article class="nm-pdp-review-card" role="listitem">
+                <div class="nm-pdp-review-card__stars" aria-hidden="true">★★★★★</div>
+                <blockquote class="nm-pdp-review-card__quote">“{{ section.settings.review_default_2 | replace: '[product]', product.title }}”</blockquote>
+                <p class="nm-pdp-review-card__author">James L. · Verified buyer</p>
+              </article>
+              <article class="nm-pdp-review-card" role="listitem">
+                <div class="nm-pdp-review-card__stars" aria-hidden="true">★★★★★</div>
+                <blockquote class="nm-pdp-review-card__quote">“{{ section.settings.review_default_3 | replace: '[product]', product.title }}”</blockquote>
+                <p class="nm-pdp-review-card__author">Priya K. · Verified buyer</p>
+              </article>
+            {%- endif -%}
+          </div>
+        </section>
+      {%- endif -%}
+
+      {%- if section.settings.show_bestsellers -%}
+        {%- render 'pdp-carousel-row',
+          title: section.settings.bestsellers_title | default: 'Best sellers',
+          id: 'pdp-bestsellers',
+          products: bestsellers_col.products,
+          current_product: blank,
+          limit: row_limit
+        -%}
+      {%- endif -%}
+
+      {%- if section.settings.show_article -%}
+        <article class="nm-pdp-article" id="pdp-article">
+          <p class="nm-pdp-article__eyebrow">{{ section.settings.article_eyebrow | default: 'Product guide' }}</p>
+          <h2 class="nm-pdp-article__title">{{ section.settings.article_title | default: product.title }}</h2>
+          <div class="nm-pdp-article__body rte">
+            {%- if product.description != blank -%}
+              {{ product.description }}
+            {%- else -%}
+              {{ section.settings.article_fallback | replace: '[product]', product.title }}
+            {%- endif -%}
+          </div>
+        </article>
+      {%- endif -%}
+    </div>
   </div>
 
   <div class="nm-pdp-sticky" data-nm-checkout-bar aria-label="Sticky checkout bar">
@@ -495,7 +582,23 @@
     { "type": "text", "id": "demo_benefit_1", "label": "Demo benefit 1 (when no blocks)", "default": "Pharmacist-reviewed, science-backed formulation" },
     { "type": "text", "id": "demo_benefit_2", "label": "Demo benefit 2 (when no blocks)", "default": "Made for daily energy, immunity & wellness support" },
     { "type": "text", "id": "demo_benefit_3", "label": "Demo benefit 3 (when no blocks)", "default": "Fast shipping + secure checkout" },
-    { "type": "text", "id": "demo_benefit_4", "label": "Demo benefit 4 (when no blocks)", "default": "30-day satisfaction guarantee" }
+    { "type": "text", "id": "demo_benefit_4", "label": "Demo benefit 4 (when no blocks)", "default": "30-day satisfaction guarantee" },
+
+    { "type": "header", "content": "Below product rows" },
+    { "type": "checkbox", "id": "show_similar", "label": "Show similar products row", "default": true },
+    { "type": "text", "id": "similar_title", "label": "Similar products title", "default": "Similar products" },
+    { "type": "checkbox", "id": "show_reviews", "label": "Show product reviews row", "default": true },
+    { "type": "text", "id": "reviews_title", "label": "Reviews title", "default": "Customer reviews" },
+    { "type": "textarea", "id": "review_default_1", "label": "Default review 1 ([product] = product title)", "default": "I noticed a real difference within two weeks of using [product]. Quality feels premium and my routine finally sticks." },
+    { "type": "textarea", "id": "review_default_2", "label": "Default review 2", "default": "[product] fits perfectly into my daily wellness stack — exactly what my pharmacist suggested." },
+    { "type": "textarea", "id": "review_default_3", "label": "Default review 3", "default": "Fast shipping, sealed packaging, and [product] delivers consistent results I can trust." },
+    { "type": "checkbox", "id": "show_bestsellers", "label": "Show best sellers row", "default": true },
+    { "type": "text", "id": "bestsellers_title", "label": "Best sellers title", "default": "Best sellers" },
+    { "type": "range", "id": "row_products_limit", "label": "Products per row", "min": 4, "max": 12, "step": 2, "default": 8 },
+    { "type": "checkbox", "id": "show_article", "label": "Show product article", "default": true },
+    { "type": "text", "id": "article_eyebrow", "label": "Article eyebrow", "default": "Product guide" },
+    { "type": "text", "id": "article_title", "label": "Article title override (blank = product title)" },
+    { "type": "richtext", "id": "article_fallback", "label": "Article fallback (if no product description)", "default": "<p>Learn how [product] supports your daily wellness routine with pharmacist-trusted quality and transparent ingredients.</p>" }
   ],
   "blocks": [
     {
@@ -511,6 +614,14 @@
       "settings": [
         { "type": "text", "id": "question", "label": "Question", "default": "How do I cancel?" },
         { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>Cancel anytime from your account portal. Contact support if you need help.</p>" }
+      ]
+    },
+    {
+      "type": "review",
+      "name": "Product review",
+      "settings": [
+        { "type": "textarea", "id": "quote", "label": "Review quote ([product] = product title)", "default": "Great quality — [product] is now part of my daily routine." },
+        { "type": "text", "id": "author", "label": "Author", "default": "Verified buyer" }
       ]
     }
   ],

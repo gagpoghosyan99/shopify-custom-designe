@@ -885,19 +885,25 @@
   margin-inline: auto;
 }
 
-/* Desktop PDP: single page scroll (no nested scroll panel) */
+/* Desktop PDP: sticky gallery + scrolling info column */
 @media (min-width: 991px) {
   .nm-product-layout {
     display: grid !important;
-    grid-template-columns: minmax(0, 1.1fr) minmax(380px, 520px) !important;
-    gap: 48px !important;
+    grid-template-columns: minmax(0, 1.08fr) minmax(400px, 500px) !important;
+    gap: clamp(2rem, 4vw, 3.5rem) !important;
     align-items: start !important;
+  }
+
+  .nm-product-media {
+    position: sticky;
+    top: clamp(16px, 3vh, 32px);
+    align-self: start;
   }
 
   .nm-product-info-scroll {
     display: flex !important;
     flex-direction: column !important;
-    gap: 18px !important;
+    gap: 0 !important;
     max-height: none !important;
     overflow: visible !important;
     position: static !important;

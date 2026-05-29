@@ -11,7 +11,13 @@
   "sections": {
     "main": {
       "type": "custom-product",
-      "settings": {}
+      "settings": {
+        "show_similar": true,
+        "show_reviews": true,
+        "show_bestsellers": true,
+        "show_article": true,
+        "row_products_limit": 8
+      }
     }
   },
   "order": ["main"]

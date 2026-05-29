@@ -1,0 +1,29 @@
+{%- liquid
+  assign row_title = title | default: 'Products'
+  assign row_id = id | default: 'pdp-row'
+  assign limit = limit | default: 8
+  assign shown = 0
+-%}
+
+{%- if products != blank -%}
+<section class="nm-pdp-row" id="{{ row_id }}" aria-label="{{ row_title | escape }}">
+  <div class="nm-pdp-row__head">
+    <h2 class="nm-pdp-row__title">{{ row_title }}</h2>
+  </div>
+  <div class="nm-pdp-row__carousel" data-nm-goals-carousel>
+    <div class="nm-pdp-row__track nm-goals__track nm-goals__track--swipe" data-nm-goals-track role="region" aria-label="{{ row_title | escape }}" tabindex="0">
+      {%- for product in products -%}
+        {%- if shown >= limit -%}{%- break -%}{%- endif -%}
+        {%- if current_product != blank and product.id == current_product.id -%}{%- continue -%}{%- endif -%}
+        {%- render 'novameds-product-offer-card',
+          product: product,
+          show_compare: true,
+          show_ratings: true,
+          button_text: 'Shop now'
+        -%}
+        {%- assign shown = shown | plus: 1 -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{%- endif -%}
