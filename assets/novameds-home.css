@@ -636,28 +636,28 @@
   position: relative;
   inset: auto;
   width: 100%;
-  aspect-ratio: 16 / 9;
-  max-height: min(56vw, 720px);
+  aspect-ratio: var(--nm-hero-banner-ratio, 16 / 9);
+  max-height: min(56vw, var(--nm-hero-banner-max-h, 520px));
 }
 
 .nm-vnext-hero--banner-only .nm-vnext-hero__photo-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center center;
+  object-position: var(--nm-hero-banner-focus, center center);
   display: block;
 }
 
 @media (max-width: 767px) {
   .nm-vnext-hero--banner-only .nm-vnext-hero__photo {
-    aspect-ratio: 16 / 10;
+    aspect-ratio: var(--nm-hero-banner-ratio-mobile, 16 / 10);
     max-height: none;
     height: auto;
   }
 
   .nm-vnext-hero--banner-only .nm-vnext-hero__photo-img {
     object-fit: cover;
-    object-position: center 42%;
+    object-position: var(--nm-hero-banner-focus, center 42%);
   }
 }
 

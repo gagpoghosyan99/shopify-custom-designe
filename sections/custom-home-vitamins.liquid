@@ -6,11 +6,15 @@
   assign show_compare = section.settings.show_compare_price
   assign show_ratings = section.settings.show_ratings
   assign button_text = section.settings.button_text | default: 'Shop now'
+  assign filter_kw = section.settings.filter_tag | strip | downcase
 
   assign col = section.settings.collection
   assign handle_fallback = section.settings.collection_handle | default: 'vitamins'
   if col == blank or col.products_count == 0
     assign col = collections[handle_fallback]
+  endif
+  if col == blank or col.products_count == 0
+    assign col = collections['best-sellers']
   endif
   if col == blank or col.products_count == 0
     assign col = collections.all
@@ -53,18 +57,45 @@
         tabindex="0"
       >
         {%- assign shown = 0 -%}
-        {%- if col != blank -%}
+        {%- assign shown_ids = '' -%}
+
+        {%- if section.settings.featured_products != blank and section.settings.featured_products.size > 0 -%}
+          {%- for product in section.settings.featured_products limit: limit -%}
+            {%- render 'novameds-product-offer-card',
+              product: product,
+              show_compare: show_compare,
+              show_ratings: show_ratings,
+              button_text: button_text
+            -%}
+            {%- assign shown = shown | plus: 1 -%}
+            {%- assign shown_ids = shown_ids | append: product.id | append: ',' -%}
+          {%- endfor -%}
+        {%- endif -%}
+
+        {%- if col != blank and shown < limit -%}
           {%- for product in col.products -%}
             {%- if shown >= limit -%}{%- break -%}{%- endif -%}
+            {%- assign id_token = product.id | append: ',' -%}
+            {%- if shown_ids contains id_token -%}{%- continue -%}{%- endif -%}
             {%- assign include = true -%}
-            {%- if section.settings.filter_tag != blank -%}
+            {%- if filter_kw != blank -%}
               {%- assign include = false -%}
-              {%- if product.tags contains section.settings.filter_tag -%}
+              {%- if product.tags contains filter_kw -%}
                 {%- assign include = true -%}
               {%- else -%}
-                {%- assign kw = section.settings.filter_tag | downcase -%}
                 {%- assign pt = product.title | downcase -%}
-                {%- if pt contains kw or pt contains 'vitamin' -%}
+                {%- if pt contains filter_kw
+                  or pt contains 'vitamin'
+                  or pt contains 'b-complex'
+                  or pt contains 'b complex'
+                  or pt contains 'multivitamin'
+                  or pt contains 'omega'
+                  or pt contains 'probiotic'
+                  or pt contains 'collagen'
+                  or pt contains 'mineral'
+                  or pt contains 'd3'
+                  or pt contains 'daily essential'
+                -%}
                   {%- assign include = true -%}
                 {%- endif -%}
               {%- endif -%}
@@ -77,12 +108,29 @@
                 button_text: button_text
               -%}
               {%- assign shown = shown | plus: 1 -%}
+              {%- assign shown_ids = shown_ids | append: product.id | append: ',' -%}
             {%- endif -%}
           {%- endfor -%}
         {%- endif -%}
 
+        {%- if col != blank and shown < limit and filter_kw != blank -%}
+          {%- for product in col.products -%}
+            {%- if shown >= limit -%}{%- break -%}{%- endif -%}
+            {%- assign id_token = product.id | append: ',' -%}
+            {%- if shown_ids contains id_token -%}{%- continue -%}{%- endif -%}
+            {%- render 'novameds-product-offer-card',
+              product: product,
+              show_compare: show_compare,
+              show_ratings: show_ratings,
+              button_text: button_text
+            -%}
+            {%- assign shown = shown | plus: 1 -%}
+            {%- assign shown_ids = shown_ids | append: product.id | append: ',' -%}
+          {%- endfor -%}
+        {%- endif -%}
+
         {%- if shown == 0 and request.design_mode -%}
-          <p class="nm-demo-note">Assign a vitamins collection or add products tagged “vitamins”.</p>
+          <p class="nm-demo-note">Assign a vitamins collection, pick featured products, or add products tagged “vitamins”.</p>
         {%- endif -%}
       </div>
 
@@ -104,8 +152,9 @@
     { "type": "text", "id": "title", "label": "Title", "default": "Vitamins & Daily Essentials" },
     { "type": "textarea", "id": "subtitle", "label": "Subtitle", "default": "Pharmacist-trusted formulas for energy, immunity, and everyday wellness." },
     { "type": "collection", "id": "collection", "label": "Vitamins collection" },
+    { "type": "product_list", "id": "featured_products", "label": "Featured products (optional)", "limit": 16, "info": "Hand-pick products for this row. Collection products fill remaining slots." },
     { "type": "text", "id": "collection_handle", "label": "Collection handle fallback", "default": "vitamins" },
-    { "type": "text", "id": "filter_tag", "label": "Filter tag/keyword", "default": "vitamins", "info": "When using All Products, only show matching items." },
+    { "type": "text", "id": "filter_tag", "label": "Filter tag/keyword", "default": "vitamins", "info": "Prefer vitamin-related products first; fills with more items if needed." },
     { "type": "range", "id": "products_to_show", "min": 4, "max": 16, "step": 2, "default": 8, "label": "Products to show" },
     { "type": "checkbox", "id": "show_view_all", "label": "Show view all link", "default": true },
     { "type": "url", "id": "view_all_link", "label": "View all link override" },
