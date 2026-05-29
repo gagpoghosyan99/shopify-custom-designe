@@ -622,6 +622,45 @@
   align-items: stretch;
 }
 
+/* Image-only premium banner (text baked into artwork) */
+.nm-vnext-hero--banner-only {
+  min-height: 0;
+  max-height: none;
+  display: block;
+  overflow: hidden;
+  border-radius: 0;
+  background: #031225;
+}
+
+.nm-vnext-hero--banner-only .nm-vnext-hero__photo {
+  position: relative;
+  inset: auto;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  max-height: min(56vw, 720px);
+}
+
+.nm-vnext-hero--banner-only .nm-vnext-hero__photo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+}
+
+@media (max-width: 767px) {
+  .nm-vnext-hero--banner-only .nm-vnext-hero__photo {
+    aspect-ratio: 16 / 10;
+    max-height: none;
+    height: auto;
+  }
+
+  .nm-vnext-hero--banner-only .nm-vnext-hero__photo-img {
+    object-fit: cover;
+    object-position: center 42%;
+  }
+}
+
 .nm-vnext-hero--photo .nm-container.nm-vnext-hero__grid {
   width: 100%;
   align-content: center;
@@ -1526,6 +1565,10 @@
   padding-bottom: 1.25rem;
 }
 
+.template-index #home-hero.nm-vnext-hero--banner-only {
+  padding-bottom: 0;
+}
+
 .template-index .nm-vnext-hero--photo .nm-container.nm-vnext-hero__grid {
   padding-bottom: 2rem;
 }
@@ -1537,6 +1580,10 @@
 @media (max-width: 767px) {
   .template-index #home-hero.nm-vnext-hero {
     padding-bottom: 0.5rem;
+  }
+
+  .template-index #home-hero.nm-vnext-hero--banner-only {
+    padding-bottom: 0;
   }
 
   .template-index .nm-vnext-hero--photo .nm-container.nm-vnext-hero__grid {

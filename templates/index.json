@@ -11,44 +11,14 @@
   "sections": {
     "hero": {
       "type": "custom-home-hero",
-      "blocks": {
-        "mt1": {
-          "type": "micro_trust",
-          "settings": {
-            "icon": "🛡️",
-            "label": "Licensed Products"
-          }
-        },
-        "mt2": {
-          "type": "micro_trust",
-          "settings": {
-            "icon": "✓",
-            "label": "Pharmacist Approved"
-          }
-        },
-        "mt3": {
-          "type": "micro_trust",
-          "settings": {
-            "icon": "🚚",
-            "label": "Worldwide Shipping"
-          }
-        }
-      },
-      "block_order": [
-        "mt1",
-        "mt2",
-        "mt3"
-      ],
       "settings": {
-        "kicker": "Premium, pharmacist-first care",
-        "heading": "Premium Wellness & Healthcare Solutions",
-        "subheading": "Trusted products for modern health, performance, and vitality — backed by science and pharmacist-first care.",
-        "primary_label": "Shop Now",
-        "secondary_label": "Best Sellers",
-        "secondary_link": "/collections/best-sellers",
-        "tertiary_label": "Doctor Recommended",
-        "tertiary_link": "/collections/all",
-        "show_micro_trust": true
+        "kicker": "",
+        "heading": "",
+        "subheading": "",
+        "primary_label": "",
+        "secondary_label": "",
+        "tertiary_label": "",
+        "show_micro_trust": false
       }
     },
     "bestsellers": {
