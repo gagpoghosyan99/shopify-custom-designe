@@ -19,10 +19,12 @@
 {%- if use_category_rows -%}
   {{ 'novameds-collection-row.css' | asset_url | stylesheet_tag }}
   <script src="{{ 'novameds-collection-row.js' | asset_url }}" defer></script>
+{%- else -%}
+  {{ 'novameds-collection-row.css' | asset_url | stylesheet_tag }}
 {%- endif -%}
 
-<section class="nm-section nm-section--collection">
-  <div class="nm-container">
+<section class="nm-section nm-section--collection nm-collection-fs">
+  <div class="nm-collection-fs__shell">
     <div class="nm-collection-toolbar nm-animate">
       <p class="nm-collection-toolbar__count">{{ collection.products_count }} {{ 'collections.general.products' | t }}</p>
       <a href="{{ routes.search_url }}" class="nm-btn nm-btn--secondary nm-btn--sm" data-nm-search-open style="padding:0.5rem 1rem;font-size:0.8125rem;">Search catalog</a>

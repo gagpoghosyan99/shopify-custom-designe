@@ -6,6 +6,11 @@
   color: #fff;
   background: linear-gradient(108deg, #061528 0%, #0a2540 42%, #0c4a5c 78%, #0d6b78 100%);
   isolation: isolate;
+  min-height: calc(100svh - var(--nm-hdr-header-h, 84px));
+}
+
+body.template-collection:has(.nm-hdr__promo) .nm-coll-banner {
+  min-height: calc(100svh - var(--nm-hdr-promo-h, 64px) - var(--nm-hdr-header-h, 84px));
 }
 
 .nm-coll-banner__bg {
@@ -80,9 +85,13 @@
   grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
   gap: clamp(1rem, 3vw, 2.5rem);
   align-items: center;
-  min-height: clamp(360px, 38vw, 460px);
-  max-height: 460px;
-  padding: clamp(1.5rem, 3vw, 2.25rem) 0;
+  min-height: calc(100svh - var(--nm-hdr-header-h, 84px) - 2rem);
+  max-height: none;
+  padding: clamp(1.5rem, 3vw, 2.25rem) clamp(1.25rem, 3vw, 3rem);
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 .nm-coll-banner__copy {
