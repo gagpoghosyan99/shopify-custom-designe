@@ -29,10 +29,7 @@
   </div>
   <div class="nm-product-card-v2__body">
     <h3 class="nm-product-card-v2__title"><a href="{{ product.url }}">{{ product.title }}</a></h3>
-    <div class="nm-product-card-v2__rating" aria-label="Rated 4.9 out of 5">
-      <span class="nm-stars">★★★★★</span>
-      <span>4.9</span>
-    </div>
+    {%- render 'product-rating', product: product, show_ratings: true, style: 'card', fallback: true -%}
     <p class="nm-product-card-v2__price">
       {{ product.price | money }}
       {%- if on_sale -%}

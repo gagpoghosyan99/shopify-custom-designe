@@ -1,0 +1,79 @@
+{%- liquid
+  assign is_demo = demo | default: false
+  assign show_compare = show_compare | default: true
+  assign show_ratings = show_ratings | default: true
+  assign button_text = button_text | default: 'Shop now'
+
+  assign card_title = title
+  assign card_url = '#'
+  assign price_cents = price
+  assign compare_cents = compare_at
+  assign rating_value = rating
+  assign reviews_count = reviews
+  assign ribbon_text = ribbon
+
+  if is_demo == false and product != blank
+    assign card_title = product.title
+    assign card_url = product.url
+    assign price_cents = product.price
+    assign compare_cents = product.compare_at_price
+    assign ribbon_text = ''
+    if product.compare_at_price > product.price
+      assign ribbon_text = 'Limited Offer'
+    endif
+  endif
+-%}
+
+<article class="nm-offer" {% if is_demo %}data-demo="true"{% endif %}>
+  <a class="nm-offer__media" href="{{ card_url }}" aria-label="{{ card_title | escape }}">
+    {%- if ribbon_text != blank -%}
+      <span class="nm-offer__ribbon" aria-hidden="true">{{ ribbon_text }}</span>
+    {%- endif -%}
+
+    {%- if is_demo -%}
+      <div class="nm-offer__ph" role="img" aria-label="{{ card_title | escape }}"></div>
+    {%- else -%}
+      {%- if product.featured_image != blank -%}
+        {{ product.featured_image
+          | image_url: width: 760
+          | image_tag:
+            widths: '260, 330, 420, 560, 660, 760',
+            sizes: '(min-width: 1200px) 330px, (min-width: 900px) 300px, 82vw',
+            loading: 'lazy',
+            decoding: 'async',
+            class: 'nm-offer__img',
+            alt: product.featured_image.alt | default: product.title
+        }}
+      {%- else -%}
+        <div class="nm-offer__ph" role="img" aria-label="{{ card_title | escape }}"></div>
+      {%- endif -%}
+    {%- endif -%}
+  </a>
+
+  <div class="nm-offer__body">
+    <h3 class="nm-offer__title">
+      <a href="{{ card_url }}">{{ card_title }}</a>
+    </h3>
+
+    {%- render 'product-rating',
+      product: product,
+      show_ratings: show_ratings,
+      style: 'offer',
+      rating: rating_value,
+      reviews: reviews_count,
+      fallback: true
+    -%}
+
+    <div class="nm-offer__price">
+      <span class="nm-offer__now">{{ price_cents | money }}</span>
+      {%- if show_compare and compare_cents != blank and compare_cents > price_cents -%}
+        <span class="nm-offer__was">{{ compare_cents | money }}</span>
+      {%- endif -%}
+    </div>
+
+    <a class="nm-offer__btn" href="{{ card_url }}">
+      <span>{{ button_text }}</span>
+    </a>
+  </div>
+</article>
+

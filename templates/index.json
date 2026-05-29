@@ -12,6 +12,7 @@
     "hero": {
       "type": "custom-home-hero",
       "settings": {
+        "use_default_banner": true,
         "kicker": "",
         "heading": "",
         "subheading": "",
@@ -25,7 +26,8 @@
       "type": "custom-product-grid",
       "settings": {
         "title": "LET US HELP YOU REACH YOUR HEALTH GOALS !!!",
-        "products_to_show": 12
+        "products_to_show": 12,
+        "show_ratings": true
       }
     },
     "discount": {

@@ -1535,6 +1535,16 @@ body.nm-modal-open {
   margin-bottom: 0.5rem;
 }
 
+.nm-product-card-v2__rating-val {
+  font-weight: 800;
+  color: rgba(0, 23, 47, 0.82);
+}
+
+.nm-product-card-v2__rating-count {
+  color: rgba(0, 23, 47, 0.58);
+  font-weight: 700;
+}
+
 .nm-stars {
   color: #f59e0b;
   letter-spacing: 1px;
