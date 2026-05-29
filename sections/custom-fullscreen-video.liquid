@@ -1,10 +1,12 @@
 {%- liquid
-  assign heading = section.settings.title | default: 'See NovaMeds in Action'
+  assign heading = section.settings.title
   assign sub = section.settings.subheading
   assign btn_label = section.settings.button_label
   assign btn_link = section.settings.button_link | default: routes.all_products_collection_url
   assign external = section.settings.video_url | strip
   assign video_id = blank
+  assign show_overlay = section.settings.show_text_overlay
+  assign enable_sound = section.settings.enable_sound
 
   if external != blank
     if external contains 'youtu.be/'
@@ -35,20 +37,26 @@
   endif
 
   assign show_copy = false
-  if heading != blank or sub != blank or btn_label != blank
-    assign show_copy = true
+  if show_overlay
+    if heading != blank or sub != blank or btn_label != blank or section.settings.eyebrow != blank
+      assign show_copy = true
+    endif
   endif
+
+  assign aria_label = heading | default: 'Brand video'
 -%}
 
 {{ 'novameds-fullscreen-video.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'novameds-fullscreen-video.js' | asset_url }}" defer></script>
 
 <section
-  class="nm-fsvideo{% if section.settings.autoplay %} nm-fsvideo--autoplay{% endif %}"
+  class="nm-fsvideo{% if section.settings.autoplay %} nm-fsvideo--autoplay{% endif %}{% unless show_copy %} nm-fsvideo--clean{% endunless %}"
   id="brand-video"
-  aria-label="{{ heading | escape }}"
+  aria-label="{{ aria_label | escape }}"
   data-nm-fsvideo
+  data-enable-sound="{{ enable_sound }}"
 >
-  <div class="nm-fsvideo__media" aria-hidden="true">
+  <div class="nm-fsvideo__media" aria-hidden="{% if show_copy %}true{% else %}false{% endif %}">
     {%- if has_shopify_video -%}
       {{
         section.settings.video
@@ -65,8 +73,9 @@
       <div class="nm-fsvideo__embed">
         <iframe
           class="nm-fsvideo__iframe"
-          src="https://www.youtube.com/embed/{{ video_id }}?autoplay=1&mute=1&loop=1&playlist={{ video_id }}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3"
-          title="{{ heading | escape }}"
+          data-nm-fsvideo-yt
+          src="https://www.youtube.com/embed/{{ video_id }}?autoplay=1&mute=1&loop=1&playlist={{ video_id }}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3&enablejsapi=1"
+          title="{{ aria_label | escape }}"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           referrerpolicy="strict-origin-when-cross-origin"
           loading="lazy"
@@ -82,14 +91,29 @@
           loading: 'lazy',
           decoding: 'async',
           class: 'nm-fsvideo__poster',
-          alt: heading
+          alt: aria_label
       }}
     {%- else -%}
       <div class="nm-fsvideo__poster-ph" role="img" aria-label="Video placeholder"></div>
     {%- endif -%}
-
-    <div class="nm-fsvideo__shade"></div>
   </div>
+
+  {%- if enable_sound and has_media -%}
+    <button
+      type="button"
+      class="nm-fsvideo__sound"
+      data-nm-fsvideo-sound
+      aria-label="Turn sound on"
+      aria-pressed="false"
+    >
+      <span class="nm-fsvideo__sound-icon nm-fsvideo__sound-icon--off" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M11 5L6 9H3v6h3l5 4V5z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M15.5 8.5a5 5 0 010 7M18 6a8.5 8.5 0 010 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </span>
+      <span class="nm-fsvideo__sound-icon nm-fsvideo__sound-icon--on" aria-hidden="true" hidden>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M11 5L6 9H3v6h3l5 4V5z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M16 9l5 5M21 9l-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </span>
+    </button>
+  {%- endif -%}
 
   {%- if show_copy -%}
     <div class="nm-fsvideo__content">
@@ -122,12 +146,25 @@
     { "type": "video", "id": "video", "label": "Shopify-hosted video (recommended)" },
     { "type": "text", "id": "video_url", "label": "YouTube URL (optional)", "info": "Used if no Shopify video is uploaded." },
     { "type": "image_picker", "id": "poster", "label": "Poster / fallback image" },
-    { "type": "checkbox", "id": "autoplay", "label": "Autoplay (muted)", "default": true },
+    { "type": "checkbox", "id": "autoplay", "label": "Autoplay", "default": true },
     { "type": "checkbox", "id": "loop", "label": "Loop video", "default": true },
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Watch our story" },
-    { "type": "text", "id": "title", "label": "Heading", "default": "See NovaMeds in Action" },
-    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Discover how pharmacist-first care, premium formulas, and real customer results come together." },
-    { "type": "text", "id": "button_label", "label": "Button label", "default": "Explore products" },
+    {
+      "type": "checkbox",
+      "id": "enable_sound",
+      "label": "Show sound button",
+      "default": true,
+      "info": "Video starts muted (required for autoplay). Visitors can tap the button to turn sound on."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_text_overlay",
+      "label": "Show text overlay",
+      "default": false
+    },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+    { "type": "text", "id": "title", "label": "Heading" },
+    { "type": "textarea", "id": "subheading", "label": "Subheading" },
+    { "type": "text", "id": "button_label", "label": "Button label" },
     { "type": "url", "id": "button_link", "label": "Button link" }
   ],
   "presets": [{ "name": "Fullscreen video" }]
