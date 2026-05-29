@@ -168,7 +168,6 @@
         "title": "Sports Nutrition & Performance",
         "subtitle": "Fuel recovery, strength, and endurance with pharmacist-reviewed performance essentials.",
         "collection_handle": "best-sellers",
-        "filter_tag": "sports",
         "products_to_show": 8,
         "show_view_all": true,
         "show_ratings": true
@@ -194,7 +193,6 @@
         "title": "Recovery, Sleep & Wellness",
         "subtitle": "Rest deeper, recover faster, and support daily balance with pharmacist-trusted essentials.",
         "collection_handle": "all",
-        "filter_tag": "wellness",
         "products_to_show": 8,
         "show_view_all": true,
         "show_ratings": true
