@@ -1503,6 +1503,11 @@ body.nm-modal-open {
   z-index: 2;
 }
 
+.nm-product-card-v2__wish.is-active {
+  color: #dc2626;
+  background: rgba(220, 38, 38, 0.08);
+}
+
 .nm-product-card-v2__body {
   display: flex;
   flex-direction: column;

@@ -197,9 +197,9 @@
   function initWishlist(page) {
     var btn = page.querySelector('[data-nm-pdp-wish]');
     if (!btn) return;
-
     var variantId = btn.getAttribute('data-variant-id');
     if (!variantId) return;
+    var cfg = window.NovaMeds || {};
 
     function setSaved(saved) {
       btn.classList.toggle('is-active', saved);
@@ -217,9 +217,7 @@
 
     fetch('/cart.js', { credentials: 'same-origin', headers: { Accept: 'application/json' } })
       .then(function (res) { return res.json(); })
-      .then(function (cart) {
-        setSaved(!!findCartLine(cart));
-      })
+      .then(function (cart) { setSaved(!!findCartLine(cart)); })
       .catch(function () {});
 
     btn.addEventListener('click', function () {
@@ -231,10 +229,7 @@
           .then(function (res) { return res.json(); })
           .then(function (cart) {
             var line = findCartLine(cart);
-            if (!line) {
-              setSaved(false);
-              return null;
-            }
+            if (!line) { setSaved(false); return null; }
             return fetch('/cart/change.js', {
               method: 'POST',
               credentials: 'same-origin',
@@ -243,50 +238,31 @@
             }).then(function (res) { return res.json(); });
           })
           .then(function (cart) {
-            if (cart && window.NovaMeds && window.NovaMeds.closePanels) {
-              /* badge refresh via cart reload */
-            }
+            if (cart && cfg.updateCartBadges) cfg.updateCartBadges(cart.item_count || 0);
             setSaved(false);
-            if (typeof fetch === 'function') {
-              fetch('/cart.js', { credentials: 'same-origin', headers: { Accept: 'application/json' } })
-                .then(function (r) { return r.json(); })
-                .then(function (c) {
-                  document.querySelectorAll('[data-nm-header-cart-count]').forEach(function (el) {
-                    var n = c.item_count || 0;
-                    el.textContent = n > 0 ? String(n) : '';
-                    el.style.display = n > 0 ? '' : 'none';
-                  });
-                })
-                .catch(function () {});
-            }
           })
           .finally(function () { btn.disabled = false; });
         return;
       }
 
-      fetch('/cart/add.js', {
-        method: 'POST',
-        credentials: 'same-origin',
-        headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: parseInt(variantId, 10), quantity: 1 }),
-      })
-        .then(function (res) {
-          if (!res.ok) throw new Error('Add failed');
-          return res.json();
-        })
-        .then(function () {
-          setSaved(true);
-          return fetch('/cart.js', { credentials: 'same-origin', headers: { Accept: 'application/json' } });
-        })
-        .then(function (res) { return res.json(); })
+      var addPromise = cfg.addToCart
+        ? cfg.addToCart(variantId, 1)
+        : fetch('/cart/add.js', {
+            method: 'POST',
+            credentials: 'same-origin',
+            headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: parseInt(variantId, 10), quantity: 1 }),
+          }).then(function (res) {
+            if (!res.ok) throw new Error('Add failed');
+            return fetch('/cart.js', { credentials: 'same-origin', headers: { Accept: 'application/json' } });
+          }).then(function (res) { return res.json(); });
+
+      addPromise
         .then(function (cart) {
-          document.querySelectorAll('[data-nm-header-cart-count]').forEach(function (el) {
-            var n = cart.item_count || 0;
-            el.textContent = n > 0 ? String(n) : '';
-            el.style.display = n > 0 ? '' : 'none';
-          });
-          var label = document.querySelector('[data-nm-cart-count-label]');
-          if (label) label.textContent = cart.item_count > 0 ? '(' + cart.item_count + ')' : '';
+          setSaved(true);
+          if (cfg.updateCartBadges) cfg.updateCartBadges(cart.item_count || 0);
+          if (cfg.renderCart) cfg.renderCart(cart);
+          if (cfg.openPanel) cfg.openPanel('cart');
         })
         .catch(function () {})
         .finally(function () { btn.disabled = false; });
@@ -303,6 +279,50 @@
           .then(function (cart) { setSaved(!!findCartLine(cart)); })
           .catch(function () {});
       }
+    });
+  }
+
+  function initProductForm(page) {
+    var form = page.querySelector('#nm-product-form');
+    if (!form) return;
+    var cfg = window.NovaMeds || {};
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var idInput = form.querySelector('[data-nm-variant-id]');
+      var atcBtn = form.querySelector('button[name="add"]');
+      if (!idInput || !idInput.value) return;
+      if (atcBtn) { atcBtn.disabled = true; atcBtn.textContent = 'Adding…'; }
+
+      var addPromise = cfg.addToCart
+        ? cfg.addToCart(idInput.value, 1)
+        : fetch('/cart/add.js', {
+            method: 'POST',
+            credentials: 'same-origin',
+            headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: parseInt(idInput.value, 10), quantity: 1 }),
+          }).then(function (res) {
+            if (!res.ok) throw new Error('Add failed');
+            return fetch('/cart.js', { credentials: 'same-origin', headers: { Accept: 'application/json' } });
+          }).then(function (res) { return res.json(); });
+
+      addPromise
+        .then(function (cart) {
+          if (cfg.updateCartBadges) cfg.updateCartBadges(cart.item_count || 0);
+          if (cfg.renderCart) cfg.renderCart(cart);
+          if (cfg.openPanel) cfg.openPanel('cart');
+          if (atcBtn) {
+            atcBtn.textContent = 'Added ✓';
+            setTimeout(function () {
+              atcBtn.disabled = false;
+              atcBtn.textContent = 'Add to cart';
+            }, 1400);
+          }
+        })
+        .catch(function () {
+          if (atcBtn) { atcBtn.disabled = false; atcBtn.textContent = 'Add to cart'; }
+          form.submit();
+        });
     });
   }
 
@@ -327,6 +347,7 @@
     initInfoScroll(root);
     initReviewsLoop(root);
     initWishlist(root);
+    initProductForm(root);
   }
 
   function boot() {

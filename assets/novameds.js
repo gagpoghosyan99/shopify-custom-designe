@@ -69,16 +69,19 @@
     hideEl(cartDrawer);
     hideEl(overlay);
     activeModal = null;
+    lockBody(false);
   }
 
   function closeAll() {
     closePanels();
     closeMenuDrawer();
-    lockBody(false);
   }
 
   function openPanel(name) {
-    closeAll();
+    closeMenuDrawer();
+    hideEl(searchModal);
+    hideEl(cartDrawer);
+    hideEl(overlay);
     activeModal = name;
     showEl(overlay);
     lockBody(true);
@@ -147,7 +150,28 @@
         el.style.display = 'none';
       }
     });
+    qsa('[data-nm-mobile-cart-count]').forEach(function (el) {
+      if (count > 0) {
+        el.textContent = String(count);
+        el.style.display = '';
+      } else {
+        el.textContent = '';
+        el.style.display = 'none';
+      }
+    });
     if (cartCountLabel) cartCountLabel.textContent = count > 0 ? '(' + count + ')' : '';
+  }
+
+  function addToCart(variantId, quantity) {
+    return fetch('/cart/add.js', {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: parseInt(variantId, 10), quantity: quantity || 1 }),
+    }).then(function (res) {
+      if (!res.ok) throw new Error('Add failed');
+      return fetchCart();
+    });
   }
 
   function cartImageUrl(url) {
@@ -213,6 +237,7 @@
   function renderCart(cart) {
     if (!cartBody) return;
     updateCartBadges(cart.item_count || 0);
+    syncCardWishStates(cart);
     if (!cart.items || cart.items.length === 0) {
       cartBody.innerHTML =
         '<div class="nm-cart-drawer__empty"><p>Your bag is empty</p><a href="' +
@@ -259,6 +284,66 @@
       if (!res.ok) throw new Error('Cart update failed');
       return res.json();
     });
+  }
+
+  function syncCardWishStates(cart) {
+    var inCart = {};
+    if (cart && cart.items) {
+      cart.items.forEach(function (item) {
+        inCart[String(item.variant_id)] = true;
+      });
+    }
+    qsa('[data-nm-card-wish]').forEach(function (btn) {
+      var vid = btn.getAttribute('data-variant-id');
+      var active = !!inCart[vid];
+      btn.classList.toggle('is-active', active);
+      btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+    });
+  }
+
+  function findCartLineByVariant(cart, variantId) {
+    if (!cart || !cart.items) return null;
+    for (var i = 0; i < cart.items.length; i++) {
+      if (String(cart.items[i].variant_id) === String(variantId)) return cart.items[i];
+    }
+    return null;
+  }
+
+  function toggleCardWish(btn) {
+    var variantId = btn.getAttribute('data-variant-id');
+    if (!variantId) return;
+    btn.disabled = true;
+    var isActive = btn.classList.contains('is-active');
+
+    if (isActive) {
+      fetchCart()
+        .then(function (cart) {
+          var line = findCartLineByVariant(cart, variantId);
+          if (!line) {
+            btn.classList.remove('is-active');
+            btn.setAttribute('aria-pressed', 'false');
+            return null;
+          }
+          return changeLine(line.key, 0);
+        })
+        .then(function (cart) {
+          if (cart) renderCart(cart);
+          else syncCardWishStates({ items: [] });
+        })
+        .catch(function () {})
+        .finally(function () { btn.disabled = false; });
+      return;
+    }
+
+    addToCart(variantId, 1)
+      .then(function (cart) {
+        renderCart(cart);
+        btn.classList.add('is-active');
+        btn.setAttribute('aria-pressed', 'true');
+        openPanel('cart');
+      })
+      .catch(function () {})
+      .finally(function () { btn.disabled = false; });
   }
 
   /* ── Delegated events (cart lines, close, open) ── */
@@ -324,16 +409,7 @@
       btn.disabled = true;
       var label = btn.textContent;
       btn.textContent = 'Adding…';
-      fetch('/cart/add.js', {
-        method: 'POST',
-        credentials: 'same-origin',
-        headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: parseInt(id, 10), quantity: 1 }),
-      })
-        .then(function (res) {
-          if (!res.ok) throw new Error('Add failed');
-          return fetchCart();
-        })
+      addToCart(id, 1)
         .then(function (cart) {
           renderCart(cart);
           openPanel('cart');
@@ -347,12 +423,30 @@
           btn.disabled = false;
           btn.textContent = label;
         });
+      return;
+    }
+    if (t.closest('[data-nm-card-wish]')) {
+      e.preventDefault();
+      e.stopPropagation();
+      toggleCardWish(t.closest('[data-nm-card-wish]'));
     }
   });
 
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') closeAll();
   });
+
+  document.addEventListener(
+    'click',
+    function (e) {
+      if (e.target.closest('[data-nm-cart-close]') || e.target.closest('[data-nm-search-close]')) {
+        e.preventDefault();
+        e.stopPropagation();
+        closeAll();
+      }
+    },
+    true
+  );
 
   qsa('[data-nm-cart-close]').forEach(function (btn) {
     btn.addEventListener('click', function (e) {
@@ -370,31 +464,37 @@
     });
   });
 
-  /* ── FAQ ── */
-  qsa('[data-nm-faq-question]').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      var item = btn.closest('[data-nm-faq-item]');
-      if (!item) return;
-      var wasOpen = item.classList.contains('is-open');
-      item.parentElement.querySelectorAll('[data-nm-faq-item]').forEach(function (el) {
-        el.classList.remove('is-open');
-        var q = qs('[data-nm-faq-question]', el);
-        if (q) q.setAttribute('aria-expanded', 'false');
-      });
-      if (!wasOpen) {
-        item.classList.add('is-open');
-        btn.setAttribute('aria-expanded', 'true');
-      }
+  /* ── FAQ (delegated — works after section reload) ── */
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-nm-faq-question]');
+    if (!btn) return;
+    var item = btn.closest('[data-nm-faq-item]');
+    if (!item || !item.parentElement) return;
+    var wasOpen = item.classList.contains('is-open');
+    item.parentElement.querySelectorAll('[data-nm-faq-item]').forEach(function (el) {
+      el.classList.remove('is-open');
+      var q = qs('[data-nm-faq-question]', el);
+      if (q) q.setAttribute('aria-expanded', 'false');
     });
+    if (!wasOpen) {
+      item.classList.add('is-open');
+      btn.setAttribute('aria-expanded', 'true');
+    }
   });
 
   cfg.closePanels = closePanels;
   cfg.closeAll = closeAll;
+  cfg.openPanel = openPanel;
+  cfg.updateCartBadges = updateCartBadges;
+  cfg.addToCart = addToCart;
+  cfg.fetchCart = fetchCart;
+  cfg.renderCart = renderCart;
 
   /* Initial cart badge from page */
   fetchCart()
     .then(function (cart) {
       updateCartBadges(cart.item_count || 0);
+      syncCardWishStates(cart);
     })
     .catch(function () {});
 })();

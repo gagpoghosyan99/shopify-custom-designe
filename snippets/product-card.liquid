@@ -16,7 +16,18 @@
     {%- if on_sale -%}
       <span class="nm-product-card-v2__badge">Save {{ save_pct }}%</span>
     {%- endif -%}
-    <button type="button" class="nm-product-card-v2__wish" aria-label="Save {{ product.title }}">
+    <button
+      type="button"
+      class="nm-product-card-v2__wish{% if can_quick_add %} is-wish-enabled{% endif %}"
+      {% if can_quick_add %}
+        data-nm-card-wish
+        data-variant-id="{{ variant.id }}"
+        aria-pressed="false"
+      {% else %}
+        hidden
+      {% endif %}
+      aria-label="Save {{ product.title }}"
+    >
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.6l-1-1a5.5 5.5 0 00-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 000-7.8z"/></svg>
     </button>
     <a href="{{ product.url }}" class="nm-product-card-v2__media" tabindex="-1" aria-hidden="true">

@@ -1,0 +1,439 @@
+/* NovaMeds — customer account & auth */
+
+.nm-account-hero {
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+  background: linear-gradient(120deg, #061528 0%, #0a2540 42%, #0c4a5c 78%, #0d6b78 100%);
+}
+
+.nm-account-hero__bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.nm-account-hero__orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(56px);
+  opacity: 0.48;
+}
+
+.nm-account-hero__orb--a {
+  width: 380px;
+  height: 380px;
+  right: 8%;
+  top: 10%;
+  background: radial-gradient(circle, rgba(46, 232, 240, 0.42) 0%, transparent 70%);
+  animation: nm-acc-float 8s ease-in-out infinite;
+}
+
+.nm-account-hero__orb--b {
+  width: 260px;
+  height: 260px;
+  left: 6%;
+  bottom: -40px;
+  background: radial-gradient(circle, rgba(0, 180, 200, 0.28) 0%, transparent 70%);
+  animation: nm-acc-float 10s ease-in-out infinite reverse;
+}
+
+.nm-account-hero__mesh {
+  position: absolute;
+  inset: 0;
+  opacity: 0.1;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.14) 1px, transparent 1px),
+    radial-gradient(circle at 70% 60%, rgba(46, 232, 240, 0.18) 1px, transparent 1px);
+  background-size: 48px 48px, 64px 64px;
+}
+
+@keyframes nm-acc-float {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(12px, -16px); }
+}
+
+.nm-account-hero__inner {
+  position: relative;
+  z-index: 1;
+  padding: clamp(2rem, 4vw, 3rem) 0;
+  min-height: clamp(220px, 28vw, 300px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.nm-account-hero__eyebrow {
+  margin: 0 0 0.5rem;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #2ee8f0;
+}
+
+.nm-account-hero__title {
+  margin: 0;
+  font-size: clamp(1.85rem, 4vw, 2.75rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+}
+
+.nm-account-hero__accent {
+  color: #2ee8f0;
+}
+
+.nm-account-hero__sub {
+  margin: 0.75rem 0 0;
+  max-width: 36rem;
+  font-size: clamp(0.9375rem, 1.4vw, 1.05rem);
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.nm-account {
+  padding: clamp(1.5rem, 4vw, 2.75rem) 0 clamp(3rem, 6vw, 4.5rem);
+  background: linear-gradient(180deg, #f8fbfc 0%, #fff 28%);
+}
+
+.nm-account__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+  gap: clamp(1.25rem, 3vw, 2rem);
+  align-items: start;
+}
+
+.nm-account__grid--single {
+  grid-template-columns: minmax(0, 560px);
+  justify-content: center;
+}
+
+.nm-account__card {
+  background: #fff;
+  border: 1px solid rgba(10, 22, 40, 0.08);
+  border-radius: 20px;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  box-shadow: 0 18px 48px rgba(10, 22, 40, 0.08);
+}
+
+.nm-account__card-title {
+  margin: 0 0 0.35rem;
+  font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: #0a1628;
+}
+
+.nm-account__card-sub {
+  margin: 0 0 1.25rem;
+  color: #64748b;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+}
+
+.nm-account__errors {
+  margin-bottom: 1rem;
+  padding: 0.85rem 1rem;
+  border-radius: 12px;
+  background: rgba(220, 38, 38, 0.08);
+  border: 1px solid rgba(220, 38, 38, 0.2);
+  color: #b91c1c;
+  font-size: 0.875rem;
+}
+
+.nm-account__success {
+  margin-bottom: 1rem;
+  padding: 0.85rem 1rem;
+  border-radius: 12px;
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.22);
+  color: #047857;
+  font-size: 0.875rem;
+}
+
+.nm-account__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+}
+
+.nm-account__label {
+  font-size: 0.8125rem;
+  font-weight: 800;
+  color: #334155;
+  letter-spacing: 0.02em;
+}
+
+.nm-account__field input,
+.nm-account__field select,
+.nm-account__field textarea {
+  width: 100%;
+  min-height: 48px;
+  padding: 0.75rem 0.95rem;
+  border: 1px solid rgba(10, 22, 40, 0.12);
+  border-radius: 12px;
+  font: inherit;
+  color: #0a1628;
+  background: #fff;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.nm-account__field input:focus,
+.nm-account__field select:focus,
+.nm-account__field textarea:focus {
+  outline: none;
+  border-color: rgba(0, 201, 212, 0.55);
+  box-shadow: 0 0 0 3px rgba(0, 201, 212, 0.15);
+}
+
+.nm-account__row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+.nm-account__submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  min-height: 50px;
+  margin-top: 0.35rem;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #00c9d4 0%, #00a8b5 100%);
+  color: #fff;
+  font-weight: 900;
+  font-size: 0.9375rem;
+  cursor: pointer;
+  box-shadow: 0 10px 28px rgba(0, 201, 212, 0.28);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.nm-account__submit:hover {
+  box-shadow: 0 14px 32px rgba(0, 201, 212, 0.34);
+}
+
+.nm-account__submit:active {
+  transform: scale(0.98);
+}
+
+.nm-account__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
+  margin-top: 1rem;
+  font-size: 0.875rem;
+}
+
+.nm-account__links a {
+  color: #00a8b5;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.nm-account__links a:hover {
+  text-decoration: underline;
+}
+
+.nm-account__aside {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.nm-account__panel {
+  padding: 1.1rem 1.15rem;
+  border-radius: 16px;
+  background: #fff;
+  border: 1px solid rgba(10, 22, 40, 0.08);
+  box-shadow: 0 10px 30px rgba(10, 22, 40, 0.05);
+}
+
+.nm-account__panel-title {
+  margin: 0 0 0.65rem;
+  font-size: 0.9375rem;
+  font-weight: 900;
+  color: #0a1628;
+}
+
+.nm-account__perk {
+  display: flex;
+  gap: 0.65rem;
+  align-items: flex-start;
+  padding: 0.55rem 0;
+  border-top: 1px solid rgba(10, 22, 40, 0.06);
+}
+
+.nm-account__perk:first-of-type {
+  border-top: none;
+  padding-top: 0;
+}
+
+.nm-account__perk-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 201, 212, 0.1);
+  color: #00a8b5;
+  flex-shrink: 0;
+}
+
+.nm-account__perk strong {
+  display: block;
+  font-size: 0.8125rem;
+  color: #0a1628;
+}
+
+.nm-account__perk span {
+  display: block;
+  font-size: 0.75rem;
+  color: #64748b;
+  line-height: 1.45;
+  margin-top: 0.1rem;
+}
+
+/* Dashboard */
+.nm-account-dash__welcome {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.nm-account-dash__name {
+  margin: 0;
+  font-size: clamp(1.35rem, 3vw, 1.75rem);
+  font-weight: 900;
+  color: #0a1628;
+}
+
+.nm-account-dash__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.nm-account-dash__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 0 1rem;
+  border-radius: 12px;
+  font-size: 0.8125rem;
+  font-weight: 900;
+  text-decoration: none;
+  border: 1px solid rgba(10, 22, 40, 0.12);
+  color: #0a1628;
+  background: #fff;
+}
+
+.nm-account-dash__btn--primary {
+  background: linear-gradient(135deg, #00c9d4 0%, #00a8b5 100%);
+  border-color: transparent;
+  color: #fff;
+}
+
+.nm-account-dash__stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.nm-account-dash__stat {
+  padding: 1rem;
+  border-radius: 14px;
+  background: linear-gradient(145deg, rgba(0, 201, 212, 0.08), rgba(255, 255, 255, 0.9));
+  border: 1px solid rgba(0, 201, 212, 0.15);
+}
+
+.nm-account-dash__stat strong {
+  display: block;
+  font-size: 1.25rem;
+  color: #0a1628;
+}
+
+.nm-account-dash__stat span {
+  font-size: 0.75rem;
+  color: #64748b;
+  font-weight: 700;
+}
+
+.nm-account-orders {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.nm-account-orders th,
+.nm-account-orders td {
+  padding: 0.85rem 0.65rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(10, 22, 40, 0.08);
+}
+
+.nm-account-orders th {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #64748b;
+}
+
+.nm-account-orders a {
+  color: #00a8b5;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.nm-account-address {
+  padding: 1rem;
+  border-radius: 14px;
+  border: 1px solid rgba(10, 22, 40, 0.08);
+  background: #f8fbfc;
+  margin-bottom: 0.75rem;
+}
+
+.nm-account-address__default {
+  display: inline-block;
+  margin-bottom: 0.35rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+  background: rgba(0, 201, 212, 0.12);
+  color: #007a85;
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.nm-account-address__delete {
+  display: inline;
+}
+
+.nm-account-address__delete-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  color: #dc2626;
+  font-weight: 800;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+@media (max-width: 900px) {
+  .nm-account__grid,
+  .nm-account__row,
+  .nm-account-dash__stats {
+    grid-template-columns: 1fr;
+  }
+}

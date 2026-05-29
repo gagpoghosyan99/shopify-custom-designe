@@ -28,10 +28,9 @@
               </p>
               <div class="nm-account__links" style="margin-top:0.65rem;">
                 <a href="{{ address.url_to_edit }}">Edit</a>
-                <form method="post" action="{{ address.url }}" style="display:inline;">
-                  <input type="hidden" name="_method" value="delete">
-                  <button type="submit" style="background:none;border:none;padding:0;color:#dc2626;font-weight:800;cursor:pointer;">Delete</button>
-                </form>
+                {% form 'customer_address', address, class: 'nm-account-address__delete' %}
+                  <button type="submit" name="delete" class="nm-account-address__delete-btn">Delete</button>
+                {% endform %}
               </div>
             </div>
           {%- endfor -%}
