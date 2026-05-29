@@ -1,0 +1,152 @@
+{%- liquid
+  assign heading = section.settings.heading | default: 'Let Us Help You Reach Your Health Goals!'
+  assign limit = section.settings.limit | default: 10
+  assign show_arrows = section.settings.show_arrows
+  assign enable_mobile_swipe = section.settings.enable_mobile_swipe
+  assign show_compare = section.settings.show_compare_price
+  assign show_ratings = section.settings.show_ratings
+  assign button_text = section.settings.button_text | default: 'Shop now'
+
+  assign coll = section.settings.collection
+  assign products = coll.products
+  assign has_products = false
+  if coll != blank and products.size > 0
+    assign has_products = true
+  endif
+-%}
+
+{{ 'novameds-carousel.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'novameds-carousel.js' | asset_url }}" defer></script>
+
+<section class="nm-goals" data-nm-goals data-section-id="{{ section.id }}">
+  <div class="nm-goals__inner">
+    <header class="nm-goals__head">
+      <h2 class="nm-goals__title">{{ heading }}</h2>
+    </header>
+
+    <div class="nm-goals__carousel" data-nm-goals-carousel>
+      {%- if show_arrows -%}
+        <button
+          class="nm-goals__arrow nm-goals__arrow--prev"
+          type="button"
+          data-nm-goals-prev
+          aria-label="Scroll offers left"
+        >
+          <span aria-hidden="true">‹</span>
+        </button>
+      {%- endif -%}
+
+      <div
+        class="nm-goals__track{% if enable_mobile_swipe %} nm-goals__track--swipe{% endif %}"
+        data-nm-goals-track
+        role="region"
+        aria-label="Health goals product offers"
+        tabindex="0"
+      >
+        {%- if has_products -%}
+          {%- for product in products limit: limit -%}
+            {%- render 'novameds-product-offer-card',
+              product: product,
+              show_compare: show_compare,
+              show_ratings: show_ratings,
+              button_text: button_text
+            -%}
+          {%- endfor -%}
+        {%- else -%}
+          {%- render 'novameds-product-offer-card',
+            demo: true,
+            title: 'Collagen Peptides',
+            price: 3499,
+            compare_at: 4999,
+            rating: 4.8,
+            reviews: 2134,
+            ribbon: 'Best Value',
+            button_text: button_text,
+            show_compare: show_compare,
+            show_ratings: show_ratings
+          -%}
+          {%- render 'novameds-product-offer-card',
+            demo: true,
+            title: 'Advanced Multi-Vitamin Complex',
+            price: 2999,
+            compare_at: 3999,
+            rating: 4.7,
+            reviews: 1680,
+            ribbon: 'Top Rated',
+            button_text: button_text,
+            show_compare: show_compare,
+            show_ratings: show_ratings
+          -%}
+          {%- render 'novameds-product-offer-card',
+            demo: true,
+            title: 'Omega-3 Fish Oil',
+            price: 2799,
+            compare_at: 3699,
+            rating: 4.6,
+            reviews: 1244,
+            ribbon: 'Heart Health',
+            button_text: button_text,
+            show_compare: show_compare,
+            show_ratings: show_ratings
+          -%}
+          {%- render 'novameds-product-offer-card',
+            demo: true,
+            title: 'Skin Glow Collagen',
+            price: 3299,
+            compare_at: 4299,
+            rating: 4.8,
+            reviews: 982,
+            ribbon: 'New',
+            button_text: button_text,
+            show_compare: show_compare,
+            show_ratings: show_ratings
+          -%}
+          {%- render 'novameds-product-offer-card',
+            demo: true,
+            title: 'Men’s Performance Stack',
+            price: 5499,
+            compare_at: 6999,
+            rating: 4.5,
+            reviews: 756,
+            ribbon: 'Bundle',
+            button_text: button_text,
+            show_compare: show_compare,
+            show_ratings: show_ratings
+          -%}
+        {%- endif -%}
+      </div>
+
+      {%- if show_arrows -%}
+        <button
+          class="nm-goals__arrow nm-goals__arrow--next"
+          type="button"
+          data-nm-goals-next
+          aria-label="Scroll offers right"
+        >
+          <span aria-hidden="true">›</span>
+        </button>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Health goals carousel",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Let Us Help You Reach Your Health Goals!" },
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "range", "id": "limit", "label": "Products limit", "min": 4, "max": 24, "step": 1, "default": 12 },
+
+    { "type": "checkbox", "id": "show_compare_price", "label": "Show compare-at price", "default": true },
+    { "type": "checkbox", "id": "show_ratings", "label": "Show ratings (metafields if available)", "default": true },
+    { "type": "checkbox", "id": "show_arrows", "label": "Show arrows", "default": true },
+    { "type": "checkbox", "id": "enable_mobile_swipe", "label": "Enable mobile swipe", "default": true },
+    { "type": "text", "id": "button_text", "label": "Button text", "default": "Shop now" }
+  ],
+  "presets": [
+    { "name": "Health goals / product offers (NovaMeds)" }
+  ]
+}
+{% endschema %}
+
