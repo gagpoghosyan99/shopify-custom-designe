@@ -4,6 +4,7 @@
   assign btn_label = section.settings.button_label
   assign btn_link = section.settings.button_link | default: routes.all_products_collection_url
   assign external = section.settings.video_url | strip
+  assign mp4_url = section.settings.mp4_url | strip
   assign video_id = blank
   assign show_overlay = section.settings.show_text_overlay
   assign enable_sound = section.settings.enable_sound
@@ -31,8 +32,13 @@
     assign has_youtube = true
   endif
 
+  assign has_mp4 = false
+  if mp4_url != blank
+    assign has_mp4 = true
+  endif
+
   assign has_media = false
-  if has_shopify_video or has_youtube or section.settings.poster != blank
+  if has_shopify_video or has_youtube or has_mp4 or section.settings.poster != blank
     assign has_media = true
   endif
 
@@ -49,12 +55,13 @@
 {{ 'novameds-fullscreen-video.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'novameds-fullscreen-video.js' | asset_url }}" defer></script>
 
-<section
+<div
   class="nm-fsvideo{% if section.settings.autoplay %} nm-fsvideo--autoplay{% endif %}{% unless show_copy %} nm-fsvideo--clean{% endunless %}"
   id="brand-video"
   aria-label="{{ aria_label | escape }}"
   data-nm-fsvideo
   data-enable-sound="{{ enable_sound }}"
+  data-autoplay="{{ section.settings.autoplay }}"
 >
   <div class="nm-fsvideo__media" aria-hidden="{% if show_copy %}true{% else %}false{% endif %}">
     {%- if has_shopify_video -%}
@@ -69,6 +76,17 @@
           playsinline: true,
           class: 'nm-fsvideo__video'
       }}
+    {%- elsif has_mp4 -%}
+      <video
+        class="nm-fsvideo__video"
+        autoplay
+        muted
+        playsinline
+        {% if section.settings.loop %}loop{% endif %}
+        preload="auto"
+      >
+        <source src="{{ mp4_url }}" type="video/mp4">
+      </video>
     {%- elsif has_youtube -%}
       <div class="nm-fsvideo__embed">
         <iframe
@@ -94,7 +112,9 @@
           alt: aria_label
       }}
     {%- else -%}
-      <div class="nm-fsvideo__poster-ph" role="img" aria-label="Video placeholder"></div>
+      <div class="nm-fsvideo__poster-ph" role="img" aria-label="Video placeholder">
+        <p class="nm-fsvideo__missing">Upload your video in Theme Editor → Fullscreen video</p>
+      </div>
     {%- endif -%}
   </div>
 
@@ -136,7 +156,7 @@
       </div>
     </div>
   {%- endif -%}
-</section>
+</div>
 
 {% schema %}
 {
@@ -144,6 +164,12 @@
   "tag": "section",
   "settings": [
     { "type": "video", "id": "video", "label": "Shopify-hosted video (recommended)" },
+    {
+      "type": "text",
+      "id": "mp4_url",
+      "label": "Direct MP4 URL (optional)",
+      "info": "Paste a Shopify Files MP4 link if the upload field resets after theme push."
+    },
     { "type": "text", "id": "video_url", "label": "YouTube URL (optional)", "info": "Used if no Shopify video is uploaded." },
     { "type": "image_picker", "id": "poster", "label": "Poster / fallback image" },
     { "type": "checkbox", "id": "autoplay", "label": "Autoplay", "default": true },

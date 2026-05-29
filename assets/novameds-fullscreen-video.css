@@ -13,7 +13,8 @@
 }
 
 .nm-fsvideo--clean {
-  place-items: stretch;
+  display: block;
+  position: relative;
 }
 
 .nm-fsvideo__media {
@@ -32,10 +33,25 @@
 }
 
 .nm-fsvideo__poster-ph {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background:
     radial-gradient(circle at 25% 35%, rgba(0, 201, 212, 0.35) 0%, transparent 52%),
     radial-gradient(circle at 75% 65%, rgba(46, 232, 240, 0.25) 0%, transparent 48%),
     linear-gradient(145deg, #031225 0%, #0a3040 50%, #031225 100%);
+}
+
+.nm-fsvideo__missing {
+  margin: 0;
+  padding: 1rem 1.25rem;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.75);
+  background: rgba(3, 18, 37, 0.55);
+  border: 1px solid rgba(46, 232, 240, 0.25);
 }
 
 .nm-fsvideo__embed {
@@ -178,6 +194,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .nm-fsvideo__video {
-    display: none;
+    animation: none;
   }
 }
