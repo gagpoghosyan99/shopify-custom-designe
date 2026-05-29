@@ -1,0 +1,183 @@
+/* NovaMeds — full-screen video section */
+
+.nm-fsvideo {
+  position: relative;
+  width: 100%;
+  min-height: 100svh;
+  max-height: 900px;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  background: #031225;
+  color: #fff;
+}
+
+.nm-fsvideo--clean {
+  place-items: stretch;
+}
+
+.nm-fsvideo__media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.nm-fsvideo__video,
+.nm-fsvideo__poster,
+.nm-fsvideo__poster-ph {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.nm-fsvideo__poster-ph {
+  background:
+    radial-gradient(circle at 25% 35%, rgba(0, 201, 212, 0.35) 0%, transparent 52%),
+    radial-gradient(circle at 75% 65%, rgba(46, 232, 240, 0.25) 0%, transparent 48%),
+    linear-gradient(145deg, #031225 0%, #0a3040 50%, #031225 100%);
+}
+
+.nm-fsvideo__embed {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.nm-fsvideo__iframe {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: max(100vw, 177.78vh);
+  height: max(100vh, 56.25vw);
+  min-width: 100%;
+  min-height: 100%;
+  transform: translate(-50%, -50%);
+  border: 0;
+}
+
+.nm-fsvideo__sound {
+  position: absolute;
+  right: max(1rem, env(safe-area-inset-right));
+  bottom: max(1rem, env(safe-area-inset-bottom));
+  z-index: 3;
+  width: 48px;
+  height: 48px;
+  border: 0;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #fff;
+  background: rgba(3, 18, 37, 0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.25);
+  transition: transform 180ms ease, background 180ms ease;
+}
+
+.nm-fsvideo__sound:hover {
+  transform: scale(1.06);
+  background: rgba(3, 18, 37, 0.72);
+}
+
+.nm-fsvideo__sound.is-on {
+  background: rgba(0, 201, 212, 0.28);
+  color: #fff;
+}
+
+.nm-fsvideo__sound-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nm-fsvideo__content {
+  position: relative;
+  z-index: 2;
+  width: min(100% - 2.5rem, 760px);
+  margin: 0 auto;
+  padding: calc(3rem + env(safe-area-inset-top)) 0 calc(3rem + env(safe-area-inset-bottom));
+  text-align: center;
+}
+
+.nm-fsvideo__eyebrow {
+  margin: 0 0 0.65rem;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(46, 232, 240, 0.95);
+}
+
+.nm-fsvideo__title {
+  margin: 0 0 0.85rem;
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  font-weight: 900;
+}
+
+.nm-fsvideo__sub {
+  margin: 0 auto 1.35rem;
+  max-width: 54ch;
+  color: rgba(255, 255, 255, 0.86);
+  line-height: 1.7;
+  font-size: clamp(1rem, 1.8vw, 1.125rem);
+}
+
+.nm-fsvideo__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  padding: 0.95rem 1.65rem;
+  border-radius: 999px;
+  font-weight: 900;
+  text-decoration: none;
+  color: #031225;
+  background: linear-gradient(135deg, #00c9d4, #2ee8f0);
+  box-shadow: 0 18px 55px rgba(0, 201, 212, 0.35);
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+.nm-fsvideo__btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 24px 70px rgba(0, 201, 212, 0.45);
+}
+
+.nm-fsvideo__hint {
+  margin: 1rem 0 0;
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+@media (max-width: 767px) {
+  .nm-fsvideo {
+    min-height: min(100svh, 680px);
+    max-height: none;
+  }
+
+  .nm-fsvideo__content {
+    width: min(100% - 1.5rem, 760px);
+    padding-top: calc(2rem + env(safe-area-inset-top));
+    padding-bottom: calc(2rem + env(safe-area-inset-bottom));
+  }
+
+  .nm-fsvideo__btn {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .nm-fsvideo__sound {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nm-fsvideo__video {
+    display: none;
+  }
+}

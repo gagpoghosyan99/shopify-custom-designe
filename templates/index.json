@@ -174,10 +174,10 @@
       "settings": {
         "autoplay": true,
         "loop": true,
-        "eyebrow": "Watch our story",
-        "title": "See NovaMeds in Action",
-        "subheading": "Discover how pharmacist-first care, premium formulas, and real customer results come together.",
-        "button_label": "Explore products"
+        "eyebrow": "",
+        "title": "",
+        "subheading": "",
+        "button_label": ""
       }
     },
     "wellness_collection": {
