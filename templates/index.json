@@ -218,7 +218,7 @@
       "settings": {
         "video": "shopify://files/videos/Luxury_ecommerce_video_NovaMeds_202605291815.mp4",
         "video_url": "",
-        "autoplay": false,
+        "autoplay": true,
         "loop": true,
         "eyebrow": "",
         "title": "",
