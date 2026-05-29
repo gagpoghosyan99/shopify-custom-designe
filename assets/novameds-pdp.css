@@ -1,0 +1,291 @@
+/* NovaMeds — PDP sticky gallery + below-the-fold rows */
+
+.nm-product-page.nm-pdp {
+  --nm-pdp-top-offset: var(--nm-hdr-header-h, 84px);
+  --nm-pdp-stage-h: calc(100svh - var(--nm-pdp-top-offset) - 12px);
+}
+
+body.template-product:has(.nm-hdr__promo) .nm-product-page.nm-pdp {
+  --nm-pdp-top-offset: calc(var(--nm-hdr-promo-h, 64px) + var(--nm-hdr-header-h, 84px));
+}
+
+@media (min-width: 991px) {
+  .nm-product-page.nm-pdp {
+    padding: 0.75rem 0 4rem;
+    min-height: var(--nm-pdp-stage-h);
+  }
+
+  .nm-product-page.nm-pdp .nm-product-shell {
+    width: 100%;
+    max-width: none;
+    margin-inline: 0;
+    padding-inline: clamp(1.25rem, 3vw, 3rem);
+  }
+
+  .nm-product-layout {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(420px, 34vw) !important;
+    gap: clamp(1.5rem, 3vw, 2.75rem) !important;
+    align-items: stretch !important;
+    min-height: var(--nm-pdp-stage-h);
+  }
+
+  .nm-product-media {
+    position: sticky;
+    top: calc(var(--nm-pdp-top-offset) + 8px);
+    align-self: start;
+    z-index: 2;
+    height: var(--nm-pdp-stage-h);
+    max-height: var(--nm-pdp-stage-h);
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .nm-product-media__inner {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    border-radius: clamp(14px, 1.2vw, 20px);
+  }
+
+  .nm-pdp__gallery {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    border: none;
+    border-radius: inherit;
+  }
+
+  .nm-pdp__main {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f4f6f8;
+  }
+
+  .nm-pdp__main .nm-pdp__img {
+    width: auto;
+    max-width: 100%;
+    max-height: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .nm-pdp__thumbs {
+    flex-shrink: 0;
+    margin-top: 0.75rem;
+  }
+
+  .nm-product-info-track {
+    position: relative;
+    align-self: stretch;
+    min-height: var(--nm-pdp-stage-h);
+  }
+
+  .nm-product-info-scroll {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    min-height: 100%;
+  }
+
+  .nm-pdp__card {
+    flex: 1;
+  }
+}
+
+/* Full-width sections after main two-column scroll */
+.nm-pdp-below {
+  width: 100%;
+  max-width: none;
+  padding-inline: clamp(1.25rem, 3vw, 3rem);
+  margin: clamp(2rem, 5vw, 3.5rem) auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.75rem, 4vw, 2.75rem);
+}
+
+.nm-pdp-row {
+  padding: 0;
+}
+
+.nm-pdp-row__head {
+  margin-bottom: 0.85rem;
+}
+
+.nm-pdp-row__title {
+  margin: 0;
+  font-size: clamp(1.15rem, 2.5vw, 1.5rem);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: #0a1628;
+}
+
+.nm-pdp-row__carousel {
+  position: relative;
+}
+
+.nm-pdp-row__track {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: 2px;
+  padding: 4px 2px 14px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.nm-pdp-row__track::-webkit-scrollbar {
+  display: none;
+}
+
+.nm-pdp-row__track .nm-offer {
+  scroll-snap-align: start;
+  flex: 0 0 min(272px, 78vw);
+  width: min(272px, 78vw);
+}
+
+/* Product reviews row */
+.nm-pdp-reviews__track {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: 2px;
+  padding: 4px 2px 14px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.nm-pdp-reviews__track::-webkit-scrollbar {
+  display: none;
+}
+
+.nm-pdp-review-card {
+  flex: 0 0 min(300px, 84vw);
+  scroll-snap-align: start;
+  background: #fff;
+  border: 1px solid rgba(10, 22, 40, 0.08);
+  border-radius: 18px;
+  padding: 1.15rem 1.2rem;
+  box-shadow: 0 12px 36px rgba(10, 22, 40, 0.06);
+}
+
+.nm-pdp-review-card__stars {
+  color: #f59e0b;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  margin-bottom: 0.5rem;
+}
+
+.nm-pdp-review-card__quote {
+  margin: 0 0 0.75rem;
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: #0f172a;
+}
+
+.nm-pdp-review-card__author {
+  margin: 0;
+  font-size: 0.8125rem;
+  font-weight: 800;
+  color: #64748b;
+}
+
+/* Product article / blog */
+.nm-pdp-article {
+  background: #f8fbfc;
+  border: 1px solid rgba(10, 22, 40, 0.08);
+  border-radius: 20px;
+  padding: clamp(1.25rem, 3vw, 2rem);
+}
+
+.nm-pdp-article__eyebrow {
+  margin: 0 0 0.5rem;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #00a8b5;
+}
+
+.nm-pdp-article__title {
+  margin: 0 0 1rem;
+  font-size: clamp(1.35rem, 3vw, 1.85rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  color: #0a1628;
+  line-height: 1.15;
+}
+
+.nm-pdp-article__body {
+  color: #334155;
+  line-height: 1.75;
+  font-size: 1rem;
+}
+
+.nm-pdp-article__body h2,
+.nm-pdp-article__body h3 {
+  color: #0a1628;
+  margin: 1.5rem 0 0.65rem;
+  font-weight: 900;
+}
+
+.nm-pdp-article__body p {
+  margin: 0 0 1rem;
+}
+
+.nm-pdp-article__body ul,
+.nm-pdp-article__body ol {
+  margin: 0 0 1rem;
+  padding-left: 1.25rem;
+}
+
+@media (max-width: 990px) {
+  .nm-product-page.nm-pdp {
+    --nm-pdp-top-offset: var(--nm-hdr-header-h, 64px);
+    --nm-pdp-stage-h: calc(100svh - var(--nm-pdp-top-offset) - env(safe-area-inset-top, 0px));
+    min-height: auto;
+  }
+
+  body.template-product:has(.nm-hdr__promo) .nm-product-page.nm-pdp {
+    --nm-pdp-top-offset: calc(var(--nm-hdr-promo-h, 44px) + var(--nm-hdr-header-h, 64px));
+  }
+
+  .nm-pdp-below {
+    width: 100%;
+    padding-inline: var(--nm-mobile-gutter, 16px);
+    margin-top: 1.5rem;
+    gap: 1.5rem;
+  }
+
+  .nm-pdp__carousel {
+    aspect-ratio: auto !important;
+    min-height: min(62svh, calc(var(--nm-pdp-stage-h) - 80px));
+    max-height: 72svh;
+  }
+
+  .nm-pdp__card {
+    min-height: 0 !important;
+  }
+
+  .nm-product-media {
+    position: static;
+  }
+
+  .nm-pdp-row__title,
+  .nm-pdp-article__title {
+    font-size: 1.2rem;
+  }
+
+  .nm-pdp-article {
+    padding: 1.15rem;
+    border-radius: 16px;
+  }
+}

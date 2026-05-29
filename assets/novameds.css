@@ -875,13 +875,14 @@
    ───────────────────────────────────────────────────────── */
 .nm-product-page,
 .nm-pdp {
-  padding: 1.5rem 0 5rem;
+  padding: 0.75rem 0 5rem;
   background: #ffffff;
   color: #0b0f1a;
 }
 
 .nm-product-shell {
-  width: min(100% - 2rem, var(--nm-max, 1200px));
+  width: 100%;
+  max-width: none;
   margin-inline: auto;
 }
 
@@ -889,14 +890,14 @@
 @media (min-width: 991px) {
   .nm-product-layout {
     display: grid !important;
-    grid-template-columns: minmax(0, 1.08fr) minmax(400px, 500px) !important;
-    gap: clamp(2rem, 4vw, 3.5rem) !important;
-    align-items: start !important;
+    grid-template-columns: minmax(0, 1fr) minmax(420px, 34vw) !important;
+    gap: clamp(1.5rem, 3vw, 2.75rem) !important;
+    align-items: stretch !important;
   }
 
   .nm-product-media {
     position: sticky;
-    top: clamp(16px, 3vh, 32px);
+    top: calc(var(--nm-hdr-promo-h, 64px) + var(--nm-hdr-header-h, 84px) + 8px);
     align-self: start;
   }
 
@@ -923,7 +924,8 @@
   }
 
   .nm-product-shell {
-    width: min(100% - 1.25rem, var(--nm-max, 1200px));
+    width: 100%;
+    padding-inline: var(--nm-mobile-gutter, 16px);
   }
 
   .nm-product-layout {
